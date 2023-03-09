@@ -29,19 +29,15 @@ const getOperator = async (req, res) => {
 //add new Operator
 
 const addOperator = async (req, res) => {
-  const { nic, operator_name, index_number, z_score, subject_stream, email, degree, password } =
+  const { epfno, operator_name, email, password } =
     req.body;
 
   try {
     const operator = await Operator.create({
-      nic,
+      epfno,
       operator_name,
-      index_number,
-      z_score,
-      subject_stream,
       email,
-      degree,
-      password,
+      password
     });
 
     return res.status(200).json(operator);
