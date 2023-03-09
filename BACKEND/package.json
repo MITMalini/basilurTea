@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Basiluer user Input ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MITMalini/basilurTea.git"
+  },
+  "author": "Malini Jayaweera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MITMalini/basilurTea/issues"
+  },
+  "homepage": "https://github.com/MITMalini/basilurTea#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.1",
+    "nodemon": "^2.0.20"
+  }
+}
