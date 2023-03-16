@@ -33,14 +33,14 @@ const addOperator = async (req, res) => {
     req.body;
 
   try {
-    const operator = await Operator.create({
+    const newoperator = await Operator.create({
       epfno,
       operator_name,
       email,
       password
     });
 
-    return res.status(200).json(operator);
+    return res.status(200).json(newoperator);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: e.message });
