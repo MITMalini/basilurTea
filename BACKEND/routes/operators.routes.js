@@ -7,7 +7,7 @@ const {
     deleteOperator,
     updateOperator,
     login
-} = require('../controllers/operators.controller.js');
+} = require('../controllers/operators.controller.js')
 
 // get all students
 router.get('/', getOperators);
