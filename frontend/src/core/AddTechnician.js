@@ -1,41 +1,39 @@
 import React from 'react'
-import "./addsupervisor.css";
+import "./addtechnician.css";
 
-export default function addSupervisor() {
+export default function AddTechnician() {
   return (
-    <div className='scontainer'>
-      <div className='scontainer1'>
-        <header className='scontainer2'>
-          <span className='text'>ADD SUPERVISOR</span>
+    <div className='tcontainer'>
+      <div className='tcontainer1'>
+        <header className='tcontainer2'>
+          <span className='text'>ADD Technician</span>
         </header>
-        <div className='scontainer3'>
-          <div className='scontainer4'>
-          <div className='scontainer6'>
+        <div className='tcontainer3'>
+          <div className='tcontainer4'>
+          <div className='tcontainer6'>
               <span className='text2'> NAME    : </span>
               <input
                 type="text"
-                placeholder="Supervisor's Name"
+                placeholder="Technician's Name"
                 className='textinput1'
               />
             </div>
-            <div className='scontainer7'>
+            <div className='tcontainer7'>
               <span className='text3'> EMAIL   :    </span>
               <input
                 type="text"
-                placeholder="Supervisor's Email"
+                placeholder="Technician's Email"
                 className='textinput2' 
               />
             </div>
-            <div className='scontainer5'>
+            <div className='tcontainer5'>
               <span className='text1'>  EPF NO   : </span>
               <input
                 type="text"
-                placeholder="Supervisor's EPF Number"
+                placeholder="Technician's EPF Number"
                 className='textinput'
               />
             </div>
-            
-            
             <button className='savebutton'>SAVE</button>
           </div>
         </div>
