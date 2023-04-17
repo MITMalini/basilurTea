@@ -5,6 +5,7 @@ import AddError from './core/AddError'
 import AddSupervisor from './core/AddSupervisor'
 import Dashboard from './core/Dashboard';
 import AddTechnician from './core/AddTechnician';
+import AddQc from './core/AddQc';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/addsupervisor" exact element={<AddSupervisor />} />
           <Route path="/dashboard" exact element={<Dashboard />} /> 
           <Route path="/addtechnician" exact element={<AddTechnician />} /> 
+          <Route path="/addqc" exact element={<AddQc />} /> 
         </Routes>
       </BrowserRouter>
     </div>
