@@ -10,6 +10,7 @@ export default function AddTechnician() {
         </header>
         <div className='container3'>
           <div className='container4'>
+          <form className='form'>
           <div className='container6'>
               <span className='text2'> NAME    : </span>
               <input
@@ -35,6 +36,7 @@ export default function AddTechnician() {
               />
             </div>
             <button className='savebutton'>SAVE</button>
+            </form>
           </div>
         </div>
       </div>
