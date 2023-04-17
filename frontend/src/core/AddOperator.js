@@ -1,48 +1,22 @@
-import React, {useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
-// import { db } from './firebase-config'
-// import { collection, addDoc, Timestamp } from 'firebase/firestore'
 
 export default function Addoperator() {
-    // const [operators, setOperators] = useState([]);
-    // const [newItemName, setNewItemName] = useState("");
-    // const [newItemDescription, setNewItemDescription] = useState("");
-    // const [newItemPrice, setNewItemPrice] = useState("");
-  
-    // useEffect(() => {
-    //   // Get all operators from Firestore on component mount
-    //   firestore.collection("operators").onSnapshot((snapshot) => {
-    //     const newItems = snapshot.docs.map((doc) => ({
-    //       id: doc.id,
-    //       ...doc.data(),
-    //     }));
-    //     setOperators(newItems);
-    //   });
-    // }, []);
-  
-    // const handleNewItemNameChange = (event) => {
-    //   setNewItemName(event.target.value);
-    // };
-  
-    // const handleNewItemDescriptionChange = (event) => {
-    //   setNewItemDescription(event.target.value);
-    // };
-  
-    // const handleNewItemPriceChange = (event) => {
-    //   setNewItemPrice(event.target.value);
-    // };
-  
-    // const handleNewItemSubmit = (event) => {
-    //   event.preventDefault();
-    //   firestore.collection("operators").add({
-    //     name: newItemName,
-    //     description: newItemDescription,
-    //     price: parseFloat(newItemPrice),
-    //   });
-    //   setNewItemName("");
-    //   setNewItemDescription("");
-    //   setNewItemPrice("");
-    // };
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [epf, setEpf] = useState("");
+    function sendData(e) {
+        e.preventDefault();
+        
+        //java script object
+        const newOperator ={
+            name,
+            email,
+            epf
+        }
+
+        console.log(newOperator);
+    }
     return (
         <div className='container'>
             <div className='container1'>
@@ -51,31 +25,45 @@ export default function Addoperator() {
                 </div>
                 <div className='container3'>
                     <div className='container4'>
-                        <div className='container5'>
-                            <span className='text1'>NAME    : </span>
-                            <input
-                                type="text"
-                                placeholder="Operator's Name"
-                                className='textinput'
-                            />
-                        </div>
-                        <div className='container6'>
-                            <span className='text2'>EMAIL   :    </span>
-                            <input
-                                type="text"
-                                placeholder="Operator's Email"
-                                className='textinput1'
-                            />
-                        </div>
-                        <div className='container7'>
-                            <span className='text3'>EPF NO: </span>
-                            <input
-                                type="text"
-                                placeholder="Operator's EPF Number"
-                                className='textinput2'
-                            />
-                        </div>
-                        <button className='savebutton'>SAVE</button>
+                        <form className='form' onSubmit={sendData}>
+                            <div className='container5'>
+                                <span className='text1'>NAME    : </span>
+                                <input
+                                    type="text"
+                                    placeholder="Operator's Name"
+                                    className='textinput'
+                                    id="name"
+                                    onChange={(e) => {
+                                        setName(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <div className='container6'>
+                                <span className='text2'>EMAIL   :    </span>
+                                <input
+                                    type="text"
+                                    placeholder="Operator's Email"
+                                    className='textinput1'
+                                    id="email"
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <div className='container7'>
+                                <span className='text3'>EPF NO: </span>
+                                <input
+                                    type="text"
+                                    placeholder="Operator's EPF Number"
+                                    className='textinput2'
+                                    id="epf"
+                                    onChange={(e) => {
+                                        setEpf(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <button className='savebutton'>SAVE</button>
+                        </form>
                     </div>
                 </div>
             </div>
