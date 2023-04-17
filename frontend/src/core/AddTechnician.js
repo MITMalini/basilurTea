@@ -6,7 +6,7 @@ export default function AddTechnician() {
     <div className='tcontainer'>
       <div className='tcontainer1'>
         <header className='tcontainer2'>
-          <span className='text'>ADD Technician</span>
+          <span className='text'>ADD TECHNICIAN</span>
         </header>
         <div className='tcontainer3'>
           <div className='tcontainer4'>

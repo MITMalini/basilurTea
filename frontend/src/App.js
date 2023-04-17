@@ -15,7 +15,7 @@ export default function App() {
           <Route path="/adderror" exact element={<AddError />} />
           <Route path="/addsupervisor" exact element={<AddSupervisor />} />
           <Route path="/dashboard" exact element={<Dashboard />} /> 
-          <Route path="/addtechnician" exact element={<Dashboard />} /> 
+          <Route path="/addtechnician" exact element={<AddTechnician />} /> 
         </Routes>
       </BrowserRouter>
     </div>
