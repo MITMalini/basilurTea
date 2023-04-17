@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from "react";
-import "./addoperator.css";
+import "./style.css";
 // import { db } from './firebase-config'
 // import { collection, addDoc, Timestamp } from 'firebase/firestore'
 
@@ -44,14 +44,14 @@ export default function Addoperator() {
     //   setNewItemPrice("");
     // };
     return (
-        <div className='ocontainer'>
-            <div className='ocontainer1'>
-                <div className='ocontainer2'>
+        <div className='container'>
+            <div className='container1'>
+                <div className='container2'>
                     <span className='text'>ADD OPERATOR</span>
                 </div>
-                <div className='ocontainer3'>
-                    <div className='ocontainer4'>
-                        <div className='ocontainer5'>
+                <div className='container3'>
+                    <div className='container4'>
+                        <div className='container5'>
                             <span className='text1'>NAME    : </span>
                             <input
                                 type="text"
@@ -59,7 +59,7 @@ export default function Addoperator() {
                                 className='textinput'
                             />
                         </div>
-                        <div className='ocontainer6'>
+                        <div className='container6'>
                             <span className='text2'>EMAIL   :    </span>
                             <input
                                 type="text"
@@ -67,7 +67,7 @@ export default function Addoperator() {
                                 className='textinput1'
                             />
                         </div>
-                        <div className='ocontainer7'>
+                        <div className='container7'>
                             <span className='text3'>EPF NO: </span>
                             <input
                                 type="text"
