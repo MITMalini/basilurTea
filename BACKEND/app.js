@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const operatorsRoutes= require('./routes/operators.routes.js');
 const errorsRoutes= require('./routes/errors.routes.js');
+const supervisorRoutes = require ('./routes/supervisors.routes')
 const cors =require('cors');
 
 require('dotenv').config();
@@ -16,6 +17,7 @@ app.use(cors());
 //routes
 app.use('/api/operators', operatorsRoutes);
 app.use('/api/errors', errorsRoutes);
+app.use('/api/supervisor', supervisorRoutes);
 
 // connect to db
 const dotenv = require('dotenv');

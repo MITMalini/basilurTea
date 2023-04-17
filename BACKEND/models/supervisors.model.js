@@ -5,12 +5,12 @@ var validateEmail = function (email) {
   return re.test(email);
 };
 
-const operatorsSchema = new mongoose.Schema({
+const supervisorsSchema = new mongoose.Schema({
   epfno: {
     type: Number,
     required: true,
   },
-  operator_name: {
+  supervisor_name: {
     type: String,
     required: true,
   },
@@ -25,7 +25,11 @@ const operatorsSchema = new mongoose.Schema({
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       'Please fill a valid email address',
     ],
+  },
+  password: {
+    type: String,
+    required: true,
   }
 });
 
-module.exports = mongoose.model('Operator', operatorsSchema);
+module.exports = mongoose.model('Supervisor', supervisorsSchema);
