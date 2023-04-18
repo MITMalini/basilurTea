@@ -9,18 +9,18 @@ const {
 } = require('../controllers/qc.controller.js')
 
 // get all students
-router.get('/', getQCs);
+router.get('/getqcs', getQCs);
 
 // get a single student
-router.get('/:id', getQC);
+router.get('/getqc:id', getQC);
 
 // add a new student
-router.post('/', addQC);
+router.post('/addqc', addQC);
 
 // delete a student
-router.delete('/:id', deleteQC);
+router.delete('/deleteqc:id', deleteQC);
 
 // update a student
-router.patch('/:id', updateQC);
+router.patch('/updateqc:id', updateQC);
 
 module.exports = router;

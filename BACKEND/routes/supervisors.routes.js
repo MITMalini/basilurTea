@@ -5,24 +5,22 @@ const {
     getSupervisor,
     addSupervisor,
     deleteSupervisor,
-    updateSupervisor,
-    login
+    updateSupervisor
 } = require('../controllers/supervisor.controller.js')
 
 // get all students
-router.get('/', getSupervisors);
+router.get('/getsupervisors', getSupervisors);
 
 // get a single student
-router.get('/:id', getSupervisor);
+router.get('/getsupervisor:id', getSupervisor);
 
 // add a new student
-router.post('/', addSupervisor);
+router.post('/addsupervisor', addSupervisor);
 
 // delete a student
-router.delete('/:id', deleteSupervisor);
+router.delete('/deletesupervisor:id', deleteSupervisor);
 
 // update a student
-router.patch('/:id', updateSupervisor);
-router.post("/operator_login",login)
+router.patch('/updatesupervisor:id', updateSupervisor);
 
 module.exports = router;

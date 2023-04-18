@@ -9,18 +9,18 @@ const {
 } = require('../controllers/errors.controller.js');
 
 // get all students
-router.get('/', getErrors);
+router.get('/geterrors', getErrors);
 
 // get a single student
-router.get('/:id', getError);
+router.get('/geterror:id', getError);
 
 // add a new student
-router.post('/', addError);
+router.post('/adderror', addError);
 
 // delete a student
-router.delete('/:id', deleteError);
+router.delete('/deleteerror:id', deleteError);
 
 // update a student
-router.patch('/:id', updateError);
+router.patch('/updateerror:id', updateError);
 
 module.exports = router;

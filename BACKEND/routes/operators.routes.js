@@ -6,7 +6,6 @@ const {
     addOperator,
     deleteOperator,
     updateOperator
-    // login
 } = require('../controllers/operators.controller.js')
 
 // get all students
@@ -23,6 +22,5 @@ router.delete('/deleteoperator:id', deleteOperator);
 
 // update a student
 router.patch('/updateoperator:id', updateOperator);
-// router.post("/operator_login",login)
 
 module.exports = router;

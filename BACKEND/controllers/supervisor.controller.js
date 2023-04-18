@@ -1,4 +1,4 @@
-const Supervisor = require('../models/supervisors.model.js').default;
+const Supervisor = require('../models/supervisors.model.js');
 
 //get all Supervisors
 
@@ -29,15 +29,15 @@ const getSupervisor = async (req, res) => {
 //add new Supervisor
 
 const addSupervisor = async (req, res) => {
-  const { epfno, supervisor_name, email, password } =
+  const epfno = Number(req.body.epfno);
+  const {supervisor_name, email} =
     req.body;
 
   try {
     const newsupervisor = await Supervisor.create({
       epfno,
       supervisor_name,
-      email,
-      password
+      email
     });
 
     return res.status(200).json(newsupervisor);
@@ -75,26 +75,11 @@ const updateSupervisor = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
-    const { email, password } = req.body;
-    const data = { email: email, password: password }
-    return Supervisor.find(data)
-      .then((supervisor) => {
-        if (supervisor.length > 0) {
-          
-          return res.status(200).json({ supervisor })
-        } else {
-          return res.status(404).json({ "message": "supervisor not found" })
-        }
-      })
-      .catch(err => { console.log("login failed " + err) })
-  }
 
 module.exports = {
     getSupervisors,
     getSupervisor,
     addSupervisor,
     deleteSupervisor,
-    updateSupervisor,
-    login,
+    updateSupervisor
 };

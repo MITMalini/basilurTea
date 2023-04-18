@@ -1,4 +1,4 @@
-const  Technician = require('../models/technician.model.js').default;
+const  Technician = require('../models/technician.model.js');
 
 //get all Technicians
 

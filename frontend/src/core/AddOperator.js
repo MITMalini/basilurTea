@@ -16,7 +16,7 @@ export default function Addoperator() {
             epfno
         }
         axios.post("http://localhost:8080/api/operators/addoperator",newOperator).then(()=>{
-            alert("Student Added")
+            alert("New Operator Added")
         }).catch((err)=>{
             alert(err)
 
@@ -67,8 +67,10 @@ export default function Addoperator() {
                                     }}
                                 />
                             </div>
+                            <br></br>
                             <button className='savebutton'>SAVE</button>
                         </form>
+                        <a href='/dashboard' className='dashboard'>GO BACK TO DASHBOARD</a>
                     </div>
                 </div>
             </div>
