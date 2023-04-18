@@ -9,18 +9,18 @@ const {
 } = require('../controllers/technician.controller.js')
 
 // get all students
-router.get('/', getTechnicians);
+router.get('/gettechnicians', getTechnicians);
 
 // get a single student
-router.get('/:id', getTechnician);
+router.get('/gettechnician:id', getTechnician);
 
 // add a new student
-router.post('/', addTechnician);
+router.post('/addtechnician', addTechnician);
 
 // delete a student
-router.delete('/:id', deleteTechnician);
+router.delete('/deletetechnician:id', deleteTechnician);
 
 // update a student
-router.patch('/:id', updateTechnician);
+router.patch('/updatetechnician:id', updateTechnician);
 
 module.exports = router;

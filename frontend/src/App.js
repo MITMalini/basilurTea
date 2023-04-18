@@ -12,12 +12,12 @@ export default function App() {
     <div className='App'>
       <BrowserRouter>
         <Routes>
-          <Route path="/operator" exact element={<Addoperator />} />
-          <Route path="/error" exact element={<AddError />} />
-          <Route path="/supervisor" exact element={<AddSupervisor />} />
+          <Route path="/addoperator" exact element={<Addoperator />} />
+          <Route path="/adderror" exact element={<AddError />} />
+          <Route path="/addsupervisor" exact element={<AddSupervisor />} />
           <Route path="/dashboard" exact element={<Dashboard />} /> 
-          <Route path="/technician" exact element={<AddTechnician />} /> 
-          <Route path="/qc" exact element={<AddQc />} /> 
+          <Route path="/addtechnician" exact element={<AddTechnician />} /> 
+          <Route path="/addqc" exact element={<AddQc />} /> 
         </Routes>
       </BrowserRouter>
     </div>
