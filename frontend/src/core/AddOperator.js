@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
+import axios from "axios";
 
 export default function Addoperator() {
-    const [name, setName] = useState("");
+    const [operator_name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [epf, setEpf] = useState("");
+    const [epfno, setEpf] = useState("");
     function sendData(e) {
         e.preventDefault();
         
-        //java script object
+        //java script objectw
         const newOperator ={
-            name,
+            operator_name,
             email,
-            epf
+            epfno
         }
+        axios.post("http://localhost:8080/api/operators/addoperator",newOperator).then(()=>{
+            alert("Student Added")
+        }).catch((err)=>{
+            alert(err)
 
-        console.log(newOperator);
+        })
     }
     return (
         <div className='container'>

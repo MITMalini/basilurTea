@@ -5,24 +5,24 @@ const {
     getOperator,
     addOperator,
     deleteOperator,
-    updateOperator,
-    login
+    updateOperator
+    // login
 } = require('../controllers/operators.controller.js')
 
 // get all students
-router.get('/', getOperators);
+router.get('/getoperators', getOperators);
 
 // get a single student
-router.get('/:id', getOperator);
+router.get('/getoperator:id', getOperator);
 
 // add a new student
-router.post('/', addOperator);
+router.post('/addoperator', addOperator);
 
 // delete a student
-router.delete('/:id', deleteOperator);
+router.delete('/deleteoperator:id', deleteOperator);
 
 // update a student
-router.patch('/:id', updateOperator);
-router.post("/operator_login",login)
+router.patch('/updateoperator:id', updateOperator);
+// router.post("/operator_login",login)
 
 module.exports = router;

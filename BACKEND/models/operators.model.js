@@ -9,6 +9,7 @@ const operatorsSchema = new mongoose.Schema({
   epfno: {
     type: Number,
     required: true,
+    unique: true,
   },
   operator_name: {
     type: String,
@@ -28,4 +29,5 @@ const operatorsSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Operator', operatorsSchema);
+ const Operator = mongoose.model('Operator', operatorsSchema);
+ module.exports = Operator;
