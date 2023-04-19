@@ -7,7 +7,7 @@ const errorsRoutes= require('./routes/errors.routes.js');
 const supervisorRoutes = require ('./routes/supervisors.routes');
 const technicianRoutes = require ('./routes/technician.routes.js');
 const qcRoutes = require ('./routes/qc.routes.js');
-
+const packingRoutes = require ('./routes/packing.routes.js');
 
  require('dotenv').config();
 
@@ -25,6 +25,7 @@ app.use('/api/errors', errorsRoutes);
 app.use('/api/supervisor', supervisorRoutes);
 app.use('/api/technician', technicianRoutes);
 app.use('/api/qc', qcRoutes);
+app.use('/api/packing', packingRoutes);
 
 // connect to db
 const dotenv = require('dotenv');
