@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
+import {Link } from "react-router-dom";
 
 export default function AddQc() {
   const [qc_name, setName] = useState("");
@@ -31,8 +32,8 @@ export default function AddQc() {
         <div className='container3'>
           <div className='container4'>
             <form className='form' onSubmit={sendData}>
-              <div className='container6'>
-                <span className='text2'> NAME &nbsp;   : </span>
+              <div className='container5'>
+                <span className='text2'> NAME </span>
                 <input
                   type="text"
                   placeholder="QC's Name"
@@ -43,8 +44,8 @@ export default function AddQc() {
                   }}
                 />
               </div>
-              <div className='container7'>
-                <span className='text3'> EMAIL  &nbsp; :    </span>
+              <div className='container5'>
+                <span className='text3'> EMAIL  </span>
                 <input
                   type="text"
                   placeholder="QC's Email"
@@ -56,7 +57,7 @@ export default function AddQc() {
                 />
               </div>
               <div className='container5'>
-                <span className='text1'>  EPF NO   : </span>
+                <span className='text1'>  EPF NO   </span>
                 <input
                   type="text"
                   placeholder="QC's EPF Number"
@@ -67,10 +68,11 @@ export default function AddQc() {
                   }}
                 />
               </div>
-              <br></br>
-              <button className='savebutton'>SAVE</button>
+              <div className='container6'>
+                <button className='savebutton'>SAVE</button>
+                <Link to='/'><button className='button'>DASHBOARD</button></Link>
+              </div>
             </form>
-            <a href='/dashboard' className='dashboard'>GO BACK TO DASHBOARD</a>
           </div>
         </div>
       </div>

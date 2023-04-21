@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
+import {Link } from "react-router-dom";
 
 export default function Addoperator() {
     const [operator_name, setName] = useState("");
@@ -8,16 +9,16 @@ export default function Addoperator() {
     const [epfno, setEpf] = useState("");
     function sendData(e) {
         e.preventDefault();
-        
+
         //java script objectw
-        const newOperator ={
+        const newOperator = {
             operator_name,
             email,
             epfno
         }
-        axios.post("http://localhost:8080/api/operators/addoperator",newOperator).then(()=>{
+        axios.post("http://localhost:8080/api/operators/addoperator", newOperator).then(() => {
             alert("New Operator Added")
-        }).catch((err)=>{
+        }).catch((err) => {
             alert(err)
 
         })
@@ -32,7 +33,7 @@ export default function Addoperator() {
                     <div className='container4'>
                         <form className='form' onSubmit={sendData}>
                             <div className='container5'>
-                                <span className='text1'>NAME    : </span>
+                                <span className='text1'>NAME  </span>
                                 <input
                                     type="text"
                                     placeholder="Operator's Name"
@@ -43,8 +44,8 @@ export default function Addoperator() {
                                     }}
                                 />
                             </div>
-                            <div className='container6'>
-                                <span className='text2'>EMAIL   :    </span>
+                            <div className='container5'>
+                                <span className='text2'>EMAIL  </span>
                                 <input
                                     type="text"
                                     placeholder="Operator's Email"
@@ -55,8 +56,8 @@ export default function Addoperator() {
                                     }}
                                 />
                             </div>
-                            <div className='container7'>
-                                <span className='text3'>EPF NO: </span>
+                            <div className='container5'>
+                                <span className='text3'>EPF NO</span>
                                 <input
                                     type="text"
                                     placeholder="Operator's EPF Number"
@@ -67,10 +68,11 @@ export default function Addoperator() {
                                     }}
                                 />
                             </div>
-                            <br></br>
-                            <button className='savebutton'>SAVE</button>
+                            <div className='container6'>
+                                <button className='savebutton'>SAVE</button>
+                                <Link to='/'  ><button className='button'>DASHBOARD</button></Link>
+                            </div>
                         </form>
-                        <a href='/dashboard' className='dashboard'>GO BACK TO DASHBOARD</a>
                     </div>
                 </div>
             </div>

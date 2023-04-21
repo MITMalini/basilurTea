@@ -35,7 +35,6 @@ export default function AddError() {
               />
             </div>
             <button className='savebutton'>SAVE</button>
-            
           </div>
         </div>
       </div>
