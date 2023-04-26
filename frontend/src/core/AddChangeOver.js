@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import "./style.css";
-import Dashboard from './Dashboard';
+import axios from "axios";
+import {Link } from "react-router-dom";
 
 export default function AddChangeOver() {
     const [operators, setOperators] = useState([]);
-    const [selectedoperators, setSelectedOperator] = useState([]);
+    const [selectedoperator, setSelectedOperator] = useState([]);
     const [packings, setPackings] = useState([]);
-    const [selectedpackings, setSelectedPacking] = useState([]);
+    const [selectedpacking, setSelectedPacking] = useState([]);
     const [qcs, setQcs] = useState([]);
-    const [selectedqcs, setSelectedQc] = useState([]);
+    const [selectedqc, setSelectedQc] = useState([]);
     const [technicians, setTechnicians] = useState([]);
-    const [selectedtechnicians, setSelectedTechnician] = useState([]);
+    const [selectedtechnician, setSelectedTechnician] = useState([]);
     const [supervisors, setSupervisors] = useState([]);
-    const [selectedsupervisors, setSelectedSupervisor] = useState([]);
+    const [selectedsupervisor, setSelectedSupervisor] = useState([]);
+    function sendData(e) {
+        e.preventDefault();
+        //java script objectw
+        const newChangeover = {
+            selectedoperator,
+            selectedpacking,
+            selectedqc,
+            selectedtechnician,
+            selectedsupervisor
+        }
+        axios.post("http://localhost:8080/api/changeover/addchangeover", newChangeover).then(() => {
+          alert("New Changeover Added")
+        }).catch((err) => {
+          alert(err)
+    
+        })
+      }
     useEffect(() => {
         fetch('http://localhost:8080/api/operators/getoperators')
             .then(response => response.json())
@@ -49,6 +67,7 @@ export default function AddChangeOver() {
                 </header>
                 <div className='container31'>
                     <div className='container41'>
+                        <form className='form' onSubmit={sendData}>
                         <div className='container5'>
                             <h6 className="text1">Operator</h6>
                             {/* <select className='dropdown' onChange={(e) => {
@@ -161,16 +180,17 @@ export default function AddChangeOver() {
                                 className='dropdown'
                                 options={supervisors.map(option => ({ value: option._id, label: option.supervisor_name }))}
                                 onChange={(selectedOption) => {
-                                    const qc = supervisors?.find((x) => x._id === selectedOption.value);
-                                    setSelectedQc(qc);
+                                    const spvs = supervisors?.find((x) => x._id === selectedOption.value);
+                                    setSelectedSupervisor(spvs);
                                 }}
                                 placeholder="Select Value"
                             />
                         </div>
                         <div className='container6'>
-                            <button className='savebutton'>SAVE</button>
-                            <button className='savebutton'>DASHBOARD</button>
-                        </div>
+                                <button className='savebutton'>SAVE</button>
+                                <Link to='/'  ><button className='button'>DASHBOARD</button></Link>
+                            </div>
+                        </form>
 
                     </div>
                 </div>
