@@ -1,15 +1,26 @@
 const mongoose = require('mongoose');
-
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const changeoverSchema = new mongoose.Schema({
-  // Date: {
-  //   type:Date,
-  //   required: true,
-  // },
-  // Changeoverno: {
-  //   type: Number,
-  //   default: null,
-  // },
+  date: { 
+    type: String,
+    default: function() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return year + '/' + month + '/' + day; 
+  }
+},
+  selectedshift: {
+    type: String,
+    enum: ['Morning shift', 'Evening shift'],
+    required: true
+  },
+  changeoverNumber: {
+    type: Number,
+    default: 1
+  },
   selectedoperator:{
     type: String,
     required: true,
@@ -30,27 +41,26 @@ const changeoverSchema = new mongoose.Schema({
     type: String,
     required: true,
   }
-  // bag_count:{
-  //   type: Number,
-  //   default: null,
-  // },
-  // error_count:{
-  //   type: Number,
-  //   default: null,
-  // }, 
-  // runtime:{
-  //   type: String,
-  //   default: null,
-  // },
-  // start_time:{
-  //   type: String,
-  //   default: null,
-  // },
-  // end_time:{
-  //   type: String,
-  //   default: null,
-  // }
-  
-});
+  },{
+    timestamps: true
+  });
 
+  changeoverSchema.pre('save', async function() {
+    const doc = this;
+    if (doc.isNew) {
+      const count = await mongoose.model('Changeover', changeoverSchema).find({ 
+        date: doc.date, 
+        selectedshift: doc.selectedshift 
+      }).countDocuments();
+      doc.changeoverNumber = count + 1;
+    }else {
+      const previousDoc = await mongoose.model('Changeover', changeoverSchema).findById(doc._id);
+      if (previousDoc && previousDoc.selectedshift !== doc.selectedshift) {
+        doc.changeoverNumber =  1;
+      }
+    }
+  });
+  
+
+  
 module.exports = mongoose.model('Changeover', changeoverSchema);

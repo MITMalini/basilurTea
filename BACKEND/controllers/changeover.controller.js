@@ -32,13 +32,12 @@ const addChangeover = async (req, res) => {
     // const bag_count = Number(req.body.bag_count);
     // const error_count = Number(req.body.error_count);
     const Changeoverno = Number(req.body.Changeoverno);
-  const { Date, selectedoperator,selectedpacking,selectedqc,selectedtechnician,selectedsupervisor} =
+  const { selectedshift,selectedoperator,selectedpacking,selectedqc,selectedtechnician,selectedsupervisor} =
     req.body;
 
   try {
     const newchangeover = await  Changeover.create({
-        // Date,
-        // Changeoverno,
+        selectedshift,
         selectedoperator,
         selectedpacking,
         selectedqc,
@@ -50,8 +49,9 @@ const addChangeover = async (req, res) => {
         // start_time,
         // end_time
     });
+    const savedChangeover = await newchangeover.save();
 
-    return res.status(200).json(newchangeover);
+    return res.status(200).json(savedChangeover);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: e.message });
