@@ -1,49 +1,66 @@
 const mongoose = require('mongoose');
-
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const changeoverSchema = new mongoose.Schema({
-  Date: {
-    type:Date,
-    required: true,
-  },
-  Changeover: {
-    type: Number,
-    required: true,
-  },
-  Packing_name:{
+  date: { 
     type: String,
-    required: true,
-  },
-  operator_name:{
-    type: String,
-    required: true,
-  },
-  technician_name:{
-    type: String,
-    required: true,
-  },
-  qc_name:{
-    type: String,
-    required: true,
-  },
-  supervisor_name:{
-    type: String,
-    required: true,
-  },
-  bag_count:{
-    type: Number,
-  },
-  error_count:{
-    type: Number,
-  },
-  runtime:{
-    type: String,
-  },
-  jogtime:{
-    type: String,
+    default: function() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return year + '/' + month + '/' + day; 
   }
-  
-});
+},
+  selectedshift: {
+    type: String,
+    enum: ['Morning shift', 'Evening shift'],
+    required: true
+  },
+  changeoverNumber: {
+    type: Number,
+    default: 1
+  },
+  selectedoperator:{
+    type: String,
+    required: true,
+  },
+  selectedpacking:{
+    type: String,
+    required: true,
+  },
+  selectedqc:{
+    type: String,
+    required: true,
+  },
+  selectedtechnician:{
+    type: String,
+    required: true,
+  },
+  selectedsupervisor:{
+    type: String,
+    required: true,
+  }
+  },{
+    timestamps: true
+  });
 
-const Changeover = mongoose.model('Changeover', changeoverSchema);
-module.exports = Changeover;
+  changeoverSchema.pre('save', async function() {
+    const doc = this;
+    if (doc.isNew) {
+      const count = await mongoose.model('Changeover', changeoverSchema).find({ 
+        date: doc.date, 
+        selectedshift: doc.selectedshift 
+      }).countDocuments();
+      doc.changeoverNumber = count + 1;
+    }else {
+      const previousDoc = await mongoose.model('Changeover', changeoverSchema).findById(doc._id);
+      if (previousDoc && previousDoc.selectedshift !== doc.selectedshift) {
+        doc.changeoverNumber =  1;
+      }
+    }
+  });
+  
+
+  
+module.exports = mongoose.model('Changeover', changeoverSchema);
