@@ -3,8 +3,11 @@ import Select from 'react-select';
 import "./style.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 export default function AddChangeOver() {
+    const { id, from_login } = useParams();
+    const [machinedata, setMachinedata] = useState([]);
     const [operators, setOperators] = useState([]);
     const [selectedoperator, setSelectedOperator] = useState([]);
     const [packings, setPackings] = useState([]);
@@ -16,15 +19,18 @@ export default function AddChangeOver() {
     const [supervisors, setSupervisors] = useState([]);
     const [selectedsupervisor, setSelectedSupervisor] = useState([]);
     const [selectedshift, setSelectedshift] = useState([]);
+    const [selectedMachine, setSelectedMachine] = useState([]);
 
-  const Shiftoptions = [
-    { _id: '1',value: 'Morning shift', label: 'Morning shift' },
-    { _id: '2',value: 'Evening shift', label: 'Evening shift' },
-  ];
+    const Shiftoptions = [
+        { _id: '1', value: 'Morning shift', label: 'Morning shift' },
+        { _id: '2', value: 'Evening shift', label: 'Evening shift' },
+    ];
+
     function sendData(e) {
         e.preventDefault();
         //java script objectw
         const newChangeover = {
+            selectedMachine,
             selectedoperator,
             selectedpacking,
             selectedqc,
@@ -65,7 +71,13 @@ export default function AddChangeOver() {
             .then(data => {
                 setSupervisors(data);
             });
-    }, []);
+        axios.get(`http://localhost:8080/api/user/getuser/${id}`)
+            
+            .then((result) => {
+                setMachinedata(result["data"])
+            })
+            .catch(err => console.log(`get machine data failed ${err}`))
+    }, [id]);
     return (
         <div className='container'>
             <div className='container1'>
@@ -75,21 +87,25 @@ export default function AddChangeOver() {
                 <div className='container31'>
                     <div className='container41'>
                         <form className='form' onSubmit={sendData}>
+                        {machinedata && <div className='container5'>
+                                <h6  className='text0'>MACHINE</h6>
+                                <p className="text1">{machinedata["number"]}</p>
+                                
+                            </div>}
                             <div className='container5'>
-                                <h6 className='text1'>Shift</h6>
+                                <h6 className='text0'>SHIFT</h6>
                                 <Select
                                     className='dropdown'
                                     options={Shiftoptions}
                                     onChange={(selectedOption) => {
                                         const shift = selectedOption.value;
                                         setSelectedshift(shift);
-                                        console.log(shift)
                                     }}
                                     placeholder="Select Value"
                                 />
                             </div>
                             <div className='container5'>
-                                <h6 className="text1">Operator</h6>
+                                <h6 className="text0">OPERATOR</h6>
                                 <Select
                                     className='dropdown'
                                     options={operators.map(option => ({ value: option._id, label: option.operator_name }))}
@@ -102,7 +118,7 @@ export default function AddChangeOver() {
                                 />
                             </div>
                             <div className='container5'>
-                                <h6 className='text1'>Packing</h6>
+                                <h6 className='text0'>PACKING</h6>
                                 <Select
                                     className='dropdown'
                                     options={packings.map(option => ({ value: option._id, label: option.packing_name }))}
@@ -114,7 +130,7 @@ export default function AddChangeOver() {
                                 />
                             </div>
                             <div className='container5'>
-                                <h6 className='text1'>Technician</h6>
+                                <h6 className='text0'>TECHNICIAN</h6>
                                 <Select
                                     className='dropdown'
                                     options={technicians.map(option => ({ value: option._id, label: option.technician_name }))}
@@ -126,7 +142,7 @@ export default function AddChangeOver() {
                                 />
                             </div>
                             <div className='container5'>
-                                <h6 className='text1'>QC</h6>
+                                <h6 className='text0'>QC</h6>
                                 <Select
                                     className='dropdown'
                                     options={qcs.map(option => ({ value: option._id, label: option.qc_name }))}
@@ -138,7 +154,7 @@ export default function AddChangeOver() {
                                 />
                             </div>
                             <div className='container5'>
-                                <h6 className='text1'>In-Charge</h6>
+                                <h6 className='text0'>IN-CHARGE</h6>
                                 <Select
                                     className='dropdown'
                                     options={supervisors.map(option => ({ value: option._id, label: option.supervisor_name }))}
@@ -148,10 +164,10 @@ export default function AddChangeOver() {
                                     }}
                                     placeholder="Select Value"
                                 />
-                            </div>
+                            </div><br></br>
                             <div className='container6'>
                                 <button className='savebutton'>SAVE</button>
-                                <Link to='/'  ><button className='button'>DASHBOARD</button></Link>
+                                {/* <Link to='/'  ><button className='button'>DASHBOARD</button></Link> */}
                             </div>
                         </form>
                     </div>

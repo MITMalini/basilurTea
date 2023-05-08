@@ -1,9 +1,9 @@
-const  Changeover = require('../models/changeover.models.js');
+const  ChangeoverM1 = require('../models/changeover.models.js');
 
 //get all Technicians
 
 const getChangeovers = async (req, res) => {
-  const changeovers = await  Changeover.find();
+  const changeovers = await  ChangeoverM1.find();
 
   if (!changeovers) {
     return res.status(404).json({ message: 'No any available changeovers found' });
@@ -17,7 +17,7 @@ const getChangeovers = async (req, res) => {
 const getChangeover = async (req, res) => {
   const { id } = req.params;
 
-  const changeover = await  Changeover.findById({ _id: id });
+  const changeover = await  ChangeoverM1.findById({ _id: id });
 
   if (!changeover) {
     return res.status(404).json({ message: 'No changeover found' });
@@ -31,12 +31,13 @@ const getChangeover = async (req, res) => {
 const addChangeover = async (req, res) => {
     // const bag_count = Number(req.body.bag_count);
     // const error_count = Number(req.body.error_count);
-    const Changeoverno = Number(req.body.Changeoverno);
+    const selectedMachine = Number(req.body.selectedMachine);
   const { selectedshift,selectedoperator,selectedpacking,selectedqc,selectedtechnician,selectedsupervisor} =
     req.body;
 
   try {
-    const newchangeover = await  Changeover.create({
+    const newchangeover = await  ChangeoverM1.create({
+      selectedMachine,
         selectedshift,
         selectedoperator,
         selectedpacking,
@@ -63,7 +64,7 @@ const addChangeover = async (req, res) => {
 const deleteChangeover = async (req, res) => {
   const { id } = req.params;
 
-  const changeover = await  Changeover.findOneAndDelete({ _id: id });
+  const changeover = await  ChangeoverM1.findOneAndDelete({ _id: id });
 
   if (!changeover) {
     return res.status(400).json({ error: 'No such changeover' });
@@ -77,7 +78,7 @@ const deleteChangeover = async (req, res) => {
 const updateChangeover = async (req, res) => {
   const { id } = req.params;
 
-  const changeover = await  Changeover.findOneAndUpdate({ _id: id }, { ...req.body });
+  const changeover = await  ChangeoverM1.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!changeover) {
     return res.status(400).json({ error: 'No such changeover' });

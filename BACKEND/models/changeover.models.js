@@ -2,16 +2,20 @@ const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const changeoverSchema = new mongoose.Schema({
-  date: { 
+  date: {
     type: String,
-    default: function() {
+    default: function () {
       const date = new Date();
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
       const day = date.getDate();
-      return year + '/' + month + '/' + day; 
-  }
-},
+      return year + '/' + month + '/' + day;
+    }
+  },
+  MachineNumber: {
+    type: Number,
+    required: true
+  },
   selectedshift: {
     type: String,
     enum: ['Morning shift', 'Evening shift'],
@@ -21,46 +25,47 @@ const changeoverSchema = new mongoose.Schema({
     type: Number,
     default: 1
   },
-  selectedoperator:{
+  selectedoperator: {
     type: String,
     required: true,
   },
-  selectedpacking:{
+  selectedpacking: {
     type: String,
     required: true,
   },
-  selectedqc:{
+  selectedqc: {
     type: String,
     required: true,
   },
-  selectedtechnician:{
+  selectedtechnician: {
     type: String,
     required: true,
   },
-  selectedsupervisor:{
+  selectedsupervisor: {
     type: String,
     required: true,
   }
-  },{
-    timestamps: true
-  });
+}, {
+  timestamps: true
+});
 
-  changeoverSchema.pre('save', async function() {
-    const doc = this;
-    if (doc.isNew) {
-      const count = await mongoose.model('Changeover', changeoverSchema).find({ 
-        date: doc.date, 
-        selectedshift: doc.selectedshift 
-      }).countDocuments();
-      doc.changeoverNumber = count + 1;
-    }else {
-      const previousDoc = await mongoose.model('Changeover', changeoverSchema).findById(doc._id);
-      if (previousDoc && previousDoc.selectedshift !== doc.selectedshift) {
-        doc.changeoverNumber =  1;
-      }
+changeoverSchema.pre('save', async function () {
+  const doc = this;
+  if (doc.isNew) {
+    const count = await mongoose.model('Changeover', changeoverSchema).find({
+      date: doc.date,
+      MachineNumber: doc.MachineNumber,
+      selectedshift: doc.selectedshift
+    }).countDocuments();
+    doc.changeoverNumber = count + 1;
+  } else {
+    const previousDoc = await mongoose.model('Changeover', changeoverSchema).findById(doc._id);
+    if (previousDoc && previousDoc.selectedshift !== doc.selectedshift) {
+      doc.changeoverNumber = 1;
     }
-  });
-  
+  }
+});
 
-  
+
+
 module.exports = mongoose.model('Changeover', changeoverSchema);
