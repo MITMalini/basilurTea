@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import "./style.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
 export default function AddChangeOver() {
@@ -19,7 +18,8 @@ export default function AddChangeOver() {
     const [supervisors, setSupervisors] = useState([]);
     const [selectedsupervisor, setSelectedSupervisor] = useState([]);
     const [selectedshift, setSelectedshift] = useState([]);
-    const [selectedMachine, setSelectedMachine] = useState([]);
+
+    const machineId = useRef();
 
     const Shiftoptions = [
         { _id: '1', value: 'Morning shift', label: 'Morning shift' },
@@ -28,9 +28,9 @@ export default function AddChangeOver() {
 
     function sendData(e) {
         e.preventDefault();
-        //java script objectw
+
         const newChangeover = {
-            selectedMachine,
+            selectedMachine :machineId.current.value,
             selectedoperator,
             selectedpacking,
             selectedqc,
@@ -38,6 +38,7 @@ export default function AddChangeOver() {
             selectedsupervisor,
             selectedshift
         }
+        console.log(newChangeover)
         axios.post("http://localhost:8080/api/changeover/addchangeover", newChangeover).then(() => {
             alert("New Changeover Added")
         }).catch((err) => {
@@ -72,12 +73,13 @@ export default function AddChangeOver() {
                 setSupervisors(data);
             });
         axios.get(`http://localhost:8080/api/user/getuser/${id}`)
-            
-            .then((result) => {
-                setMachinedata(result["data"])
+
+            .then((res) => {
+                setMachinedata(res.data)
             })
             .catch(err => console.log(`get machine data failed ${err}`))
     }, [id]);
+
     return (
         <div className='container'>
             <div className='container1'>
@@ -87,10 +89,15 @@ export default function AddChangeOver() {
                 <div className='container31'>
                     <div className='container41'>
                         <form className='form' onSubmit={sendData}>
-                        {machinedata && <div className='container5'>
-                                <h6  className='text0'>MACHINE</h6>
-                                <p className="text1">{machinedata["number"]}</p>
-                                
+                            {machinedata && <div className='container5'>
+                                <h6 className='text0'>MACHINE</h6>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinput3'
+                                    defaultValue={machinedata["number"] || ''}
+                                    ref={machineId}
+                                />
                             </div>}
                             <div className='container5'>
                                 <h6 className='text0'>SHIFT</h6>
@@ -112,7 +119,6 @@ export default function AddChangeOver() {
                                     onChange={(selectedOption) => {
                                         const opt = operators?.find((x) => x._id === selectedOption.value);
                                         setSelectedOperator(opt);
-                                        console.log(opt)
                                     }}
                                     placeholder="Select Value"
                                 />
@@ -172,7 +178,7 @@ export default function AddChangeOver() {
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }

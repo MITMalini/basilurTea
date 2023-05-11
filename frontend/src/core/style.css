@@ -172,6 +172,19 @@
     margin-left: 5%;
     margin-right: 10%;
   }
+  .textinput3 {
+    width: 50%;
+    line-height: 2.4;
+    margin-left: 5%;
+    margin-right: 10%;
+    border: hsl(0, 0%, 80%);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    min-height: 38px;
+    padding-left: 10px;
+  }
   .text3 {
     width: auto;
     font-size: 30px;

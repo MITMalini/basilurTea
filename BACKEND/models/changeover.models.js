@@ -12,7 +12,7 @@ const changeoverSchema = new mongoose.Schema({
       return year + '/' + month + '/' + day;
     }
   },
-  MachineNumber: {
+  selectedMachine: {
     type: Number,
     required: true
   },
@@ -54,7 +54,7 @@ changeoverSchema.pre('save', async function () {
   if (doc.isNew) {
     const count = await mongoose.model('Changeover', changeoverSchema).find({
       date: doc.date,
-      MachineNumber: doc.MachineNumber,
+      selectedMachine: doc.selectedMachine,
       selectedshift: doc.selectedshift
     }).countDocuments();
     doc.changeoverNumber = count + 1;

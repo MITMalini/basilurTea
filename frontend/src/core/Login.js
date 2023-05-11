@@ -8,6 +8,7 @@ export default function Login() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isShown, setIsSHown] = useState(false);
     const history = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,7 +57,7 @@ export default function Login() {
                                 <div className='container5'>
                                     <span className='text1'>PASSWORD</span>
                                     <input
-                                        type="text"
+                                        type="password"
                                         placeholder="Password"
                                         className='textinput1'
                                         id="password"
