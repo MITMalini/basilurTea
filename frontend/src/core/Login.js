@@ -23,7 +23,7 @@ export default function Login() {
                 console.log("login success")
                 console.log(result.data)
                 const id = result.data["user"][0]["_id"]
-                history(`/addchangeover/${id}/true`);
+                history(`/dashboard/${id}/true`);
                 
             } else {
                 alert("Login failed,Try Again")

@@ -68,10 +68,10 @@ export default function addSupervisor() {
                   }}
                 />
               </div>
-              <div className='container6'>
-                <button className='savebutton'>SAVE</button>
-                <Link to='/'><button className='button'>DASHBOARD</button></Link>
-              </div>
+              <div className="buttondiv">
+                                <button className='buttonl'>SAVE</button>
+                                <button className='buttonr'>HOME</button>
+                            </div>
             </form>
           </div>
         </div>

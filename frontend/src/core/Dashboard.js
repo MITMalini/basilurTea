@@ -1,48 +1,137 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "./style.css";
+import { useParams } from 'react-router-dom';
 import {Link } from "react-router-dom";
 
-export default function Dashboard() {
-    // const [changeover, setChangeover] = useState()
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8080/api/changeover/getchangeover/${_id}`)
-    //         .then((result) => {
-    //             setChangeover(result["data"])
-    //         })
-    //         .catch(err => console.log(`get changeover data failed ${err}`))
+const Dashboard = ({ formData }) => {
+    const { id, from_login } = useParams();
+    const [submittedData, setSubmittedData] = useState({});
 
-    // }, [_id])
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/user/getuser/${id}`)
+            .then((res) => {
+                setMachinedata(res.data)
+            })
+            .catch(err => console.log(`get machine data failed ${err}`))
+
+        // Update the state with the received form data
+        setSubmittedData(formData);
+    }, [formData]);
 
     return (
         <div className='container'>
             <div className='container1'>
-                <div className='container2'>
+                <div className='container21'>
                     <span className='text'> CHANGEOVER</span>
                 </div>
-                <div className='container3'>
-                    <div className='container4'>
+                <div className='container31'>
+                    <div className='container41'>
                         <form className='form' >
                             <div className='container5'>
-                                <span className='text1'>NAME  </span>
+                                <span className='textview'>MACHINE NUMBER  </span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputview1'
+                                    readOnly
+                                />
+                            </div>
+                            <div className='container5'>
+                                
+                                    <span className='textview'>DATE&nbsp;</span>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className='textinputviewl'
+                                        readOnly
+                                    />
+                                
+                                
+                                    <span className='textviewo'>START TIME &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputviewr'
+                                    readOnly
+                                />
                                 
                             </div>
                             <div className='container5'>
-                                <span className='text2'>EMAIL  </span>
+                               
+                                <span className='textview'>SHIFT  </span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputviewl'
+                                    readOnly
+                                />
                                 
+                                
+                                    <span className='textviewo'>CHANGE OVER  </span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputviewr'
+                                    readOnly
+                                />
+                                 
                             </div>
                             <div className='container5'>
-                                <span className='text3'>EPF NO</span>
-                                
+                                <span className='textview'>OPERATOR</span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputview0'
+                                    readOnly
+                                />
                             </div>
-                            {/* <div className='container6'>
-                                <button className='savebutton'>SAVE</button>
-                                <Link to='/'  ><button className='button'>DASHBOARD</button></Link>
-                            </div> */}
+                            <div className='container5'>
+                                <span className='textview'>PACKING</span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputview0'
+                                    readOnly
+                                />
+                            </div>
+                            <div className='container5'>
+                                <span className='textview'>TECHNICIAN</span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputview0'
+                                    readOnly
+                                />
+                            </div>
+                            <div className='container5'>
+                                <span className='textview'>QC</span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputview0'
+                                    readOnly
+                                />
+                            </div>
+                            <div className='container5'>
+                                <span className='textview'>IN-CHARGE</span>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className='textinputview0'
+                                    readOnly
+                                />
+                            </div>
+                            <div className="buttondiv">
+                                <Link to="/home/:id/addchangeover" className='buttonl'>NEW CHANGE OVER</Link>
+                                <Link className='buttonm'>END CHANGE OVER</Link>
+                                <Link to="/home/:id/:from_login" className='buttonr'>HOME</Link>
+                            </div>
                         </form>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     );
 };
+export default Dashboard;
