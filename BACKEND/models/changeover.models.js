@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
+const moment = require('moment-timezone');
 
 const changeoverSchema = new mongoose.Schema({
   date: {
@@ -44,10 +45,19 @@ const changeoverSchema = new mongoose.Schema({
   selectedsupervisor: {
     type: String,
     required: true,
+  },
+  startedAt: {
+    type: String,
+    default: function () {
+      return moment().tz('Asia/Colombo').format('hh:mm:ss A');
+    },
+  },
+  endedAt:{
+    type: String,
+    default: null
   }
-}, {
-  timestamps: true
-});
+}, 
+);
 
 changeoverSchema.pre('save', async function () {
   const doc = this;

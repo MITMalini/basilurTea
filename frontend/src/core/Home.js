@@ -15,7 +15,6 @@ export default function Home() {
                     <div className='container41'>
                         <div className='containerhome'>
                         <a href="./addchangeover" className='homebutton'>ADD CHANGEOVER</a>
-                        <a href="./dashboard" className='homebutton'>DASHBOARD</a>
                         <a href="./addoperator" className='homebutton'>ADD OPERATOR</a>
                         <a href="./addpacking" className='homebutton'>ADD PACKING</a>
                         <a href="./addqc" className='homebutton'>ADD QC</a>

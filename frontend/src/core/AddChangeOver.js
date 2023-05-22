@@ -20,6 +20,8 @@ export default function AddChangeOver() {
     const [supervisors, setSupervisors] = useState([]);
     const [selectedsupervisor, setSelectedSupervisor] = useState([]);
     const [selectedshift, setSelectedshift] = useState([]);
+    
+
 
     const machineId = useRef();
 
@@ -40,9 +42,25 @@ export default function AddChangeOver() {
             selectedsupervisor,
             selectedshift
         }
-        axios.post("http://localhost:8080/api/changeover/addchangeover", newChangeover).then(() => {
+        axios.post("http://localhost:8080/api/changeover/addchangeover", newChangeover).then((response) => {
+            const {date, changeoverNumber, startedAt, _id} =response.data;
+            console.log(response.data);
             alert("New Changeover Added")
-            navigate(`/home/${id}/dashboard`);
+            navigate(`/home/${id}/dashboard`,{
+                state:{
+                    selectedMachine: machineId.current.value,
+                    selectedoperator:selectedoperator,
+                    selectedpacking:selectedpacking,
+                    selectedqc:selectedqc,
+                    selectedtechnician:selectedtechnician,
+                    selectedsupervisor:selectedsupervisor,
+                    selectedshift:selectedshift,
+                    date:date,
+                    changeoverNumber:changeoverNumber,
+                    starttime:startedAt,
+                    changeoverid:_id
+                }
+            });
         }).catch((err) => {
             alert(err)
 

@@ -32,7 +32,7 @@ const addChangeover = async (req, res) => {
     // const bag_count = Number(req.body.bag_count);
     // const error_count = Number(req.body.error_count);
     const selectedMachine = Number(req.body.selectedMachine);
-  const { selectedshift,selectedoperator,selectedpacking,selectedqc,selectedtechnician,selectedsupervisor} =
+  const { selectedshift,selectedoperator,selectedpacking,selectedqc,selectedtechnician,selectedsupervisor,startedAt,endedAt} =
     req.body;
 
   try {
@@ -43,7 +43,9 @@ const addChangeover = async (req, res) => {
         selectedpacking,
         selectedqc,
         selectedtechnician,
-        selectedsupervisor
+        selectedsupervisor,
+        startedAt,
+        endedAt
         // bag_count,
         // error_count,
         // runtime,

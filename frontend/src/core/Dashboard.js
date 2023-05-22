@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "./style.css";
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams  } from 'react-router-dom';
 import {Link } from "react-router-dom";
 
-const Dashboard = ({ formData }) => {
-    const { id, from_login } = useParams();
-    const [submittedData, setSubmittedData] = useState({});
+const Dashboard = () => {
+    const { id } = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [selectedChangeover, setSelectedChangeover] = useState([]);
+    
 
-    useEffect(() => {
-        axios.get(`http://localhost:8080/api/user/getuser/${id}`)
-            .then((res) => {
-                setMachinedata(res.data)
-            })
-            .catch(err => console.log(`get machine data failed ${err}`))
+    function sendData(e) {
+        e.preventDefault();
+        
+        try{
 
-        // Update the state with the received form data
-        setSubmittedData(formData);
-    }, [formData]);
-
+            const currentTime = new Date();
+        const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        
+             axios.patch(`http://localhost:8080/api/changeover/updatechangeover/${location.state.changeoverid}`,{
+            endedAt: formattedTime
+            
+          });
+        }catch(err){
+            console.error(err)
+        }
+        alert("Changeover Ended")     
+        
+    }
     return (
         <div className='container'>
             <div className='container1'>
@@ -27,13 +37,14 @@ const Dashboard = ({ formData }) => {
                 </div>
                 <div className='container31'>
                     <div className='container41'>
-                        <form className='form' >
+                        <form className='form' onSubmit={sendData}>
                             <div className='container5'>
                                 <span className='textview'>MACHINE NUMBER  </span>
                                 <input
                                     type="text"
                                     name="name"
                                     className='textinputview1'
+                                    defaultValue={location.state.selectedMachine}
                                     readOnly
                                 />
                             </div>
@@ -44,6 +55,7 @@ const Dashboard = ({ formData }) => {
                                         type="text"
                                         name="name"
                                         className='textinputviewl'
+                                        defaultValue={location.state.date}
                                         readOnly
                                     />
                                 
@@ -53,6 +65,7 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputviewr'
+                                    defaultValue={location.state.starttime}
                                     readOnly
                                 />
                                 
@@ -64,6 +77,7 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputviewl'
+                                    defaultValue={location.state.selectedshift}
                                     readOnly
                                 />
                                 
@@ -73,6 +87,7 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputviewr'
+                                    defaultValue={location.state.changeoverNumber}
                                     readOnly
                                 />
                                  
@@ -83,6 +98,7 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputview0'
+                                    defaultValue={location.state.selectedoperator.operator_name}
                                     readOnly
                                 />
                             </div>
@@ -92,6 +108,7 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputview0'
+                                    defaultValue={location.state.selectedpacking.packing_name}
                                     readOnly
                                 />
                             </div>
@@ -101,6 +118,7 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputview0'
+                                    defaultValue={location.state.selectedtechnician.technician_name}
                                     readOnly
                                 />
                             </div>
@@ -110,6 +128,7 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputview0'
+                                    defaultValue={location.state.selectedqc.qc_name}
                                     readOnly
                                 />
                             </div>
@@ -119,15 +138,16 @@ const Dashboard = ({ formData }) => {
                                     type="text"
                                     name="name"
                                     className='textinputview0'
+                                    defaultValue={location.state.selectedsupervisor.supervisor_name}
                                     readOnly
                                 />
                             </div>
                             <div className="buttondiv">
-                                <Link to="/home/:id/addchangeover" className='buttonl'>NEW CHANGE OVER</Link>
-                                <Link className='buttonm'>END CHANGE OVER</Link>
-                                <Link to="/home/:id/:from_login" className='buttonr'>HOME</Link>
+                                <a type="submit" className='buttonm'><button className='buttonmm'>END CHANGE OVER</button></a>
+                                
                             </div>
                         </form>
+                        <a href='./true' className='buttonm'><button className='buttonmm'>Home</button></a>
                     </div>
                 </div>
             </div>
