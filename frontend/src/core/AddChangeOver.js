@@ -191,11 +191,11 @@ export default function AddChangeOver() {
                                     placeholder="Select Value"
                                 />
                             </div><br></br>
-                            <div className='container6'>
+                            <div className='buttondiv1'>
                                 <button className='savebutton'>SAVE</button>
-                                {/* <a href=`./home/${id}/true` ><button className='button'>DASHBOARD</button></a> */}
                             </div>
                         </form>
+                        <a href='./true' > Go back to Home</a>
                     </div>
                 </div>
             </div >

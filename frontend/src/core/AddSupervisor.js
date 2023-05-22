@@ -70,9 +70,9 @@ export default function addSupervisor() {
               </div>
               <div className="buttondiv">
                                 <button className='buttonl'>SAVE</button>
-                                <button className='buttonr'>HOME</button>
                             </div>
             </form>
+            <a href='./true' classname="adiv">Go back to Home</a>
           </div>
         </div>
       </div>

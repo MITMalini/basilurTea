@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "./style.css";
-import { useLocation, useNavigate, useParams  } from 'react-router-dom';
+import {useLocation, useNavigate, useParams  } from 'react-router-dom';
 import {Link } from "react-router-dom";
 
 const Dashboard = () => {
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    const [selectedChangeover, setSelectedChangeover] = useState([]);
-    
 
     function sendData(e) {
         e.preventDefault();
@@ -22,11 +20,13 @@ const Dashboard = () => {
              axios.patch(`http://localhost:8080/api/changeover/updatechangeover/${location.state.changeoverid}`,{
             endedAt: formattedTime
             
+            
           });
         }catch(err){
             console.error(err)
         }
-        alert("Changeover Ended")     
+        alert("Changeover Ended") 
+        navigate(`/home/${id}/addchangeover`)    
         
     }
     return (
@@ -142,12 +142,12 @@ const Dashboard = () => {
                                     readOnly
                                 />
                             </div>
-                            <div className="buttondiv">
+                            <div className="buttondiv1">
                                 <a type="submit" className='buttonm'><button className='buttonmm'>END CHANGE OVER</button></a>
                                 
                             </div>
                         </form>
-                        <a href='./true' className='buttonm'><button className='buttonmm'>Home</button></a>
+                        <a href='./true' > Go back to Home</a>
                     </div>
                 </div>
             </div>

@@ -88,6 +88,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: #D9D9D9;
+  padding-bottom: 2%;
 }
 
 .container41 {
@@ -101,6 +102,7 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: #D9D9D9;
+  padding-bottom: 2%;
 }
 
 .form {
@@ -358,12 +360,13 @@
   width: 30%;
   background-color: black;
   color: white;
-  font-size: 10px;
+  font-size: 20px;
   text-decoration: none;
   justify-content: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 40px;
 }
 .buttonm {
   width: 30%;
@@ -376,20 +379,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.buttonr {
-  width: 30%;
-  height: auto;
-  background-color: black;
-  color: white;
-  font-size: 10px;
-  justify-content: center;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 1%;
-  padding-bottom: 1%;
 }
 .dashboard {
   width: 30%;
@@ -431,12 +420,21 @@
 }
 
 .buttondiv {
+  width: 90%;
+  display: flex;
+  padding-top: 1%;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  height:10%;
+}
+.buttondiv1 {
   flex: auto;
   width: 90%;
   display: flex;
   padding-top: 1%;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .homebutton {
@@ -469,4 +467,9 @@
   height: 100%;
   color: white;
   background-color: black;
+}
+.adiv{
+  color: black;
+  padding-bottom: 1%;
+  margin-bottom:1% ;
 }
