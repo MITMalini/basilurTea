@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import "./style.css";
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
 
 export default function AddChangeOver() {
-    const { id, from_login } = useParams();
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [machinedata, setMachinedata] = useState([]);
     const [operators, setOperators] = useState([]);
     const [selectedoperator, setSelectedOperator] = useState([]);
@@ -38,9 +40,9 @@ export default function AddChangeOver() {
             selectedsupervisor,
             selectedshift
         }
-        console.log(newChangeover)
         axios.post("http://localhost:8080/api/changeover/addchangeover", newChangeover).then(() => {
             alert("New Changeover Added")
+            navigate(`/home/${id}/dashboard`);
         }).catch((err) => {
             alert(err)
 
@@ -173,7 +175,7 @@ export default function AddChangeOver() {
                             </div><br></br>
                             <div className='container6'>
                                 <button className='savebutton'>SAVE</button>
-                                {/* <Link to='/'  ><button className='button'>DASHBOARD</button></Link> */}
+                                {/* <a href=`./home/${id}/true` ><button className='button'>DASHBOARD</button></a> */}
                             </div>
                         </form>
                     </div>
