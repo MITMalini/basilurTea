@@ -1,4 +1,4 @@
-const Error = require('../models/errors.model.js').default;
+const Error = require('../models/errors.model.js');
 
 //get all Errors
 
