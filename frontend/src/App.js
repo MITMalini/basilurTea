@@ -10,6 +10,7 @@ import AddChangeOver from './core/AddChangeOver';
 import Dashboard from './core/Dashboard';
 import Login from './core/Login';
 import Home from './core/Home';
+import ViewAllChangeovers from './core/ViewAllChnageovers';
 export default function App() {
   return (
     <div className='App'>
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/home/:id/addpacking" exact element={<Addpacking />} />
           <Route path="/home/:id/addchangeover" exact element={<AddChangeOver />} />
           <Route path="/home/:id/:from_login" exact element={<Home />} />
+          <Route path="/home/:id/viewallchangeovers" exact element={<ViewAllChangeovers />} />
         </Routes>
       </BrowserRouter>
     </div>
