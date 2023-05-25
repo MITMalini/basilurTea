@@ -135,9 +135,9 @@ export default function AddChangeOver() {
                                 <h6 className="text0">OPERATOR</h6>
                                 <Select
                                     className='dropdown'
-                                    options={operators.map(option => ({ value: option._id, label: option.operator_name }))}
+                                    options={operators.map(option => ({ value: option.operator_name, label: option.operator_name }))}
                                     onChange={(selectedOption) => {
-                                        const opt = operators?.find((x) => x._id === selectedOption.value);
+                                        const opt = operators?.find((x) => x.operator_name === selectedOption.value);
                                         setSelectedOperator(opt);
                                     }}
                                     placeholder="Select Value"
@@ -147,9 +147,9 @@ export default function AddChangeOver() {
                                 <h6 className='text0'>PACKING</h6>
                                 <Select
                                     className='dropdown'
-                                    options={packings.map(option => ({ value: option._id, label: option.packing_name }))}
+                                    options={packings.map(option => ({ value: option.packing_name, label: option.packing_name }))}
                                     onChange={(selectedOption) => {
-                                        const pckn = packings?.find((x) => x._id === selectedOption.value);
+                                        const pckn = packings?.find((x) => x.packing_name === selectedOption.value);
                                         setSelectedPacking(pckn);
                                     }}
                                     placeholder="Select Value"
@@ -159,9 +159,9 @@ export default function AddChangeOver() {
                                 <h6 className='text0'>TECHNICIAN</h6>
                                 <Select
                                     className='dropdown'
-                                    options={technicians.map(option => ({ value: option._id, label: option.technician_name }))}
+                                    options={technicians.map(option => ({ value: option.technician_name, label: option.technician_name }))}
                                     onChange={(selectedOption) => {
-                                        const tech = technicians?.find((x) => x._id === selectedOption.value);
+                                        const tech = technicians?.find((x) => x.technician_name === selectedOption.value);
                                         setSelectedTechnician(tech);
                                     }}
                                     placeholder="Select Value"
@@ -171,9 +171,9 @@ export default function AddChangeOver() {
                                 <h6 className='text0'>QC</h6>
                                 <Select
                                     className='dropdown'
-                                    options={qcs.map(option => ({ value: option._id, label: option.qc_name }))}
+                                    options={qcs.map(option => ({ value: option.qc_name, label: option.qc_name }))}
                                     onChange={(selectedOption) => {
-                                        const qc = qcs?.find((x) => x._id === selectedOption.value);
+                                        const qc = qcs?.find((x) => x.qc_name === selectedOption.value);
                                         setSelectedQc(qc);
                                     }}
                                     placeholder="Select Value"
@@ -183,9 +183,9 @@ export default function AddChangeOver() {
                                 <h6 className='text0'>IN-CHARGE</h6>
                                 <Select
                                     className='dropdown'
-                                    options={supervisors.map(option => ({ value: option._id, label: option.supervisor_name }))}
+                                    options={supervisors.map(option => ({ value: option.supervisor_name, label: option.supervisor_name }))}
                                     onChange={(selectedOption) => {
-                                        const spvs = supervisors?.find((x) => x._id === selectedOption.value);
+                                        const spvs = supervisors?.find((x) => x.supervisor_name === selectedOption.value);
                                         setSelectedSupervisor(spvs);
                                     }}
                                     placeholder="Select Value"

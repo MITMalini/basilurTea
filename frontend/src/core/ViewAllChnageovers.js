@@ -41,6 +41,8 @@ export default function ViewAllChangeovers() {
             columns: [
                 { header: 'Changeover Date', dataKey: 'Changeoverdate' },
                 { header: 'Changeover Machine', dataKey: 'ChangeoverMachine' },
+                { header: 'Changeover Date', dataKey: 'date' },
+                { header: 'Changeover Machine', dataKey: 'selectedMachine' },
                 { header: 'Changeover Shift', dataKey: 'Changeovershift' },
                 { header: 'Changeover Number', dataKey: 'ChangeoverNumber' },
                 { header: 'Changeover Operator', dataKey: 'Changeoveroperator' },
@@ -53,17 +55,16 @@ export default function ViewAllChangeovers() {
             ],
             body: changeovers.map(changeover => {
                 return {
-                    Changeoverdate: changeover.Changeoverdate,
-                    ChangeoverMachine: changeover.ChangeoverMachine,
-                    Changeovershift: changeover.Changeovershift,
-                    ChangeoverNumber: changeover.ChangeoverNumber,
-                    Changeoveroperator: changeover.Changeoveroperator,
-                    Changeoverpacking: changeover.Changeoverpacking,
-                    Changeoverqc:changeover.Changeoverqc,
-                    Changeovertechnician:changeover.Changeovertechnician,
-                    Changeoversupervisor:changeover.Changeoversupervisor,
-                    ChangeoverstartedAt:changeover.ChangeoverstartedAt,
-                    ChangeoverendedAt:changeover.ChangeoverendedAt        };
+                    
+                    Changeovershift: changeover.selectedshift,
+                    ChangeoverNumber: changeover.changeoverNumber,
+                    Changeoveroperator: changeover.selectedoperator.operator_name,
+                    Changeoverpacking: changeover.selectedpacking.packing_name,
+                    Changeoverqc:changeover.selectedqc.qc_name,
+                    Changeovertechnician:changeover.selectedtechnician.technician_name,
+                    Changeoversupervisor:changeover.selectedsupervisor.supervisor_name,
+                    ChangeoverstartedAt:changeover.startedAt,
+                    ChangeoverendedAt:changeover.endedAt        };
             }),
             columnStyles,
         })
@@ -83,7 +84,7 @@ export default function ViewAllChangeovers() {
                 </div>
 
                 <table className="div4" border={1}>
-                    <thead className="div5">
+                    <thead className="div5 column">
                         <tr>
                             <th scope="col" className="div6">
                             Changeover Date
@@ -123,9 +124,11 @@ export default function ViewAllChangeovers() {
                     <tbody>
                         {changeovers.filter((changeovers) => {
                             if (search === "") {
+                                
                                 return changeovers;
                             }
-                            else if (changeovers.name.toLowerCase().includes(search.toLowerCase())) {
+                            else if (changeovers.changeoverNumber.toLowerCase().includes(search.toLowerCase())) {
+                               {console.log(changeovers)}
                                 return changeovers;
                             }
 
@@ -133,37 +136,37 @@ export default function ViewAllChangeovers() {
                             return (
                                 <tr className="div7" key={index}>
                                     <th scope="row" className="div8">
-                                        {changeovers.Changeoverdate}
+                                        {changeovers.date}
                                     </th  >
                                     <td scope="row" className="div7">
-                                        {changeovers.ChangeoverMachine}
+                                        {changeovers.selectedMachine}
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.Changeovershift}
+                                        {changeovers.selectedshift}
                                     </td>
                                     <td >
-                                        {changeovers.ChangeoverNumber}
+                                        {changeovers.changeoverNumber}
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.Changeoveroperator}
+                                        {changeovers.selectedoperator.operator_name}
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.Changeoverpacking} 
+                                        {changeovers.selectedpacking.packing_name} 
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.Changeoverqc}
+                                        {changeovers.selectedqc.qc_name}
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.Changeovertechnician}
+                                        {changeovers.selectedtechnician.technician_name}
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.Changeoversupervisor}
+                                        {changeovers.selectedsupervisor.supervisor_name}
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.ChangeoverstartedAt}
+                                        {changeovers.startedAt}
                                     </td>
                                     <td scope="row" className="div7">
-                                        {changeovers.ChangeoverendedAt} 
+                                        {changeovers.endedAt} 
                                     </td>
                                     <td className="div7 text-right">
                                     {changeovers && <a className="diva" href={`/deletechangeover/${changeovers._id}/false`} >
