@@ -13,10 +13,10 @@ const changeoverSchema = new mongoose.Schema({
       return year + '/' + month + '/' + day;
     }
   },
-  orderNumber: {
-    type: String,
-    required: true
-  },
+  // orderNumber: {
+  //   type: String,
+  //   required: true
+  // },
   selectedMachine: {
     type: Number,
     required: true

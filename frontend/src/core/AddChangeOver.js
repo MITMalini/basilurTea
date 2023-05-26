@@ -10,15 +10,15 @@ export default function AddChangeOver() {
     const { id } = useParams();
     const [machinedata, setMachinedata] = useState([]);
     const [operators, setOperators] = useState([]);
-    const [selectedoperator, setSelectedOperator] = useState([]);
+    const [selectedoperator, setSelectedOperator] = useState();
     const [packings, setPackings] = useState([]);
-    const [selectedpacking, setSelectedPacking] = useState([]);
+    const [selectedpacking, setSelectedPacking] = useState();
     const [qcs, setQcs] = useState([]);
-    const [selectedqc, setSelectedQc] = useState([]);
+    const [selectedqc, setSelectedQc] = useState();
     const [technicians, setTechnicians] = useState([]);
-    const [selectedtechnician, setSelectedTechnician] = useState([]);
+    const [selectedtechnician, setSelectedTechnician] = useState();
     const [supervisors, setSupervisors] = useState([]);
-    const [selectedsupervisor, setSelectedSupervisor] = useState([]);
+    const [selectedsupervisor, setSelectedSupervisor] = useState();
     const [selectedshift, setSelectedshift] = useState([]);
     
 
@@ -40,11 +40,12 @@ export default function AddChangeOver() {
             selectedqc,
             selectedtechnician,
             selectedsupervisor,
-            selectedshift
+            
+           
         }
+        { console.log("test",selectedoperator)}
         axios.post("http://localhost:8080/api/changeover/addchangeover", newChangeover).then((response) => {
             const {date, changeoverNumber, startedAt, _id} =response.data;
-            console.log(response.data);
             alert("New Changeover Added")
             navigate(`/home/${id}/dashboard`,{
                 state:{
@@ -138,7 +139,9 @@ export default function AddChangeOver() {
                                     options={operators.map(option => ({ value: option.operator_name, label: option.operator_name }))}
                                     onChange={(selectedOption) => {
                                         const opt = operators?.find((x) => x.operator_name === selectedOption.value);
+                                        console.log(setSelectedOperator)
                                         setSelectedOperator(opt);
+                                        
                                     }}
                                     placeholder="Select Value"
                                 />
