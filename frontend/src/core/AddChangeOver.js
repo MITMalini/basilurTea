@@ -19,7 +19,7 @@ export default function AddChangeOver() {
     const [selectedtechnician, setSelectedTechnician] = useState();
     const [supervisors, setSupervisors] = useState([]);
     const [selectedsupervisor, setSelectedSupervisor] = useState();
-    const [selectedshift, setSelectedshift] = useState([]);
+    const [selectedshift, setSelectedshift] = useState();
     
 
 
@@ -40,8 +40,7 @@ export default function AddChangeOver() {
             selectedqc,
             selectedtechnician,
             selectedsupervisor,
-            
-           
+            selectedshift
         }
         { console.log("test",selectedoperator)}
         axios.post("http://localhost:8080/api/changeover/addchangeover", newChangeover).then((response) => {
@@ -126,8 +125,10 @@ export default function AddChangeOver() {
                                     className='dropdown'
                                     options={Shiftoptions}
                                     onChange={(selectedOption) => {
-                                        const shift = selectedOption.value;
-                                        setSelectedshift(shift);
+                                        if (selectedOption) {
+                                            const shift = selectedOption.value;
+                                            setSelectedshift(shift);
+                                        }
                                     }}
                                     placeholder="Select Value"
                                 />
@@ -139,7 +140,7 @@ export default function AddChangeOver() {
                                     options={operators.map(option => ({ value: option.operator_name, label: option.operator_name }))}
                                     onChange={(selectedOption) => {
                                         const opt = operators?.find((x) => x.operator_name === selectedOption.value);
-                                        console.log(setSelectedOperator)
+                                        
                                         setSelectedOperator(opt);
                                         
                                     }}

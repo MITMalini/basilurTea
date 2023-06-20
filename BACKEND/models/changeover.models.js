@@ -31,23 +31,23 @@ const changeoverSchema = new mongoose.Schema({
     default: 1
   },
   selectedoperator: {
-    type: String,
+    type: Array,
     required: true,
   },
   selectedpacking: {
-    type: String,
+    type: Array,
     required: true,
   },
   selectedqc: {
-    type: String,
+    type: Array,
     required: true,
   },
   selectedtechnician: {
-    type: String,
+    type: Array,
     required: true,
   },
   selectedsupervisor: {
-    type: String,
+    type: Array,
     required: true,
   },
   startedAt: {
