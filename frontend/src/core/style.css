@@ -509,10 +509,17 @@
 .thdiv{
   width:200px;
   text-align: center;
+  background-color: black;
+  height: 50px;
+  color: white;
+  font-size: large;
 }
 .row{
   width:200px;
+  height: 30px;
   text-align: center;
+  font-size: small;
+
 }
 .tablediv{
   width:max-content;

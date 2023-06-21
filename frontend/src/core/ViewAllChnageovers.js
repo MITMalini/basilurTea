@@ -112,20 +112,20 @@ export default function ViewAllChangeovers() {
 
         <div className="container3table">
           <div className="containertable">
-            <table className="tablediv" border={1}>
-              <thead className="theaddiv column">
+            <table className="tablediv">
+              <thead className="theaddiv">
                 <tr className="tr">
-                  <th className="thdiv">Changeover Date</th>
-                  <th className="thdiv">Changeover Machine</th>
-                  <th className="thdiv">Changeover Shift</th>
-                  <th className="thdiv">Changeover Number</th>
-                  <th className="thdiv">Operator</th>
-                  <th className="thdiv">Packing</th>
+                  <th className="thdiv">DATE</th>
+                  <th className="thdiv">MACHINE</th>
+                  <th className="thdiv">SHIFT</th>
+                  <th className="thdiv">CHANGEOVER</th>
+                  <th className="thdiv">OPERATOR</th>
+                  <th className="thdiv">PACKING</th>
                   <th className="thdiv">QC</th>
-                  <th className="thdiv">Technician</th>
-                  <th className="thdiv">Supervisor</th>
-                  <th className="thdiv">Changeover Started At</th>
-                  <th className="thdiv">Changeover Ended At</th>
+                  <th className="thdiv">TECHNICIAN</th>
+                  <th className="thdiv">SUPERVISOR</th>
+                  <th className="thdiv">START TIME</th>
+                  <th className="thdiv">END TIME</th>
                 </tr>
               </thead>
               <tbody>
