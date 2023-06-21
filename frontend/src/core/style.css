@@ -52,6 +52,7 @@
 }
 
 .container3 {
+  gap: 0;
   flex: auto;
   width: 60%;
   height: 80%;
@@ -63,6 +64,7 @@
   justify-content: center;
   align-self: center;
 }
+
 
 .container31 {
   flex: auto;
@@ -89,6 +91,7 @@
   justify-content: center;
   background-color: #D9D9D9;
   padding-bottom: 2%;
+  
 }
 
 .container41 {
@@ -472,4 +475,45 @@
   color: black;
   padding-bottom: 1%;
   margin-bottom:1% ;
+}
+.containertable {
+  width: auto;
+  height: 100%;
+  background-color: #D9D9D9;
+  padding-left: 5%;
+  margin-left: 1%;
+  padding-right: 5%;
+  margin-right: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-bottom: 1%;
+  overflow-x: auto; 
+  white-space: nowrap;
+}
+.container3table {
+  flex: auto;
+  width:96%;
+  height: 80%;
+  align-items: center;
+  padding-top: 1%;
+  flex-direction: column;
+  padding-bottom: 10%;
+  justify-content: center;
+  align-self: center;
+  margin-left: 1%;
+  margin-right: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+.thdiv{
+  width:200px;
+  text-align: center;
+}
+.row{
+  width:200px;
+  text-align: center;
+}
+.tablediv{
+  width:max-content;
 }
