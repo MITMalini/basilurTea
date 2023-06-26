@@ -1,15 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import "./style.css";
 import { useParams } from "react-router-dom";
 
 export default function ViewAllChangeovers() {
-  const [changeovers, setChangeover] = useState([]);
-  const [search, setsearch] = useState("");
-  const [machinenumber, setSelectedMachine] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 6;
+
   const { id } = useParams();
+
+  const [changeovers, setChangeover] = useState([]);
+  const [search, setSearch] = useState("");
+  const [machinenumber, setSelectedMachine] = useState("");
+
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = changeovers.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
+
+  const totalPages = Math.ceil(changeovers.length / recordsPerPage);
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   useEffect(() => {
     function getChangeovers() {
@@ -19,7 +47,7 @@ export default function ViewAllChangeovers() {
           const filteredChangeovers = res.data.filter(
             (changeovers) => changeovers.selectedMachine === machinenumber
           );
-          setChangeover(filteredChangeovers);
+          setChangeover(filteredChangeovers.reverse());
         })
         .catch((err) => {
           alert(err.message);
@@ -38,163 +66,131 @@ export default function ViewAllChangeovers() {
     getChangeovers();
   }, [id]);
 
-  const generatePdf = () => {
-    const doc = new jsPDF({ orientation: "landscape" });
-    const columnStyles = {
-      Changeoverdate: { columnWidth: 25 },
-      ChangeoverMachine: { columnWidth: 25 },
-      Changeovershift: { columnWidth: 25 },
-      ChangeoverNumber: { columnWidth: 25 },
-      Changeoveroperator: { columnWidth: 25 },
-      Changeoverpacking: { columnWidth: 25 },
-      Changeoverqc: { columnWidth: 25 },
-      Changeovertechnician: { columnWidth: 25 },
-      Changeoversupervisor: { columnWidth: 25 },
-      ChangeoverstartedAt: { columnWidth: 25 },
-      ChangeoverendedAt: { columnWidth: 25 },
-    };
-    autoTable(doc, {
-      columns: [
-        { header: "Changeover Date", dataKey: "Changeoverdate" },
-        { header: "Changeover Machine", dataKey: "ChangeoverMachine" },
-        { header: "Changeover Shift", dataKey: "Changeovershift" },
-        { header: "Changeover Number", dataKey: "ChangeoverNumber" },
-        { header: "Changeover Operator", dataKey: "Changeoveroperator" },
-        { header: "Changeover Packing", dataKey: "Changeoverpacking" },
-        { header: "Changeover QC", dataKey: "Changeoverqc" },
-        { header: "Changeover Technician", dataKey: "Changeovertechnician" },
-        { header: "Changeover Supervisor", dataKey: "Changeoversupervisor" },
-        { header: "Changeover Started At", dataKey: "ChangeoverstartedAt" },
-        { header: "Changeover Ended At", dataKey: "ChangeoverendedAt" },
-      ],
-      body: changeovers.map((changeover) => {
-        return {
-          Changeoverdate: changeover.date,
-          ChangeoverMachine: changeover.selectedMachine,
-          Changeovershift: changeover.selectedshift,
-          ChangeoverNumber: changeover.changeoverNumber,
-          Changeoveroperator: changeover.selectedoperator
-            .map((operator) => operator.operator_name)
-            .join(", "),
-          Changeoverpacking: changeover.selectedpacking
-            .map((packing) => packing.packing_name)
-            .join(", "),
-          Changeoverqc: changeover.selectedqc
-            .map((qc) => qc.qc_name)
-            .join(", "),
-          Changeovertechnician: changeover.selectedtechnician
-            .map((technician) => technician.technician_name)
-            .join(", "),
-          Changeoversupervisor: changeover.selectedsupervisor
-            .map((supervisor) => supervisor.supervisor_name)
-            .join(", "),
-          ChangeoverstartedAt: changeover.startedAt,
-          ChangeoverendedAt: changeover.endedAt,
-        };
-      }),
-      columnStyles,
-    });
-    doc.save("Changeovers Details.pdf");
-  };
   return (
     <div className="container">
       <div className="container1">
-        <div className="container2">
-          <div className="div3">
-            <button onClick={generatePdf} className="divbutton">
-              Generate PDF
-            </button>
-            <a href="./addchangeover" className="div-a">
-              <button className="divbutton">Add New Changeover</button>
-            </a>
-          </div>
+        <div className="container21">
+          <span className="text"> MACHINE CHANGEOVERS</span>
         </div>
-
+        <div className="buttondiv1vac">
+          <a href="./generatepdf" className="savebuttonvac">
+            GENERATE PDF
+          </a>
+          <a href="./addchangeover" className="savebuttonvac">
+            NEW CHANGEOVER
+          </a>
+        </div>
         <div className="container3table">
           <div className="containertable">
-            <table className="tablediv">
-              <thead className="theaddiv">
-                <tr className="tr">
-                  <th className="thdiv">DATE</th>
-                  <th className="thdiv">MACHINE</th>
-                  <th className="thdiv">SHIFT</th>
-                  <th className="thdiv">CHANGEOVER</th>
-                  <th className="thdiv">OPERATOR</th>
-                  <th className="thdiv">PACKING</th>
-                  <th className="thdiv">QC</th>
-                  <th className="thdiv">TECHNICIAN</th>
-                  <th className="thdiv">SUPERVISOR</th>
-                  <th className="thdiv">START TIME</th>
-                  <th className="thdiv">END TIME</th>
-                </tr>
-              </thead>
-              <tbody>
-                {changeovers
-                  .filter((changeovers) => {
-                    if (search === "") {
-                      return changeovers;
-                    } else if (
-                      changeovers.changeoverNumber
-                        .toLowerCase()
-                        .includes(search.toLowerCase())
-                    ) {
-                      {
-                        console.log(changeovers);
-                      }
-                      return changeovers;
-                    }
-                  })
-                  .map((changeovers, index) => {
-                    return (
-                      <tr className="rows" key={index}>
-                        <th scope="row" className="row">
-                          {changeovers.date}
-                        </th>
-                        <td scope="row" className="row">
-                          {changeovers.selectedMachine}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.selectedshift}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.changeoverNumber}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.selectedoperator
-                            .map((operator) => operator.operator_name)
-                            .join(", ")}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.selectedpacking
-                            .map((packing) => packing.packing_name)
-                            .join(", ")}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.selectedqc
-                            .map((qc) => qc.qc_name)
-                            .join(", ")}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.selectedtechnician
-                            .map((technician) => technician.technician_name)
-                            .join(", ")}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.selectedsupervisor
-                            .map((supervisor) => supervisor.supervisor_name)
-                            .join(", ")}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.startedAt}
-                        </td>
-                        <td scope="row" className="row">
-                          {changeovers.endedAt}
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
+            <div className="containersubtable">
+              <table className="tablediv">
+                <thead className="theaddiv">
+                  <tr className="tr">
+                    <th className="thdiv">DATE</th>
+                    <th className="thdiv">MACHINE</th>
+                    <th className="thdiv">SHIFT</th>
+                    <th className="thdiv">CHANGEOVER</th>
+                    <th className="thdiv">OPERATOR</th>
+                    <th className="thdiv">PACKING</th>
+                    <th className="thdiv">QC</th>
+                    <th className="thdiv">TECHNICIAN</th>
+                    <th className="thdiv">SUPERVISOR</th>
+                    <th className="thdiv">START TIME</th>
+                    <th className="thdiv">END TIME</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentRecords.map((changeovers, index) => (
+                    <tr className="rows" key={index}>
+                      <td scope="row" className="row">
+                        {changeovers.date}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.selectedMachine}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.selectedshift}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.changeoverNumber}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.selectedoperator
+                          .map((operator) => operator.operator_name)
+                          .join(", ")}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.selectedpacking
+                          .map((packing) => packing.packing_name)
+
+                          .join(", ")}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.selectedqc
+                          .map((qc) => qc.qc_name)
+                          .join(", ")}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.selectedtechnician
+                          .map((technician) => technician.technician_name)
+                          .join(", ")}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.selectedsupervisor
+                          .map((supervisor) => supervisor.supervisor_name)
+                          .join(", ")}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.startedAt}
+                      </td>
+                      <td scope="row" className="row">
+                        {changeovers.endedAt}
+                      </td>
+                    </tr>
+                  ))}
+                  {/* );
+                  })} */}
+                </tbody>
+              </table>
+            </div>
+            <br />
+            <div
+              className="navigationdiv"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className={`navigation-button ${
+                  currentPage === 1 ? "disabled" : ""
+                }`}
+              >
+                Previous Page
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => goToPage(page)}
+                    disabled={currentPage === page}
+                    className={`navigation-button ${
+                      currentPage === page ? "active" : ""
+                    }`}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+              <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+                className={`navigation-button ${
+                  currentPage === totalPages ? "disabled" : ""
+                }`}
+              >
+                Next Page
+              </button>
+            </div>
           </div>
         </div>
       </div>
