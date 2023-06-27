@@ -166,22 +166,20 @@
   margin-left: 10%;
   margin-bottom: 0%;
 }
-
 .text0 {
   width: auto;
-  font-size: 25px;
+  font-size: 20px;
   align-self: center;
   font-style: normal;
   margin-top: 0%;
   font-weight: 800;
   line-height: 1.15;
-  margin-left: 10%;
+  margin-left: 9%;
   margin-bottom: 0%;
 }
-
 .textview {
   width: auto;
-  font-size: 20px;
+  font-size: 15px;
   align-self: center;
   font-style: normal;
   font-weight: 700;
@@ -189,25 +187,21 @@
   margin-left: 5%;
   margin-bottom: 0%;
 }
-
 .textviewo {
   width: auto;
-  font-size: 20px;
-  align-self: center;
+  font-size: 2015 center;
   font-style: normal;
   font-weight: 700;
   line-height: 1.15;
   margin-left: 1%;
   margin-right: 1%;
 }
-
 .textinput {
   width: 50%;
   line-height: 2;
   margin-left: 5%;
   margin-right: 10%;
 }
-
 .textinputco {
   width: 50%;
   margin-left: 5%;
@@ -239,7 +233,7 @@
   width: 50%;
   line-height: 2.4;
   margin-left: 5%;
-  margin-right: 10%;
+  margin-right: 9%;
   border: hsl(0, 0%, 80%);
   border-radius: 4px;
   border-style: solid;
@@ -398,7 +392,7 @@
 .dropdown {
   width: 50%;
   margin-left: 5%;
-  margin-right: 10%;
+  margin-right: 9%;
   font-size: 15px;
   color: black;
 }
@@ -487,7 +481,7 @@
 }
 .containertable {
   width: auto;
-  height: 80%;
+  height: 350px;
   background-color: #D9D9D9;
   padding-left: 3%;
   margin-left: 1%;
@@ -582,8 +576,8 @@
 .navigation-button {
   background-color: black;
   color: white;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 .navigation-button.disabled {
@@ -595,30 +589,65 @@
   background-color: gray;
   cursor: not-allowed;
 }
-.divbutton{
-  margin-top: 5%;
-  width: 40%;
-  height: 100%;
-  color: white;
-  background-color: black;
-  font-size: 20px;
-  margin-bottom: 3%;
-  font-weight: 600;
-  padding-top: 1%;
-  padding-bottom: 1%;
-}
+
 .container52{
   width: 100%;
   height: 20%;
   display: flex;
   align-self: center;
   justify-content:center;
+  padding-top: 5%;
+  padding-bottom: 3%;
 }
 .container53{
   width: 100%;
   height: 80%;
   display: flex;
-  background-color: aqua;
-  align-self: center;
-  justify-content:center;
+  justify-content:space-evenly;
+}
+.navigationdiv{
+  display: flex;
+}
+.containerform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+}
+
+.form-control {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.generate-button {
+  
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.generate-button:hover {
+  background-color: #646464;
+}
+
+.generate-button:focus {
+  outline: none;
 }

@@ -12,6 +12,7 @@ export default function GeneratePDF() {
   const { id } = useParams();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
     function getChangeovers() {
@@ -24,13 +25,14 @@ export default function GeneratePDF() {
             return changeover.date >= startDate && changeover.date <= endDate;
           });
           setChangeovers1(filteredChangeovers.reverse());
+          setDataFetched(true);
         })
         .catch((err) => {
           alert(err.message);
         });
     }
     getChangeovers();
-  }, [machinenumber, startDate, endDate]);
+  }, [startDate, endDate]);
 
   const generatePdf = () => {
     if (changeovers.length === 0) {
@@ -93,11 +95,11 @@ export default function GeneratePDF() {
       columnStyles,
     });
 
-    doc.save("Full Changeovers Details.pdf");
+    doc.save("Changeovers Details.pdf");
   };
 
   const generateFilteredPdf = () => {
-    if (changeovers1.length === 0) {
+    if (!dataFetched || changeovers1.length === 0) {
       alert("No data available");
       return;
     }
@@ -129,7 +131,7 @@ export default function GeneratePDF() {
         { header: "Changeover Started At", dataKey: "ChangeoverstartedAt" },
         { header: "Changeover Ended At", dataKey: "ChangeoverendedAt" },
       ],
-      body: filtereddata.map((changeover) => {
+      body: changeovers1.map((changeover) => {
         return {
           Changeoverdate: changeover.date,
           ChangeoverMachine: changeover.selectedMachine,
@@ -157,7 +159,9 @@ export default function GeneratePDF() {
       columnStyles,
     });
 
-    doc.save("Full Changeovers Details.pdf");
+    doc.save(
+      "Changeovers Details from " + startDate + " to " + endDate + ".pdf"
+    );
   };
   return (
     <div className="container">
@@ -168,28 +172,33 @@ export default function GeneratePDF() {
         <div className="container31">
           <div className="container41">
             <div className="container52">
-              <button onClick={generatePdf} className="divbutton">
+              <button onClick={generatePdf} className="generate-button">
                 EXPORT ALL DATA
               </button>
             </div>
             <div className="container53">
               <form>
-                <label> From </label>
+                <label htmlFor="startDate"> From </label>
                 <input
                   type="date"
+                  className="form-control"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                 />
+                {console.log(startDate)}
+
                 <label> To </label>
                 <input
+                  className="form-control"
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                 />
+                {console.log(startDate)}
               </form>
             </div>
             <div className="container52">
-              <button onClick={generateFilteredPdf} className="divbutton">
+              <button onClick={generateFilteredPdf} className="generate-button">
                 GENERATE REPORT
               </button>
             </div>

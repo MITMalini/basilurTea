@@ -79,6 +79,9 @@ export default function ViewAllChangeovers() {
           <a href="./addchangeover" className="savebuttonvac">
             NEW CHANGEOVER
           </a>
+          <a href="./true" className="savebuttonvac">
+            GO TO HOME
+          </a>
         </div>
         <div className="container3table">
           <div className="containertable">
@@ -165,7 +168,7 @@ export default function ViewAllChangeovers() {
                   currentPage === 1 ? "disabled" : ""
                 }`}
               >
-                Previous Page
+                &lt;
               </button>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                 (page) => (
@@ -188,7 +191,7 @@ export default function ViewAllChangeovers() {
                   currentPage === totalPages ? "disabled" : ""
                 }`}
               >
-                Next Page
+                &gt;
               </button>
             </div>
           </div>

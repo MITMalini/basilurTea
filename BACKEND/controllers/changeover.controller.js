@@ -1,12 +1,14 @@
-const  ChangeoverM1 = require('../models/changeover.models.js');
+const ChangeoverM1 = require("../models/changeover.models.js");
 
 //get all Technicians
 
 const getChangeovers = async (req, res) => {
-  const changeovers = await  ChangeoverM1.find();
+  const changeovers = await ChangeoverM1.find();
 
   if (!changeovers) {
-    return res.status(404).json({ message: 'No any available changeovers found' });
+    return res
+      .status(404)
+      .json({ message: "No any available changeovers found" });
   } else {
     return res.status(200).json(changeovers);
   }
@@ -17,10 +19,10 @@ const getChangeovers = async (req, res) => {
 const getChangeover = async (req, res) => {
   const { id } = req.params;
 
-  const changeover = await  ChangeoverM1.findById({ _id: id });
+  const changeover = await ChangeoverM1.findById({ _id: id });
 
   if (!changeover) {
-    return res.status(404).json({ message: 'No changeover found' });
+    return res.status(404).json({ message: "No changeover found" });
   } else {
     return res.status(200).json(changeover);
   }
@@ -29,28 +31,40 @@ const getChangeover = async (req, res) => {
 //add new  Technician
 
 const addChangeover = async (req, res) => {
-    // const bag_count = Number(req.body.bag_count);
-    // const error_count = Number(req.body.error_count);
-    const selectedMachine = Number(req.body.selectedMachine);
-  const { selectedshift,selectedoperator,selectedpacking,selectedqc,selectedtechnician,selectedsupervisor,startedAt,endedAt} =
-    req.body;
+  // const bag_count = Number(req.body.bag_count);
+  // const error_count = Number(req.body.error_count);
+  const selectedMachine = Number(req.body.selectedMachine);
+  const {
+    selectedshift,
+    selectedoperator,
+    selectedpacking,
+    selectedqc,
+    selectedtechnician,
+    selectedsupervisor,
+    startedAt,
+    endedAt,
+    customercode,
+    ordernumber,
+  } = req.body;
 
   try {
-    const newchangeover = await  ChangeoverM1.create({
-        selectedMachine,
-        selectedshift,
-        selectedoperator,
-        selectedpacking,
-        selectedqc,
-        selectedtechnician,
-        selectedsupervisor,
-        startedAt,
-        endedAt
-        // bag_count,
-        // error_count,
-        // runtime,
-        // start_time,
-        // end_time
+    const newchangeover = await ChangeoverM1.create({
+      selectedMachine,
+      selectedshift,
+      selectedoperator,
+      selectedpacking,
+      selectedqc,
+      selectedtechnician,
+      selectedsupervisor,
+      startedAt,
+      endedAt,
+      customercode,
+      ordernumber,
+      // bag_count,
+      // error_count,
+      // runtime,
+      // start_time,
+      // end_time
     });
     const savedChangeover = await newchangeover.save();
 
@@ -66,12 +80,14 @@ const addChangeover = async (req, res) => {
 const deleteChangeover = async (req, res) => {
   const { id } = req.params;
 
-  const changeover = await  ChangeoverM1.findOneAndDelete({ _id: id });
+  const changeover = await ChangeoverM1.findOneAndDelete({ _id: id });
 
   if (!changeover) {
-    return res.status(400).json({ error: 'No such changeover' });
+    return res.status(400).json({ error: "No such changeover" });
   } else {
-    return res.status(200).json({ message: ' changeover deleted successfully' });
+    return res
+      .status(200)
+      .json({ message: " changeover deleted successfully" });
   }
 };
 
@@ -80,19 +96,22 @@ const deleteChangeover = async (req, res) => {
 const updateChangeover = async (req, res) => {
   const { id } = req.params;
 
-  const changeover = await  ChangeoverM1.findOneAndUpdate({ _id: id }, { ...req.body });
+  const changeover = await ChangeoverM1.findOneAndUpdate(
+    { _id: id },
+    { ...req.body }
+  );
 
   if (!changeover) {
-    return res.status(400).json({ error: 'No such changeover' });
+    return res.status(400).json({ error: "No such changeover" });
   } else {
     return res.status(200).json(changeover);
   }
 };
 
 module.exports = {
-    getChangeovers,
-    getChangeover,
-    addChangeover,
-    deleteChangeover,
-    updateChangeover,
+  getChangeovers,
+  getChangeover,
+  addChangeover,
+  deleteChangeover,
+  updateChangeover,
 };
