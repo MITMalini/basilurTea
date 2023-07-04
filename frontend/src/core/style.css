@@ -603,8 +603,10 @@
   width: 100%;
   height: 80%;
   display: flex;
-  justify-content:space-evenly;
+  align-items: center;
+  justify-content: space-evenly;
 }
+
 .navigationdiv{
   display: flex;
 }
@@ -628,6 +630,8 @@ label {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 150px;
+  min-height: 25px;
 }
 
 .button-container {
@@ -650,4 +654,27 @@ label {
 
 .generate-button:focus {
   outline: none;
+}
+.dropdownpdf{
+  width: 150px;
+  font-family: monospace;
+  cursor: default;
+  align-items: center;
+}
+.container42 {
+  gap: 0;
+  flex: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #D9D9D9;
+  padding-bottom: 3%;
+}
+.Labelform{
+  font-size: 15px;
+  font-weight: 700;
 }

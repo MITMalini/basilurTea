@@ -25,8 +25,8 @@ export default function AddChangeOver() {
   const machineId = useRef();
 
   const Shiftoptions = [
-    { _id: "1", value: "Morning shift", label: "Morning shift" },
-    { _id: "2", value: "Evening shift", label: "Evening shift" },
+    { _id: "1", value: "A", label: "A" },
+    { _id: "2", value: "B", label: "B" },
   ];
 
   function sendData(e) {

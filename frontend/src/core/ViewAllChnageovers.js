@@ -10,8 +10,6 @@ export default function ViewAllChangeovers() {
   const { id } = useParams();
 
   const [changeovers, setChangeover] = useState([]);
-  const [search, setSearch] = useState("");
-  const [machinenumber, setSelectedMachine] = useState("");
 
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -42,29 +40,40 @@ export default function ViewAllChangeovers() {
   useEffect(() => {
     function getChangeovers() {
       axios
-        .get("http://localhost:8080/api/changeover/getchangeovers")
+        .get(`http://localhost:8080/api/user/getuser/${id}`)
         .then((res) => {
-          const filteredChangeovers = res.data.filter(
-            (changeovers) => changeovers.selectedMachine === machinenumber
-          );
-          setChangeover(filteredChangeovers.reverse());
+          const user = res.data.number; // Assuming the machine ID is accessible via machine.machineNumber
+          // setSelectedMachine(user);
+          // console.log(setSelectedMachine);
+          axios
+            .get("http://localhost:8080/api/changeover/getchangeovers")
+            .then((res) => {
+              const filteredChangeovers = res.data.filter(
+                (changeovers) => changeovers.selectedMachine === user
+              );
+              setChangeover(filteredChangeovers.reverse());
+            })
+            .catch((err) => {
+              alert(err.message);
+            });
         })
         .catch((err) => {
           alert(err.message);
         });
     }
-    axios
-      .get(`http://localhost:8080/api/user/getuser/${id}`)
-      .then((res) => {
-        const user = res.data.number; // Assuming the machine ID is accessible via machine.machineNumber
-        setSelectedMachine(user);
-        console.log(setSelectedMachine);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
     getChangeovers();
-  }, [id]);
+  }, []);
+
+  const DateFormat = (date) => {
+    var d = new Date(date);
+
+    var date = ("0" + d.getDate()).slice(-2);
+    var month = ("0" + (d.getMonth() + 1)).slice(-2);
+    var year = d.getFullYear();
+    var newDate = date + "-" + month + "-" + year;
+
+    return newDate;
+  };
 
   return (
     <div className="container">
@@ -106,7 +115,7 @@ export default function ViewAllChangeovers() {
                   {currentRecords.map((changeovers, index) => (
                     <tr className="rows" key={index}>
                       <td scope="row" className="row">
-                        {changeovers.date}
+                        {DateFormat(changeovers.date)}
                       </td>
                       <td scope="row" className="row">
                         {changeovers.selectedMachine}
