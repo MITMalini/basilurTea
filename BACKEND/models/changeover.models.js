@@ -36,7 +36,7 @@ const changeoverSchema = new mongoose.Schema({
   },
   selectedshift: {
     type: String,
-    enum: ["Morning shift", "Evening shift"],
+    enum: ["A", "B"],
     required: true,
   },
   changeoverNumber: {
