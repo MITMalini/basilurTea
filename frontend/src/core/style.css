@@ -8,7 +8,196 @@
   flex-direction: column;
   background-color: black;
 }
+.container-FP {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.container1-FP {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: #7a4214;
+}
+.container2-FP {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 80%;
+  display: flex;
+  align-items: flex-start;
+  background-size: cover;
+  background-image: url("C:\Users\malinij\OneDrive - MILLENNIUM I.T.E.S.P (PRIVATE) LIMITED\Documents\GitHub\basilurTea\frontend\public\BasilurFirstPage.webp");
+  background-repeat: no-repeat;
+  position: relative;
+}
+ .container2-FP::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, #7a4214 100%);
+  opacity: 1; /* Adjust the opacity value as needed */
+ }
+.container3-FP {
+  gap: 15%;
+  flex: 0 0 auto;
+  left: 0px;
+  width: 100%;
+  bottom: 0px;
+  height: 20%;
+  display: flex;
+  position: absolute;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+}
+.button-FP {
+  display: flex;
+  width: 30%;
+  height:50%;
+  justify-content: center !important; 
+  align-items: center !important;
+  background-color: white;
+  cursor: pointer;
+  border-radius:10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 25px;
+  font-weight: 700;
+  color: #532d0f ;
 
+  text-decoration: none;
+}
+
+.container-LOGIN {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: black;
+}
+.container1-LOGIN {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+
+}
+.container2-LOGIN{
+  flex: 1;
+  width: 60%;
+  height: 100vh;
+  display: flex;
+  align-self: stretch;
+  align-items: flex-start;
+  background-size: cover;
+  background-image: url("C:\Users\malinij\OneDrive - MILLENNIUM I.T.E.S.P (PRIVATE) LIMITED\Documents\GitHub\basilurTea\frontend\public\BasilurBanner.webp");
+  background-repeat: no-repeat;
+}
+.container3-LOGIN {
+  flex: 0 0 auto;
+  width: 40%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.container4-LOGIN{
+  flex: 0 0 auto;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.text-LOGIN{
+  font-size:30px;
+  align-self: center;
+  font-style: normal;
+  font-weight: 900;
+  color: WHITE;
+}
+.container7-LOGIN{
+  width: 80%;
+  height: 50%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  background-color:#4A5670;
+  padding-top: 2%;
+  margin-top: 30%;
+  margin-bottom: 30%;
+  border-radius:5%
+
+}
+.form-LOGIN{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 5%;
+}
+.savebutton-LOGIN {
+  width: 40%;
+  height: 15%;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  padding-top: 1%;
+  justify-content: center;
+  cursor: pointer;
+}
+.savebutton-LOGIN:focus{
+  cursor: pointer;
+  background-color: #5b6c92;
+}
+.container8-LOGIN{
+  flex: auto;
+  width: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.textinput-LOGIN{
+  width: 80%;
+  height: 25%;
+  padding: 1%;
+  border: 5px solid #252b39;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 15px;
+  color: #333;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.textinput-LOGIN:focus{
+  outline: none;
+  box-shadow: 0 0 5px #aaa;
+}
 .container1 {
   flex: auto;
   width: 100%;
@@ -30,7 +219,6 @@
   padding-bottom: 5%;
   justify-content: center;
 }
-
 .container21 {
   width: 100%;
   height: 20%;
@@ -65,20 +253,6 @@
   align-self: center;
 }
 
-
-.container31 {
-  flex: auto;
-  width: 60%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-top: 1%;
-  flex-direction: column;
-  padding-bottom: 5%;
-  justify-content: space-between;
-  align-self: center;
-}
-
 .container4 {
   gap: 0;
   flex: auto;
@@ -90,22 +264,6 @@
   flex-direction: column;
   justify-content: center;
   background-color: #D9D9D9;
-  padding-bottom: 2%;
-  
-}
-
-.container41 {
-  gap: 0;
-  flex: auto;
-  width: 90%;
-  height: 100%;
-  display: flex;
-  align-self: center;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: #D9D9D9;
-  padding-bottom: 2%;
 }
 
 .form {
@@ -294,7 +452,6 @@
   border-style: solid;
   border-width: 1px;
   box-sizing: border-box;
-  min-height: 30px;
   padding-left: 10px;
 }
 
@@ -340,6 +497,7 @@
   padding-top: 0.5%;
   padding-bottom: 0.5%;
   justify-content: center;
+  cursor: pointer;
 }
 
 .button {
@@ -368,7 +526,7 @@
 .buttonm {
   width: 30%;
   height: auto;
-  background-color: black;
+  background-color: RED;
   color: white;
   font-size: 10px;
   justify-content: center;
@@ -461,18 +619,19 @@
 .containerhome {
   width: 100%;
   height: 100%;
-  padding-top: 0.9%;
-  padding-bottom: 0.9%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  align-content: center;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 .buttonmm{
   width: 100%;
   height: 100%;
   color: white;
-  background-color: black;
+  background-color: RED;
 }
 .adiv{
   color: black;
@@ -638,21 +797,38 @@ label {
   text-align: center;
 }
 
-.generate-button {
+.generate-buttonpdf {
   
   padding: 10px 20px;
-  background-color: #000000;
+  background-color: rgb(194, 4, 4);
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.generate-button:hover {
-  background-color: #646464;
+.generate-buttonpdf:hover {
+  background-color: rgb(255, 0, 0);
 }
 
-.generate-button:focus {
+.generate-buttonpdf:focus {
+  outline: none;
+}
+.generate-buttonexcel {
+  
+  padding: 10px 20px;
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.generate-buttonexcel:hover {
+  background-color: rgb(3, 216, 3);
+}
+
+.generate-buttonexcel:focus {
   outline: none;
 }
 .dropdownpdf{
@@ -664,7 +840,7 @@ label {
 .container42 {
   gap: 0;
   flex: auto;
-  width: 100%;
+  width: 1000px;
   height: 100%;
   display: flex;
   align-self: center;
@@ -677,4 +853,54 @@ label {
 .Labelform{
   font-size: 15px;
   font-weight: 700;
+}
+.container31 {
+  flex: auto;
+  width: 60%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 1%;
+  flex-direction: column;
+  padding-bottom: 5%;
+  justify-content: space-between;
+  align-self: center;
+}
+.container41 {
+  gap: 0;
+  flex: auto;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #D9D9D9;
+  padding-bottom: 2%;
+}
+.container3-Dashboard {
+  flex: auto;
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 1%;
+  flex-direction: column;
+  padding-bottom: 5%;
+  justify-content: space-between;
+  align-self: center;
+}
+.container4-Dashboard {
+  gap: 0;
+  flex: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #D9D9D9;
+  padding-bottom: 2%;
 }

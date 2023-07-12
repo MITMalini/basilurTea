@@ -31,7 +31,7 @@ const Dashboard = () => {
       console.error(err);
     }
     alert("Changeover Ended");
-    navigate(`/home/${id}/addchangeover`);
+    navigate(`/Basilur/home/${id}/addchangeover`);
   }
   return (
     <div className="container">
@@ -39,8 +39,8 @@ const Dashboard = () => {
         <div className="container21">
           <span className="text"> CHANGEOVER</span>
         </div>
-        <div className="container31">
-          <div className="container41">
+        <div className="container3-Dashboard">
+          <div className="container4-Dashboard">
             <form className="form" onSubmit={sendData}>
               <div className="container5">
                 <span className="textview">DATE&nbsp;</span>
@@ -62,7 +62,6 @@ const Dashboard = () => {
                   readOnly
                 />
               </div>
-              <br />
               <div className="container5">
                 <span className="textview">SHIFT </span>
                 <input
@@ -82,7 +81,6 @@ const Dashboard = () => {
                   readOnly
                 />
               </div>
-              <br />
               <div className="container5">
                 <span className="textview">MACHINE NUMBER </span>
                 <input

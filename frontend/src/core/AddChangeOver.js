@@ -48,7 +48,7 @@ export default function AddChangeOver() {
       .then((response) => {
         const { date, changeoverNumber, startedAt, _id } = response.data;
         alert("New Changeover Added");
-        navigate(`/home/${id}/dashboard`, {
+        navigate(`/Basilur/home/${id}/dashboard`, {
           state: {
             selectedMachine: machineId.current.value,
             selectedoperator: selectedoperator,

@@ -4,6 +4,7 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import Select from "react-select";
+import * as XLSX from "xlsx";
 
 export default function GeneratePDF() {
   const [changeovers, setChangeovers] = useState([]);
@@ -37,7 +38,6 @@ export default function GeneratePDF() {
           const filteredChangeovers = nofilter.filter((changeover) => {
             return changeover.date >= startDate && changeover.date <= endDate;
           });
-
           setChangeovers1(filteredChangeovers.reverse());
           setDataFetched(true);
         })
@@ -72,6 +72,54 @@ export default function GeneratePDF() {
         setSupervisors(data);
       });
   }, [startDate, endDate]);
+
+  const generateExcel = () => {
+    if (changeovers.length === 0) {
+      alert("No data available");
+      return;
+    }
+
+    const columnStyles = {
+      Changeoverdate: { cellWidth: 25 },
+      ChangeoverMachine: { cellWidth: 25 },
+      Changeovershift: { cellWidth: 25 },
+      ChangeoverNumber: { cellWidth: 25 },
+      Changeoveroperator: { cellWidth: 25 },
+      Changeoverpacking: { cellWidth: 25 },
+      Changeoverqc: { cellWidth: 25 },
+      Changeovertechnician: { cellWidth: 25 },
+      Changeoversupervisor: { cellWidth: 25 },
+      ChangeoverstartedAt: { cellWidth: 25 },
+      ChangeoverendedAt: { cellWidth: 25 },
+    };
+    const data = changeovers.map((changeover) => ({
+      Changeoverdate: changeover.date,
+      ChangeoverMachine: changeover.selectedMachine,
+      Changeovershift: changeover.selectedshift,
+      ChangeoverNumber: changeover.changeoverNumber,
+      Changeoveroperator: changeover.selectedoperator
+        .map((operator) => operator.operator_name)
+        .join(", "),
+      Changeoverpacking: changeover.selectedpacking
+        .map((packing) => packing.packing_name)
+        .join(", "),
+      Changeoverqc: changeover.selectedqc.map((qc) => qc.qc_name).join(", "),
+      Changeovertechnician: changeover.selectedtechnician
+        .map((technician) => technician.technician_name)
+        .join(", "),
+      Changeoversupervisor: changeover.selectedsupervisor
+        .map((supervisor) => supervisor.supervisor_name)
+        .join(", "),
+      ChangeoverstartedAt: changeover.startedAt,
+      ChangeoverendedAt: changeover.endedAt,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Changeovers");
+
+    XLSX.writeFile(workbook, "Changeovers_Details.xlsx");
+  };
 
   const generatePdf = () => {
     if (changeovers.length === 0) {
@@ -137,6 +185,43 @@ export default function GeneratePDF() {
     doc.save("Changeovers Details.pdf");
   };
 
+  const generatefilteredExcel = () => {
+    if (changeovers.length === 0) {
+      alert("No data available");
+      return;
+    }
+
+    const data = changeovers1.map((changeover) => ({
+      Changeoverdate: changeover.date,
+      ChangeoverMachine: changeover.selectedMachine,
+      Changeovershift: changeover.selectedshift,
+      ChangeoverNumber: changeover.changeoverNumber,
+      Changeoveroperator: changeover.selectedoperator
+        .map((operator) => operator.operator_name)
+        .join(", "),
+      Changeoverpacking: changeover.selectedpacking
+        .map((packing) => packing.packing_name)
+        .join(", "),
+      Changeoverqc: changeover.selectedqc.map((qc) => qc.qc_name).join(", "),
+      Changeovertechnician: changeover.selectedtechnician
+        .map((technician) => technician.technician_name)
+        .join(", "),
+      Changeoversupervisor: changeover.selectedsupervisor
+        .map((supervisor) => supervisor.supervisor_name)
+        .join(", "),
+      ChangeoverstartedAt: changeover.startedAt,
+      ChangeoverendedAt: changeover.endedAt,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Changeovers");
+
+    XLSX.writeFile(
+      workbook,
+      "Changeovers Details from " + startDate + " to " + endDate + ".xlsx"
+    );
+  };
   const generateFilteredPdf = () => {
     if (!dataFetched || changeovers1.length === 0) {
       alert("No data available");
@@ -270,15 +355,18 @@ export default function GeneratePDF() {
   return (
     <div className="container">
       <div className="container1">
-        <div className="container2">
+        <div className="container21">
           <span className="text"> GENERATE REPORTS</span>
         </div>
         <div className="container31">
           <div className="container42">
             <h3>EXPORT ALL DATA</h3>
             <div className="container53">
-              <button onClick={generatePdf} className="generate-button">
+              <button onClick={generatePdf} className="generate-buttonpdf">
                 EXPORT ALL DATA
+              </button>
+              <button onClick={generateExcel} className="generate-buttonexcel">
+                GENERATE EXCEL
               </button>
             </div>
             <h3>FILTER DATA BY DATE</h3>
@@ -305,8 +393,17 @@ export default function GeneratePDF() {
                 />
               </form>
               &nbsp;&nbsp;
-              <button onClick={generateFilteredPdf} className="generate-button">
-                GENERATE REPORT
+              <button
+                onClick={generateFilteredPdf}
+                className="generate-buttonpdf"
+              >
+                GENERATE PDF
+              </button>
+              <button
+                onClick={generatefilteredExcel}
+                className="generate-buttonexcel"
+              >
+                GENERATE EXCEL
               </button>
             </div>
             <h3>FILTER DATA BY POSITION</h3>
@@ -385,11 +482,18 @@ export default function GeneratePDF() {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <button
                 onClick={generateNameFilteredPdf}
-                className="generate-button"
+                className="generate-buttonpdf"
               >
-                GENERATE REPORT
+                GENERATE PDF
+              </button>
+              <button
+                onClick={generateNameFilteredPdf}
+                className="generate-buttonexcel"
+              >
+                GENERATE EXCEL
               </button>
             </div>
+            <a href="./true"> Go back to Home</a>
           </div>
         </div>
       </div>

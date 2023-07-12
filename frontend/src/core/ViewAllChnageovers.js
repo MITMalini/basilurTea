@@ -82,8 +82,8 @@ export default function ViewAllChangeovers() {
           <span className="text"> MACHINE CHANGEOVERS</span>
         </div>
         <div className="buttondiv1vac">
-          <a href="./generatepdf" className="savebuttonvac">
-            GENERATE PDF
+          <a href="./generatereport" className="savebuttonvac">
+            GENERATE REPORT
           </a>
           <a href="./addchangeover" className="savebuttonvac">
             NEW CHANGEOVER
