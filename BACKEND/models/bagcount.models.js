@@ -5,7 +5,6 @@ const bagcountSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-
   mrnnumber: {
     type: String,
     required: true,

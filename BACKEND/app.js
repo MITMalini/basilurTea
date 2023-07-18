@@ -11,6 +11,7 @@ const packingRoutes = require("./routes/packing.routes.js");
 const changeoverRoutes = require("./routes/changeover.routes.js");
 const userRoutes = require("./routes/users.routes.js");
 const bagcountRoutes = require("./routes/bagcount.routes.js");
+const breakdownRoutes = require("./routes/breakdown.routes.js");
 require("dotenv").config();
 
 // app config
@@ -31,6 +32,7 @@ app.use("/api/packing", packingRoutes);
 app.use("/api/changeover", changeoverRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/bagcount", bagcountRoutes);
+app.use("/api/breakdown", breakdownRoutes);
 // connect to db
 const dotenv = require("dotenv");
 dotenv.config({ path: "config.env" });

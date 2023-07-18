@@ -3,15 +3,17 @@ import axios from "axios";
 import "./style.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 const Dashboard = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const [startTime, setStartTime] = useState("");
 
   function sendData(e) {
     e.preventDefault();
-
     try {
       const currentTime = new Date();
       const formattedTime = currentTime.toLocaleTimeString([], {
@@ -20,7 +22,6 @@ const Dashboard = () => {
         second: "2-digit",
         hour12: true,
       });
-
       axios.patch(
         `http://localhost:8080/api/changeover/updatechangeover/${location.state.changeoverid}`,
         {
@@ -33,6 +34,34 @@ const Dashboard = () => {
     alert("Changeover Ended");
     navigate(`/Basilur/home/${id}/addchangeover`);
   }
+  function sendBDData(e) {
+    e.preventDefault();
+    try {
+      const currentTime = new Date();
+      const formattedTime = currentTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+      axios.patch(`http://localhost:8080/api/breakdown/addbreakdown`, {
+        endtime: formattedTime,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    alert("BreakDown Ended");
+  }
+  useEffect(() => {
+    const currentTime = new Date();
+    const formattedTime = currentTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+    setStartTime(formattedTime); // Set start time in state
+  }, []);
   return (
     <div className="container">
       <div className="container1">
@@ -41,7 +70,7 @@ const Dashboard = () => {
         </div>
         <div className="container3-Dashboard">
           <div className="container4-Dashboard">
-            <form className="form" onSubmit={sendData}>
+            <form className="form-dashboard" onSubmit={sendData}>
               <div className="container5">
                 <span className="textview">DATE&nbsp;</span>
                 <input
@@ -172,7 +201,99 @@ const Dashboard = () => {
                 </a>
               </div>
             </form>
-            <a href="./true"> Go back to Home</a>
+            <div className="optionbox">
+              <div>
+                <Popup
+                  trigger={
+                    <button className="optionbox-botton">ADD BREAKDOWN</button>
+                  }
+                  modal
+                  nested
+                >
+                  {(close) => (
+                    <div className="modal">
+                      <form className="form" onSubmit={sendBDData}>
+                        <div className="container5">
+                          <h6 className="text0">DATE</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            placeholder="Customer Code"
+                            defaultValue={location.state.date}
+                            readOnly
+                          />
+                        </div>
+                        <div className="container5">
+                          <h6 className="text0">SHIFT</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            placeholder="Customer Code"
+                            defaultValue={location.state.selectedshift}
+                            readOnly
+                          />
+                        </div>
+                        <div className="container5">
+                          <h6 className="text0">MACHINE</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            defaultValue={location.state.selectedMachine}
+                            readOnly
+                          />
+                        </div>
+                        <div className="container5">
+                          <h6 className="text0">CHANGEOVER</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            placeholder="Customer Code"
+                            defaultValue={location.state.changeoverNumber}
+                          />
+                        </div>
+
+                        <div className="container5">
+                          <h6 className="text0">START TIME</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            placeholder="Customer Code"
+                            defaultValue={startTime}
+                            readOnly
+                          />
+                        </div>
+                        <div className="container5">
+                          <h6 className="text0">DESCRIPTION</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            placeholder="Breakdown description"
+                          />
+                        </div>
+                        <br></br>
+                        <div className="buttondiv1">
+                          <button
+                            className="savebutton"
+                            onClick={() => close()}
+                          >
+                            SAVE
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  )}
+                </Popup>
+              </div>
+              <a href="./true" className="optionbox-a">
+                <button className="optionbox-botton">GO BACK TO HOME</button>
+              </a>
+            </div>
           </div>
         </div>
       </div>

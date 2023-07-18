@@ -123,6 +123,7 @@ export default function AddChangeOver() {
                     className="textinput3"
                     defaultValue={machinedata["number"] || ""}
                     ref={machineId}
+                    readOnly
                   />
                 </div>
               )}
