@@ -887,3 +887,11 @@ label {
   padding-top: 3%;
   padding-bottom: 3%;
 }
+.text-BD{
+  font-size:30px;
+  align-self: center;
+  font-style: normal;
+  font-weight: 900;
+  color: black;
+  margin-bottom: 2%;
+}

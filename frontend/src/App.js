@@ -14,7 +14,6 @@ import AdminHome from "./core/AdminHome";
 import ViewAllChangeovers from "./core/ViewAllChnageovers";
 import GenerateReport from "./core/GenerateReport";
 import FirstPage from "./core/FirstPage";
-import AddBreakdown from "./core/AddBreakdown";
 
 export default function App() {
   return (
@@ -72,11 +71,6 @@ export default function App() {
             path="/Basilur/home/:id/addchangeover"
             exact
             element={<AddChangeOver />}
-          />
-          <Route
-            path="/Basilur/home/:id/addbreakdown"
-            exact
-            element={<AddBreakdown />}
           />
           <Route
             path="/Basilur/home/:id/generatereport"

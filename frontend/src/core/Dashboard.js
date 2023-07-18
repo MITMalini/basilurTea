@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./style.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
@@ -213,6 +212,7 @@ const Dashboard = () => {
                   {(close) => (
                     <div className="modal">
                       <form className="form" onSubmit={sendBDData}>
+                        <span className="text-BD"> ADD BREAKDOWN</span>
                         <div className="container5">
                           <h6 className="text0">DATE</h6>
                           <input
@@ -253,6 +253,7 @@ const Dashboard = () => {
                             className="textinput3"
                             placeholder="Customer Code"
                             defaultValue={location.state.changeoverNumber}
+                            read
                           />
                         </div>
 
