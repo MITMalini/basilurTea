@@ -13,6 +13,7 @@ export default function GenerateMachineReport() {
   const [changeovers, setChangeovers] = useState([]);
   const [changeovers1, setChangeovers1] = useState([]);
   const [changeoversod, setChangeoversOD] = useState([]);
+  const [breakdowns, setBreakdowns] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [wantedDate, setWantedDate] = useState("");
@@ -62,6 +63,24 @@ export default function GenerateMachineReport() {
           .catch((err) => {
             alert(err.message);
           });
+        //   axios
+        //     .get("http://localhost:8080/api/breakdown/getbreakdowns")
+        //     .then((res) => {
+        //       const allBreakdowns = res.data;
+        //       const nofilterbreakdown = allBreakdowns.filter((breakdown) => {
+        //         return breakdown.machinenumber === user;
+        //       });
+        //       const filteredBreakdowns = nofilterbreakdown.filter((breakdown) => {
+        //         const breakdownDate = breakdown.date.split("T")[0];
+        //         return breakdownDate === wantedDate;
+        //       });
+        //       console.log(filteredBreakdowns);
+        //       setBreakdowns(filteredBreakdowns.reverse());
+        //       setDataFetched(true);
+        //     })
+        //     .catch((err) => {
+        //       alert(err.message);
+        //     });
       });
     }
     getChangeovers();
@@ -400,7 +419,40 @@ export default function GenerateMachineReport() {
       }),
       columnStyles,
     });
-
+    doc.addPage();
+    const columnStylesbd = {
+      machinenumber: { cellWidth: 20 },
+      date: { cellWidth: 25 },
+      shift: { cellWidth: 25 },
+      changeoverNumber: { cellWidth: 25 },
+      starttime: { cellWidth: 25 },
+      endtime: { cellWidth: 25 },
+      Description: { cellWidth: 40 },
+    };
+    autoTable(doc, {
+      columns: [
+        { header: "machine number", dataKey: "machinenumber" },
+        { header: "date", dataKey: "date" },
+        { header: "Shift", dataKey: "shift" },
+        { header: "Changeover Number", dataKey: "changeoverNumber" },
+        { header: "start time", dataKey: "starttime" },
+        { header: "end time", dataKey: "endtime" },
+        { header: "Description", dataKey: "Description" },
+      ],
+      body: breakdowns.map((breakdown) => {
+        return {
+          machinenumber: breakdown.machinenumber,
+          date: breakdown.date.split("T")[0],
+          Changeovershift: breakdown.selectedshift,
+          shift: breakdown.shift,
+          changeoverNumber: breakdown.changeoverNumber,
+          starttime: breakdown.starttime,
+          endtime: breakdown.endtime,
+          Description: breakdown.Description,
+        };
+      }),
+      columnStylesbd,
+    });
     doc.save("Changeovers Details on " + wantedDate + ".pdf");
   };
   // const generateNameFilteredPdf = () => {
