@@ -13,10 +13,10 @@ export default function AdminHome() {
         <div className="container31">
           <div className="container41">
             <div className="containerhome">
-              <a href="./viewalladminchangeovers" className="homebutton">
+              <a href="./adminviewallchangeovers" className="homebutton">
                 VIEW CHANGEOVERS
               </a>
-              <a href="./generateadminreport" className="homebutton">
+              <a href="./generatereport" className="homebutton">
                 GENERATE REPORT
               </a>
               <a href="./addoperator" className="homebutton">

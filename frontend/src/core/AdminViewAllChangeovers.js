@@ -3,7 +3,7 @@ import axios from "axios";
 import "./style.css";
 import { useParams } from "react-router-dom";
 
-export default function ViewAllChangeovers() {
+export default function AdminViewAllChangeovers() {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 6;
 
@@ -40,20 +40,10 @@ export default function ViewAllChangeovers() {
   useEffect(() => {
     function getChangeovers() {
       axios
-        .get(`http://localhost:8080/api/user/getuser/${id}`)
+        .get("http://localhost:8080/api/changeover/getchangeovers")
         .then((res) => {
-          const user = res.data.number;
-          axios
-            .get("http://localhost:8080/api/changeover/getchangeovers")
-            .then((res) => {
-              const filteredChangeovers = res.data.filter(
-                (changeovers) => changeovers.selectedMachine === user
-              );
-              setChangeover(filteredChangeovers.reverse());
-            })
-            .catch((err) => {
-              alert(err.message);
-            });
+          const filteredChangeovers = res.data;
+          setChangeover(filteredChangeovers.reverse());
         })
         .catch((err) => {
           alert(err.message);
@@ -80,11 +70,8 @@ export default function ViewAllChangeovers() {
           <span className="text"> MACHINE CHANGEOVERS</span>
         </div>
         <div className="buttondiv1vac">
-          <a href="./generatemachinereport" className="savebuttonvac">
+          <a href="./generatereport" className="savebuttonvac">
             GENERATE REPORT
-          </a>
-          <a href="./addchangeover" className="savebuttonvac">
-            NEW CHANGEOVER
           </a>
           <a href="./true" className="savebuttonvac">
             GO TO HOME

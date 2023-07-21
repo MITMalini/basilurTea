@@ -19,8 +19,11 @@ export default function Home() {
               <a href="./viewallchangeovers" className="homebutton">
                 VIEW CHANGEOVERS
               </a>
-              <a href="./generatereport" className="homebutton">
+              <a href="./generatemachinereport" className="homebutton">
                 GENERATE REPORT
+              </a>
+              <a href="./dashboard" className="homebutton">
+                DASHBOARD
               </a>
               {/* <a href="./addoperator" className='homebutton'>ADD OPERATOR</a>
                         <a href="./addpacking" className='homebutton'>ADD PACKING</a>
