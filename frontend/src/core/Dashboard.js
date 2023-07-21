@@ -9,7 +9,14 @@ const Dashboard = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [startTime, setStartTime] = useState("");
+  const [starttime, setStartTime] = useState("");
+  const [date, setDate] = useState(location.state.date);
+  const [shift, setShift] = useState(location.state.selectedshift);
+  const [machinenumber, setMachine] = useState(location.state.selectedMachine);
+  const [changeoverNumber, setChangeover] = useState(
+    location.state.changeoverNumber
+  );
+  const [Description, setDescription] = useState("");
 
   function sendData(e) {
     e.preventDefault();
@@ -43,13 +50,33 @@ const Dashboard = () => {
         second: "2-digit",
         hour12: true,
       });
-      axios.patch(`http://localhost:8080/api/breakdown/addbreakdown`, {
+
+      const newBreakdown = {
+        date,
+        shift,
+        machinenumber,
+        changeoverNumber,
+        starttime,
+        Description,
         endtime: formattedTime,
-      });
+      };
+
+      newBreakdown.endtime = formattedTime; // Add endtime property to newBreakdown object
+      axios
+        .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+        .then((response) => {
+          console.log(response.data); // Log the response from the server (optional)
+          alert("Breakdown saved successfully!");
+          close(); // Close the popup
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("An error occurred while saving the breakdown.");
+        });
     } catch (err) {
       console.error(err);
+      alert("An error occurred while saving the breakdown.");
     }
-    alert("BreakDown Ended");
   }
   useEffect(() => {
     const currentTime = new Date();
@@ -61,6 +88,7 @@ const Dashboard = () => {
     });
     setStartTime(formattedTime); // Set start time in state
   }, []);
+
   return (
     <div className="container">
       <div className="container1">
@@ -211,7 +239,10 @@ const Dashboard = () => {
                 >
                   {(close) => (
                     <div className="modal">
-                      <form className="form" onSubmit={sendBDData}>
+                      <form
+                        className="form"
+                        onSubmit={(e) => sendBDData(e, close)}
+                      >
                         <span className="text-BD"> ADD BREAKDOWN</span>
                         <div className="container5">
                           <h6 className="text0">DATE</h6>
@@ -220,7 +251,7 @@ const Dashboard = () => {
                             name="name"
                             className="textinput3"
                             placeholder="Customer Code"
-                            defaultValue={location.state.date}
+                            value={date}
                             readOnly
                           />
                         </div>
@@ -231,7 +262,7 @@ const Dashboard = () => {
                             name="name"
                             className="textinput3"
                             placeholder="Customer Code"
-                            defaultValue={location.state.selectedshift}
+                            value={shift}
                             readOnly
                           />
                         </div>
@@ -241,7 +272,7 @@ const Dashboard = () => {
                             type="text"
                             name="name"
                             className="textinput3"
-                            defaultValue={location.state.selectedMachine}
+                            value={machinenumber}
                             readOnly
                           />
                         </div>
@@ -252,8 +283,8 @@ const Dashboard = () => {
                             name="name"
                             className="textinput3"
                             placeholder="Customer Code"
-                            defaultValue={location.state.changeoverNumber}
-                            read
+                            value={changeoverNumber}
+                            readOnly
                           />
                         </div>
 
@@ -264,7 +295,7 @@ const Dashboard = () => {
                             name="name"
                             className="textinput3"
                             placeholder="Customer Code"
-                            defaultValue={startTime}
+                            value={starttime}
                             readOnly
                           />
                         </div>
@@ -275,17 +306,13 @@ const Dashboard = () => {
                             name="name"
                             className="textinput3"
                             placeholder="Breakdown description"
+                            onChange={(e) => {
+                              setDescription(e.target.value);
+                            }}
                           />
                         </div>
                         <br></br>
-                        <div className="buttondiv1">
-                          <button
-                            className="savebutton"
-                            onClick={() => close()}
-                          >
-                            SAVE
-                          </button>
-                        </div>
+                        <button className="savebutton">SAVE</button>
                       </form>
                     </div>
                   )}

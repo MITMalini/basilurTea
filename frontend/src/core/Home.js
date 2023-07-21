@@ -19,7 +19,7 @@ export default function Home() {
               <a href="./viewallchangeovers" className="homebutton">
                 VIEW CHANGEOVERS
               </a>
-              <a href="./generatereport" className="homebutton">
+              <a href="./generatemachinereport" className="homebutton">
                 GENERATE REPORT
               </a>
               <a href="./dashboard" className="homebutton">

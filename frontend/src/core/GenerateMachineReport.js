@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./style.css";
 import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
 
-export default function GeneratePDF() {
+export default function GenerateMachineReport() {
+  const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [changeovers, setChangeovers] = useState([]);
   const [changeovers1, setChangeovers1] = useState([]);
   const [changeoversod, setChangeoversOD] = useState([]);
@@ -21,7 +25,6 @@ export default function GeneratePDF() {
   // const [technicians, setTechnicians] = useState([]);
   // const [supervisors, setSupervisors] = useState([]);
   // const [selectedName, setSelectedName] = useState([]);
-
   // const Positionoptions = [
   //   { _id: "1", value: "selectedoperator", label: "Operator" },
   //   { _id: "2", value: "selectedpacking", label: "Packing" },
@@ -31,26 +34,35 @@ export default function GeneratePDF() {
   // ];
   useEffect(() => {
     function getChangeovers() {
-      axios
-        .get("http://localhost:8080/api/changeover/getchangeovers")
-        .then((res) => {
-          const nofilter = res.data;
-          setChangeovers(nofilter.reverse());
-          const filteredChangeovers = nofilter.filter((changeover) => {
-            return changeover.date >= startDate && changeover.date <= endDate;
+      axios.get(`http://localhost:8080/api/user/getuser/${id}`).then((res) => {
+        const user = res.data.number;
+        axios
+          .get("http://localhost:8080/api/changeover/getchangeovers")
+          .then((res) => {
+            const allChangeovers = res.data;
+            const nofilter = allChangeovers.filter((changeover) => {
+              return changeover.selectedMachine === user;
+            });
+            {
+              console.log(nofilter);
+            }
+            setChangeovers(nofilter.reverse());
+            const filteredChangeovers = nofilter.filter((changeover) => {
+              return changeover.date >= startDate && changeover.date <= endDate;
+            });
+            setChangeovers1(filteredChangeovers.reverse());
+            const filteredODChangeovers = nofilter.filter((changeover) => {
+              const changeoverDate = changeover.date.split("T")[0];
+              return changeoverDate === wantedDate;
+            });
+            console.log(filteredODChangeovers);
+            setChangeoversOD(filteredODChangeovers.reverse());
+            setDataFetched(true);
+          })
+          .catch((err) => {
+            alert(err.message);
           });
-          setChangeovers1(filteredChangeovers.reverse());
-          const filteredODChangeovers = nofilter.filter((changeover) => {
-            const changeoverDate = changeover.date.split("T")[0];
-            return changeoverDate === wantedDate;
-          });
-          console.log(filteredODChangeovers);
-          setChangeoversOD(filteredODChangeovers.reverse());
-          setDataFetched(true);
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
+      });
     }
     getChangeovers();
     // fetch("http://localhost:8080/api/operators/getoperators")
@@ -78,7 +90,7 @@ export default function GeneratePDF() {
     //   .then((data) => {
     //     setSupervisors(data);
     //   });
-  }, [startDate, endDate, wantedDate]);
+  }, [startDate, endDate]);
 
   const generateExcel = () => {
     if (changeovers.length === 0) {
@@ -295,12 +307,12 @@ export default function GeneratePDF() {
     );
   };
   const generatefilteredDateExcel = () => {
-    if (!dataFetched || changeoversOD.length === 0) {
+    if (changeoversod.length === 0) {
       alert("No data available");
       return;
     }
 
-    const data = changeoversOD.map((changeover) => ({
+    const data = changeoversod.map((changeover) => ({
       Changeoverdate: changeover.date,
       ChangeoverMachine: changeover.selectedMachine,
       Changeovershift: changeover.selectedshift,
@@ -391,6 +403,72 @@ export default function GeneratePDF() {
 
     doc.save("Changeovers Details on " + wantedDate + ".pdf");
   };
+  // const generateNameFilteredPdf = () => {
+  //   if (!dataFetched || changeovers1.length === 0) {
+  //     alert("No data available");
+  //     return;
+  //   }
+  //   const doc = new jsPDF({ orientation: "landscape" });
+  //   const columnStyles = {
+  //     Changeoverdate: { cellWidth: 25 },
+  //     ChangeoverMachine: { cellWidth: 25 },
+  //     Changeovershift: { cellWidth: 25 },
+  //     ChangeoverNumber: { cellWidth: 25 },
+  //     Changeoveroperator: { cellWidth: 25 },
+  //     Changeoverpacking: { cellWidth: 25 },
+  //     Changeoverqc: { cellWidth: 25 },
+  //     Changeovertechnician: { cellWidth: 25 },
+  //     Changeoversupervisor: { cellWidth: 25 },
+  //     ChangeoverstartedAt: { cellWidth: 25 },
+  //     ChangeoverendedAt: { cellWidth: 25 },
+  //   };
+  //   autoTable(doc, {
+  //     columns: [
+  //       { header: "Changeover Date", dataKey: "Changeoverdate" },
+  //       { header: "Changeover Machine", dataKey: "ChangeoverMachine" },
+  //       { header: "Changeover Shift", dataKey: "Changeovershift" },
+  //       { header: "Changeover Number", dataKey: "ChangeoverNumber" },
+  //       { header: "Changeover Operator", dataKey: "Changeoveroperator" },
+  //       { header: "Changeover Packing", dataKey: "Changeoverpacking" },
+  //       { header: "Changeover QC", dataKey: "Changeoverqc" },
+  //       { header: "Changeover Technician", dataKey: "Changeovertechnician" },
+  //       { header: "Changeover Supervisor", dataKey: "Changeoversupervisor" },
+  //       { header: "Changeover Started At", dataKey: "ChangeoverstartedAt" },
+  //       { header: "Changeover Ended At", dataKey: "ChangeoverendedAt" },
+  //     ],
+  //     body: changeovers1.map((changeover) => {
+  //       return {
+  //         Changeoverdate: changeover.date,
+  //         ChangeoverMachine: changeover.selectedMachine,
+  //         Changeovershift: changeover.selectedshift,
+  //         ChangeoverNumber: changeover.changeoverNumber,
+  //         Changeoveroperator: changeover.selectedoperator
+  //           .map((operator) => operator.operator_name)
+  //           .join(", "),
+  //         Changeoverpacking: changeover.selectedpacking
+  //           .map((packing) => packing.packing_name)
+  //           .join(", "),
+  //         Changeoverqc: changeover.selectedqc
+  //           .map((qc) => qc.qc_name)
+  //           .join(", "),
+  //         Changeovertechnician: changeover.selectedtechnician
+  //           .map((technician) => technician.technician_name)
+  //           .join(", "),
+  //         Changeoversupervisor: changeover.selectedsupervisor
+  //           .map((supervisor) => supervisor.supervisor_name)
+  //           .join(", "),
+  //         ChangeoverstartedAt: changeover.startedAt,
+  //         ChangeoverendedAt: changeover.endedAt,
+  //       };
+  //     }),
+  //     columnStyles,
+  //   });
+
+  //   doc.save(
+  //     "Changeovers Details from " + startDate + " to " + endDate + ".pdf"
+  //   );
+  // };
+
   return (
     <div className="container">
       <div className="container1">

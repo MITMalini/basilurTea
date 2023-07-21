@@ -12,8 +12,10 @@ import Login from "./core/Login";
 import Home from "./core/Home";
 import AdminHome from "./core/AdminHome";
 import ViewAllChangeovers from "./core/ViewAllChnageovers";
+import AdminViewAllChangeovers from "./core/AdminViewAllChangeovers";
 import GenerateReport from "./core/GenerateReport";
 import FirstPage from "./core/FirstPage";
+import GenerateMachineReport from "./core/GenerateMachineReport";
 
 export default function App() {
   return (
@@ -73,14 +75,24 @@ export default function App() {
             element={<AddChangeOver />}
           />
           <Route
-            path="/Basilur/home/:id/generatereport"
+            path="/Basilur/adminhome/:id/generatereport"
             exact
             element={<GenerateReport />}
+          />
+          <Route
+            path="/Basilur/home/:id/generatemachinereport"
+            exact
+            element={<GenerateMachineReport />}
           />
           <Route
             path="/Basilur/home/:id/viewallchangeovers"
             exact
             element={<ViewAllChangeovers />}
+          />
+          <Route
+            path="/Basilur/adminhome/:id/adminviewallchangeovers"
+            exact
+            element={<AdminViewAllChangeovers />}
           />
         </Routes>
       </BrowserRouter>
