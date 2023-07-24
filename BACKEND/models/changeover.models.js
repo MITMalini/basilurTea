@@ -14,7 +14,7 @@ const changeoverSchema = new mongoose.Schema({
       return formattedDate;
     },
   },
-  // orderNumber: {
+  // plannedbagcount: {
   //   type: String,
   //   required: true
   // },
@@ -22,12 +22,12 @@ const changeoverSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  customercode: {
+  mrnnumber: {
     type: String,
     required: true,
   },
-  ordernumber: {
-    type: String,
+  plannedbagcount: {
+    type: Number,
     required: true,
   },
   endedAt: {

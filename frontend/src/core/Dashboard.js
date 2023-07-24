@@ -55,7 +55,7 @@ const Dashboard = () => {
         date,
         shift,
         machinenumber,
-        changeoverNumber,
+        mrnnumber,
         starttime,
         Description,
         endtime: formattedTime,
@@ -148,22 +148,22 @@ const Dashboard = () => {
                 />
               </div>
               <div className="container5">
-                <span className="textview">CUSTOMER CODE</span>
+                <span className="textview">MRN NUMBER</span>
                 <input
                   type="text"
                   name="name"
                   className="textinputview1"
-                  defaultValue={location.state.customercode}
+                  defaultValue={location.state.mrnnumber}
                   readOnly
                 />
               </div>
               <div className="container5">
-                <span className="textview">ORDER NUMBER</span>
+                <span className="textview">PLANNED BAG COUNT</span>
                 <input
                   type="text"
                   name="name"
                   className="textinputview1"
-                  defaultValue={location.state.ordernumber}
+                  defaultValue={location.state.plannedbagcount}
                   readOnly
                 />
               </div>

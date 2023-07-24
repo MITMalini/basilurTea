@@ -19,8 +19,8 @@ export default function AddChangeOver() {
   const [supervisors, setSupervisors] = useState([]);
   const [selectedsupervisor, setSelectedSupervisor] = useState();
   const [selectedshift, setSelectedshift] = useState();
-  const [customercode, setCustomerCode] = useState("");
-  const [ordernumber, setOrderNumber] = useState("");
+  const [mrnnumber, setMrnNumber] = useState("");
+  const [plannedbagcount, setBagCount] = useState("");
 
   const machineId = useRef();
 
@@ -40,8 +40,8 @@ export default function AddChangeOver() {
       selectedtechnician,
       selectedsupervisor,
       selectedshift,
-      customercode,
-      ordernumber,
+      mrnnumber,
+      plannedbagcount,
     };
     axios
       .post("http://localhost:8080/api/changeover/addchangeover", newChangeover)
@@ -61,8 +61,8 @@ export default function AddChangeOver() {
             changeoverNumber: changeoverNumber,
             starttime: startedAt,
             changeoverid: _id,
-            customercode: customercode,
-            ordernumber: ordernumber,
+            mrnnumber: mrnnumber,
+            plannedbagcount: plannedbagcount,
           },
         });
       })
@@ -128,30 +128,6 @@ export default function AddChangeOver() {
                 </div>
               )}
               <div className="container5">
-                <h6 className="text0">CUSTOMER CODE</h6>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinput3"
-                  placeholder="Customer Code"
-                  onChange={(e) => {
-                    setCustomerCode(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="container5">
-                <h6 className="text0">ORDER NUMBER</h6>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinput3"
-                  placeholder="Order Number"
-                  onChange={(e) => {
-                    setOrderNumber(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="container5">
                 <h6 className="text0">SHIFT</h6>
                 <Select
                   className="dropdown"
@@ -163,6 +139,30 @@ export default function AddChangeOver() {
                     }
                   }}
                   placeholder="Select Value"
+                />
+              </div>
+              <div className="container5">
+                <h6 className="text0">MRN NUMBER</h6>
+                <input
+                  type="text"
+                  name="name"
+                  className="textinput3"
+                  placeholder="MRN Number"
+                  onChange={(e) => {
+                    setMrnNumber(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="container5">
+                <h6 className="text0">BAG COUNT</h6>
+                <input
+                  type="text"
+                  name="name"
+                  className="textinput3"
+                  placeholder="Planned Bag count"
+                  onChange={(e) => {
+                    setBagCount(e.target.value);
+                  }}
                 />
               </div>
               <div className="container5">
