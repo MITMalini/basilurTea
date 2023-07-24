@@ -1,12 +1,14 @@
-const  Technician = require('../models/technician.model.js');
+const Technician = require("../models/technician.model.js");
 
 //get all Technicians
 
 const getTechnicians = async (req, res) => {
-  const technicians = await  Technician.find();
+  const technicians = await Technician.find();
 
   if (!technicians) {
-    return res.status(404).json({ message: 'No any available technicians found' });
+    return res
+      .status(404)
+      .json({ message: "No any available technicians found" });
   } else {
     return res.status(200).json(technicians);
   }
@@ -17,10 +19,10 @@ const getTechnicians = async (req, res) => {
 const getTechnician = async (req, res) => {
   const { id } = req.params;
 
-  const technician = await  Technician.findById({ _id: id });
+  const technician = await Technician.findById({ _id: id });
 
   if (!technician) {
-    return res.status(404).json({ message: 'No technician found' });
+    return res.status(404).json({ message: "No technician found" });
   } else {
     return res.status(200).json(technician);
   }
@@ -29,14 +31,12 @@ const getTechnician = async (req, res) => {
 //add new  Technician
 
 const addTechnician = async (req, res) => {
-  const { epfno, technician_name, email} =
-    req.body;
+  const { epfno, technician_name } = req.body;
 
   try {
-    const newtechnician = await  Technician.create({
+    const newtechnician = await Technician.create({
       epfno,
       technician_name,
-      email,
     });
 
     return res.status(200).json(newtechnician);
@@ -51,12 +51,14 @@ const addTechnician = async (req, res) => {
 const deleteTechnician = async (req, res) => {
   const { id } = req.params;
 
-  const technician = await  Technician.findOneAndDelete({ _id: id });
+  const technician = await Technician.findOneAndDelete({ _id: id });
 
   if (!technician) {
-    return res.status(400).json({ error: 'No such technician' });
+    return res.status(400).json({ error: "No such technician" });
   } else {
-    return res.status(200).json({ message: ' Technician deleted successfully' });
+    return res
+      .status(200)
+      .json({ message: " Technician deleted successfully" });
   }
 };
 
@@ -65,19 +67,22 @@ const deleteTechnician = async (req, res) => {
 const updateTechnician = async (req, res) => {
   const { id } = req.params;
 
-  const technician = await  Technician.findOneAndUpdate({ _id: id }, { ...req.body });
+  const technician = await Technician.findOneAndUpdate(
+    { _id: id },
+    { ...req.body }
+  );
 
   if (!technician) {
-    return res.status(400).json({ error: 'No such technician' });
+    return res.status(400).json({ error: "No such technician" });
   } else {
     return res.status(200).json(technician);
   }
 };
 
 module.exports = {
-    getTechnicians,
-    getTechnician,
-    addTechnician,
-    deleteTechnician,
-    updateTechnician,
+  getTechnicians,
+  getTechnician,
+  addTechnician,
+  deleteTechnician,
+  updateTechnician,
 };

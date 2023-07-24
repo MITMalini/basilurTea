@@ -13,7 +13,6 @@ export default function Addoperator() {
     //java script objectw
     const newOperator = {
       operator_name,
-      email,
       epfno,
     };
     axios
@@ -46,7 +45,7 @@ export default function Addoperator() {
                   }}
                 />
               </div>
-              <div className="container5">
+              {/* <div className="container5">
                 <span className="text2">EMAIL </span>
                 <input
                   type="text"
@@ -57,7 +56,7 @@ export default function Addoperator() {
                     setEmail(e.target.value);
                   }}
                 />
-              </div>
+              </div> */}
               <div className="container5">
                 <span className="text3">EPF NO</span>
                 <input
