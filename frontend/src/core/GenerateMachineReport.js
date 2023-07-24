@@ -109,7 +109,7 @@ export default function GenerateMachineReport() {
     //   .then((data) => {
     //     setSupervisors(data);
     //   });
-  }, [startDate, endDate]);
+  }, [startDate, endDate, wantedDate]);
 
   const generateExcel = () => {
     if (changeovers.length === 0) {
@@ -131,7 +131,7 @@ export default function GenerateMachineReport() {
       ChangeoverendedAt: { cellWidth: 25 },
     };
     const data = changeovers.map((changeover) => ({
-      Changeoverdate: changeover.date,
+      Changeoverdate: changeover.date.split("T")[0],
       ChangeoverMachine: changeover.selectedMachine,
       Changeovershift: changeover.selectedshift,
       ChangeoverNumber: changeover.changeoverNumber,
@@ -194,7 +194,7 @@ export default function GenerateMachineReport() {
       ],
       body: changeovers.map((changeover) => {
         return {
-          Changeoverdate: changeover.date,
+          Changeoverdate: changeover.date.split("T")[0],
           ChangeoverMachine: changeover.selectedMachine,
           Changeovershift: changeover.selectedshift,
           ChangeoverNumber: changeover.changeoverNumber,
@@ -230,7 +230,7 @@ export default function GenerateMachineReport() {
     }
 
     const data = changeovers1.map((changeover) => ({
-      Changeoverdate: changeover.date,
+      Changeoverdate: changeover.date.split("T")[0],
       ChangeoverMachine: changeover.selectedMachine,
       Changeovershift: changeover.selectedshift,
       ChangeoverNumber: changeover.changeoverNumber,
@@ -295,7 +295,7 @@ export default function GenerateMachineReport() {
       ],
       body: changeovers1.map((changeover) => {
         return {
-          Changeoverdate: changeover.date,
+          Changeoverdate: changeover.date.split("T")[0],
           ChangeoverMachine: changeover.selectedMachine,
           Changeovershift: changeover.selectedshift,
           ChangeoverNumber: changeover.changeoverNumber,
@@ -332,7 +332,7 @@ export default function GenerateMachineReport() {
     }
 
     const data = changeoversod.map((changeover) => ({
-      Changeoverdate: changeover.date,
+      Changeoverdate: changeover.date.split("T")[0],
       ChangeoverMachine: changeover.selectedMachine,
       Changeovershift: changeover.selectedshift,
       ChangeoverNumber: changeover.changeoverNumber,
@@ -394,7 +394,7 @@ export default function GenerateMachineReport() {
       ],
       body: changeoversod.map((changeover) => {
         return {
-          Changeoverdate: changeover.date,
+          Changeoverdate: changeover.date.split("T")[0],
           ChangeoverMachine: changeover.selectedMachine,
           Changeovershift: changeover.selectedshift,
           ChangeoverNumber: changeover.changeoverNumber,
@@ -419,40 +419,40 @@ export default function GenerateMachineReport() {
       }),
       columnStyles,
     });
-    doc.addPage();
-    const columnStylesbd = {
-      machinenumber: { cellWidth: 20 },
-      date: { cellWidth: 25 },
-      shift: { cellWidth: 25 },
-      changeoverNumber: { cellWidth: 25 },
-      starttime: { cellWidth: 25 },
-      endtime: { cellWidth: 25 },
-      Description: { cellWidth: 40 },
-    };
-    autoTable(doc, {
-      columns: [
-        { header: "machine number", dataKey: "machinenumber" },
-        { header: "date", dataKey: "date" },
-        { header: "Shift", dataKey: "shift" },
-        { header: "Changeover Number", dataKey: "changeoverNumber" },
-        { header: "start time", dataKey: "starttime" },
-        { header: "end time", dataKey: "endtime" },
-        { header: "Description", dataKey: "Description" },
-      ],
-      body: breakdowns.map((breakdown) => {
-        return {
-          machinenumber: breakdown.machinenumber,
-          date: breakdown.date.split("T")[0],
-          Changeovershift: breakdown.selectedshift,
-          shift: breakdown.shift,
-          changeoverNumber: breakdown.changeoverNumber,
-          starttime: breakdown.starttime,
-          endtime: breakdown.endtime,
-          Description: breakdown.Description,
-        };
-      }),
-      columnStylesbd,
-    });
+    // doc.addPage();
+    // const columnStylesbd = {
+    //   machinenumber: { cellWidth: 20 },
+    //   date: { cellWidth: 25 },
+    //   shift: { cellWidth: 25 },
+    //   changeoverNumber: { cellWidth: 25 },
+    //   starttime: { cellWidth: 25 },
+    //   endtime: { cellWidth: 25 },
+    //   Description: { cellWidth: 40 },
+    // };
+    // autoTable(doc, {
+    //   columns: [
+    //     { header: "machine number", dataKey: "machinenumber" },
+    //     { header: "date", dataKey: "date" },
+    //     { header: "Shift", dataKey: "shift" },
+    //     { header: "Changeover Number", dataKey: "changeoverNumber" },
+    //     { header: "start time", dataKey: "starttime" },
+    //     { header: "end time", dataKey: "endtime" },
+    //     { header: "Description", dataKey: "Description" },
+    //   ],
+    //   body: breakdowns.map((breakdown) => {
+    //     return {
+    //       machinenumber: breakdown.machinenumber,
+    //       date: breakdown.date.split("T")[0],
+    //       Changeovershift: breakdown.selectedshift,
+    //       shift: breakdown.shift,
+    //       changeoverNumber: breakdown.changeoverNumber,
+    //       starttime: breakdown.starttime,
+    //       endtime: breakdown.endtime,
+    //       Description: breakdown.Description,
+    //     };
+    //   }),
+    //   columnStylesbd,
+    // });
     doc.save("Changeovers Details on " + wantedDate + ".pdf");
   };
   // const generateNameFilteredPdf = () => {
@@ -490,7 +490,7 @@ export default function GenerateMachineReport() {
   //     ],
   //     body: changeovers1.map((changeover) => {
   //       return {
-  //         Changeoverdate: changeover.date,
+  //         Changeoverdate: changeover.date.split("T")[0],
   //         ChangeoverMachine: changeover.selectedMachine,
   //         Changeovershift: changeover.selectedshift,
   //         ChangeoverNumber: changeover.changeoverNumber,
