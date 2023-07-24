@@ -16,6 +16,7 @@ import AdminViewAllChangeovers from "./core/AdminViewAllChangeovers";
 import GenerateReport from "./core/GenerateReport";
 import FirstPage from "./core/FirstPage";
 import GenerateMachineReport from "./core/GenerateMachineReport";
+import AddBreakdown from "./core/AddBreakDown";
 
 export default function App() {
   return (
@@ -93,6 +94,16 @@ export default function App() {
             path="/Basilur/adminhome/:id/adminviewallchangeovers"
             exact
             element={<AdminViewAllChangeovers />}
+          />
+          <Route
+            path="/Basilur/adminhome/:id/adminviewallchangeovers"
+            exact
+            element={<AdminViewAllChangeovers />}
+          />
+          <Route
+            path="/Basilur/home/:id/addbreakdown"
+            exact
+            element={<AddBreakdown />}
           />
         </Routes>
       </BrowserRouter>

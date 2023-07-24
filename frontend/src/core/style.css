@@ -895,3 +895,53 @@ label {
   color: black;
   margin-bottom: 2%;
 }
+.container-addbrdwn{
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.container1-addbrdwn{
+  flex: 0 0 auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.container2-addbrdwn{
+  flex: 0 0 auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.container3-addbrdwn{
+  flex: 0 0 auto;
+  width: 100%;
+  border: 2px dashed rgba(120, 120, 120, 0.4);
+  height: 15%;
+  display: flex;
+  align-items: flex-start;
+}
+.container4-addbrdwn{
+  flex: 0 0 auto;
+  width: 90%;
+  height: 80%;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.container5-addbrdwn{
+  flex: 0 0 auto;
+  width: 100%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
