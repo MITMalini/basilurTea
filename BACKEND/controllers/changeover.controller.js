@@ -44,7 +44,7 @@ const addChangeover = async (req, res) => {
     startedAt,
     endedAt,
     customercode,
-    ordernumber,
+    plannedbagcount,
   } = req.body;
 
   try {
@@ -59,7 +59,7 @@ const addChangeover = async (req, res) => {
       startedAt,
       endedAt,
       customercode,
-      ordernumber,
+      plannedbagcount,
       // bag_count,
       // error_count,
       // runtime,
