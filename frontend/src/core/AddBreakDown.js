@@ -9,40 +9,40 @@ export default function AddBreakdown() {
           <div className="container4-addbrdwn">
             <div className="container5-addbrdwn">
               <button type="button" className="button-addbrdwn">
-                Button
+                NO TEA
               </button>
               <button type="button" className="button-addbrdwn">
-                Button
+                NO OPERATOR
               </button>
               <button type="button" className="button-addbrdwn">
-                Button
-              </button>
-            </div>
-            <div className="container5-addbrdwn">
-              <button type="button" className="button-addbrdwn">
-                Button
-              </button>
-              <button type="button" className="button-addbrdwn">
-                Button
-              </button>
-              <button type="button" className="button-addbrdwn">
-                Button
+                NO PACKING
               </button>
             </div>
             <div className="container5-addbrdwn">
               <button type="button" className="button-addbrdwn">
-                Button
+                NO MATERIAL
               </button>
               <button type="button" className="button-addbrdwn">
-                Button
+                LUNCH
               </button>
               <button type="button" className="button-addbrdwn">
-                Button
+                TEA TIME
               </button>
             </div>
             <div className="container5-addbrdwn">
               <button type="button" className="button-addbrdwn">
-                Button
+                MEETING
+              </button>
+              <button type="button" className="button-addbrdwn">
+                NO POWER
+              </button>
+              <button type="button" className="button-addbrdwn">
+                NO MRN
+              </button>
+            </div>
+            <div className="container5-addbrdwn">
+              <button type="button" className="button-addbrdwn">
+                OTHER
               </button>
               <button type="button" className="button-addbrdwn">
                 Button
