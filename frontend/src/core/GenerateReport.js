@@ -143,7 +143,6 @@ export default function GeneratePDF() {
 
     XLSX.writeFile(workbook, "Changeovers_Details.xlsx");
   };
-
   const generatePdf = () => {
     if (changeovers.length === 0) {
       alert("No data available");
@@ -207,7 +206,6 @@ export default function GeneratePDF() {
 
     doc.save("Changeovers Details.pdf");
   };
-
   const generatefilteredExcel = () => {
     if (changeovers.length === 0) {
       alert("No data available");
