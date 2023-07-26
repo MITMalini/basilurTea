@@ -90,6 +90,149 @@ const Dashboard = () => {
   }, []);
 
   return (
+    // <div className="container">
+    //   <div className="container1">
+    //     <div className="container21">
+    //       <span className="text"> CHANGEOVER</span>
+    //     </div>
+    //     <div className="container3-Dashboard">
+    //       <div className="container4main-Dashboard">
+    //         <div className="container4-Dashboard">
+    //           <form className="form-Dashboard">
+    //             <div className="container5-Dashboard">
+    //               <span className="textview-dashboard">MACHINE NUMBER </span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.selectedMachine}
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">MRN NUMBER</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.mrnnumber}
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">PLANNED BAG COUNT</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.plannedbagcount}
+    //                 readOnly
+    //               />
+    //             </div>
+    //             <div className="container5-Dashboard">
+    //               <span className="textview-dashboard">DATE</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.date.split("T")[0]}
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">START TIME</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.starttime}
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">SHIFT </span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.selectedshift}
+    //                 readOnly
+    //               />
+
+    //               <span className="textview-dashboard">CHANGE OVER </span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.changeoverNumber}
+    //                 readOnly
+    //               />
+    //             </div>
+    //             <div className="container5-Dashboard">
+    //               <span className="textview-dashboard">OPERATOR</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.selectedoperator.operator_name}
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">PACKING</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.selectedpacking.packing_name}
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">TECHNICIAN</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={
+    //                   location.state.selectedtechnician.technician_name
+    //                 }
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">QC</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={location.state.selectedqc.qc_name}
+    //                 readOnly
+    //               />
+    //               <span className="textview-dashboard">In-Charge</span>
+    //               <input
+    //                 type="text"
+    //                 name="name"
+    //                 className="textinput-dashboard"
+    //                 defaultValue={
+    //                   location.state.selectedsupervisor.supervisor_name
+    //                 }
+    //                 readOnly
+    //               />
+    //             </div>
+    //           </form>
+    //         </div>
+    //       </div>
+    //       <div className="containerbotton-Dashboard">
+    //         <button>end changeover</button>
+    //       </div>
+    //       <div></div>
+    //       {/* <div className="optionbox">
+    //         <div className="buttondiv1">
+    //           <a type="submit" className="buttonm" onSubmit={sendData}>
+    //             <button className="buttonmm">END CHANGE OVER</button>
+    //           </a>
+    //         </div>
+    //         <div className="buttondiv1">
+    //           <a href="./true" className="buttonm">
+    //             <button className="buttonmm">Breakdown</button>
+    //           </a>
+    //         </div>
+
+    //         <a href="./true" className="optionbox-a">
+    //           <button className="optionbox-botton">GO BACK TO HOME</button>
+    //         </a>
+    //       </div> */}
+    //     </div>
+    //   </div>
+    // </div>
+
     <div className="container">
       <div className="container1">
         <div className="container21">
@@ -97,232 +240,12 @@ const Dashboard = () => {
         </div>
         <div className="container3-Dashboard">
           <div className="container4-Dashboard">
-            <form className="form-dashboard" onSubmit={sendData}>
-              <div className="container5">
-                <span className="textview">DATE&nbsp;</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputviewl"
-                  defaultValue={location.state.date}
-                  readOnly
-                />
-                <span className="textviewo">
-                  START TIME &nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputviewr"
-                  defaultValue={location.state.starttime}
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">SHIFT </span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputviewl"
-                  defaultValue={location.state.selectedshift}
-                  readOnly
-                />
-
-                <span className="textviewo">CHANGE OVER </span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputviewr"
-                  defaultValue={location.state.changeoverNumber}
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">MACHINE NUMBER </span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={location.state.selectedMachine}
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">MRN NUMBER</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={location.state.mrnnumber}
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">PLANNED BAG COUNT</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={location.state.plannedbagcount}
-                  readOnly
-                />
-              </div>
-
-              <div className="container5">
-                <span className="textview">OPERATOR</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={location.state.selectedoperator.operator_name}
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">PACKING</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={location.state.selectedpacking.packing_name}
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">TECHNICIAN</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={
-                    location.state.selectedtechnician.technician_name
-                  }
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">QC</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={location.state.selectedqc.qc_name}
-                  readOnly
-                />
-              </div>
-              <div className="container5">
-                <span className="textview">IN-CHARGE</span>
-                <input
-                  type="text"
-                  name="name"
-                  className="textinputview1"
-                  defaultValue={
-                    location.state.selectedsupervisor.supervisor_name
-                  }
-                  readOnly
-                />
-              </div>
-              <div className="buttondiv1">
-                <a type="submit" className="buttonm">
-                  <button className="buttonmm">END CHANGE OVER</button>
-                </a>
-              </div>
-            </form>
-            <div className="optionbox">
-              <div>
-                <Popup
-                  trigger={
-                    <button className="optionbox-botton">ADD BREAKDOWN</button>
-                  }
-                  modal
-                  nested
-                >
-                  {(close) => (
-                    <div className="modal">
-                      <form
-                        className="form"
-                        onSubmit={(e) => sendBDData(e, close)}
-                      >
-                        <span className="text-BD"> ADD BREAKDOWN</span>
-                        <div className="container5">
-                          <h6 className="text0">DATE</h6>
-                          <input
-                            type="text"
-                            name="name"
-                            className="textinput3"
-                            placeholder="Customer Code"
-                            value={date}
-                            readOnly
-                          />
-                        </div>
-                        <div className="container5">
-                          <h6 className="text0">SHIFT</h6>
-                          <input
-                            type="text"
-                            name="name"
-                            className="textinput3"
-                            placeholder="Customer Code"
-                            value={shift}
-                            readOnly
-                          />
-                        </div>
-                        <div className="container5">
-                          <h6 className="text0">MACHINE</h6>
-                          <input
-                            type="text"
-                            name="name"
-                            className="textinput3"
-                            value={machinenumber}
-                            readOnly
-                          />
-                        </div>
-                        <div className="container5">
-                          <h6 className="text0">CHANGEOVER</h6>
-                          <input
-                            type="text"
-                            name="name"
-                            className="textinput3"
-                            placeholder="Customer Code"
-                            value={changeoverNumber}
-                            readOnly
-                          />
-                        </div>
-
-                        <div className="container5">
-                          <h6 className="text0">START TIME</h6>
-                          <input
-                            type="text"
-                            name="name"
-                            className="textinput3"
-                            placeholder="Customer Code"
-                            value={starttime}
-                            readOnly
-                          />
-                        </div>
-                        <div className="container5">
-                          <h6 className="text0">DESCRIPTION</h6>
-                          <input
-                            type="text"
-                            name="name"
-                            className="textinput3"
-                            placeholder="Breakdown description"
-                            onChange={(e) => {
-                              setDescription(e.target.value);
-                            }}
-                          />
-                        </div>
-                        <br></br>
-                        <button className="savebutton">SAVE</button>
-                      </form>
-                    </div>
-                  )}
-                </Popup>
-              </div>
-              <a href="./true" className="optionbox-a">
-                <button className="optionbox-botton">GO BACK TO HOME</button>
-              </a>
-            </div>
+            <div className="container5-Dashboard"></div>
+            <button type="button" className="button-Dashboard">
+              Button
+            </button>
           </div>
+          <div className="container6-Dashboard"></div>
         </div>
       </div>
     </div>
