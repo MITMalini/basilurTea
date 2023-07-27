@@ -45,6 +45,26 @@ const Dashboard = () => {
   const handleButtonClickLunch = () => {
     setIsSelectedLunch(!isSelectedLunch);
   };
+  const [isSelectedNoMaterial, setIsSelectedNoMaterial] = useState(false);
+  const handleButtonClickNoMaterial = () => {
+    setIsSelectedNoMaterial(!isSelectedNoMaterial);
+  };
+  const [isSelectedNoPacking, setIsSelectedNoPacking] = useState(false);
+  const handleButtonClickNoPacking = () => {
+    setIsSelectedNoPacking(!isSelectedNoPacking);
+  };
+  const [isSelectedNoOperator, setIsSelectedNoOperator] = useState(false);
+  const handleButtonClickNoOperator = () => {
+    setIsSelectedNoOperator(!isSelectedNoOperator);
+  };
+  const [isSelectedNoTea, setIsSelectedNoTea] = useState(false);
+  const handleButtonClickNoTea = () => {
+    setIsSelectedNoTea(!isSelectedNoTea);
+  };
+  const [isSelectedDinner, setIsSelectedDinner] = useState(false);
+  const handleButtonClickDinner = () => {
+    setIsSelectedDinner(!isSelectedDinner);
+  };
   function sendData(e) {
     e.preventDefault();
     try {
@@ -254,19 +274,45 @@ const Dashboard = () => {
             </div>
             <div className="container4-addbrdwn">
               <div className="container5-addbrdwn">
-                <button type="submit" className="button-addbrdwn">
-                  NO TEA
+                <button
+                  className={`button-addbrdwn ${
+                    isSelectedNoTea ? "selected" : ""
+                  }`}
+                  onClick={handleButtonClickNoTea}
+                >
+                  {isSelectedNoTea ? "MACHINE BREAKDOWN - NO TEA" : "NO TEA"}
                 </button>
-                <button type="button" className="button-addbrdwn">
-                  NO OPERATOR
+                <button
+                  className={`button-addbrdwn ${
+                    isSelectedNoOperator ? "selected" : ""
+                  }`}
+                  onClick={handleButtonClickNoOperator}
+                >
+                  {isSelectedNoOperator
+                    ? "MACHINE BREAKDOWN - NO OPERATOR"
+                    : "NO OPERATOR"}
                 </button>
-                <button type="button" className="button-addbrdwn">
-                  NO PACKING
+                <button
+                  className={`button-addbrdwn ${
+                    isSelectedNoPacking ? "selected" : ""
+                  }`}
+                  onClick={handleButtonClickNoPacking}
+                >
+                  {isSelectedNoPacking
+                    ? "MACHINE BREAKDOWN - NO PACKING"
+                    : "NO PACKING"}
                 </button>
               </div>
               <div className="container5-addbrdwn">
-                <button type="button" className="button-addbrdwn">
-                  NO MATERIAL
+                <button
+                  className={`button-addbrdwn ${
+                    isSelectedNoMaterial ? "selected" : ""
+                  }`}
+                  onClick={handleButtonClickNoMaterial}
+                >
+                  {isSelectedNoMaterial
+                    ? "MACHINE BREAKDOWN - NO MATERIAL"
+                    : "NO MATERIAL"}
                 </button>
                 <button
                   className={`button-addbrdwn ${
@@ -318,12 +364,16 @@ const Dashboard = () => {
                 </button>
               </div>
               <div className="container5-addbrdwn">
-                {/* <button
-                  className={`button-addbrdwn ${isSelected ? "selected" : ""}`}
-                  onClick={handleButtonClick1}
+                <button
+                  className={`button-addbrdwn ${
+                    isSelectedDinner ? "selected" : ""
+                  }`}
+                  onClick={handleButtonClickDinner}
                 >
-                  {isSelected ? "Selected" : "Not Selected"}
-                </button> */}
+                  {isSelectedDinner
+                    ? "MACHINE BREAKDOWN - NO DINNER"
+                    : "DINNER"}
+                </button>
                 <button type="button" className="button-addbrdwn">
                   Button
                 </button>
