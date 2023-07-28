@@ -22,48 +22,79 @@ const Dashboard = () => {
   const [changeoverNumber, setChangeover] = useState(
     location.state.changeoverNumber
   );
-  const [Description, setDescription] = useState("");
 
-  const [isSelected, setIsSelected] = useState(false);
+  const [breakdowndata, setBreakDowndata] = useState(location.state.mrnnumber);
+  const [mrnnumber, setMrnNumber] = useState(location.state.mrnnumber);
+  const [Description, setDescription] = useState("");
+  const [refreshTime, setRefreshTime] = useState(null);
+
   const [isSelectedNOMRN, setIsSelectedNOMRN] = useState(false);
   const handleButtonClickNoMRN = () => {
     setIsSelectedNOMRN(!isSelectedNOMRN);
+    setDescription("NO MRN");
   };
   const [isSelectedMeeting, setIsSelectedMeeting] = useState(false);
   const handleButtonClickMeeting = () => {
     setIsSelectedMeeting(!isSelectedMeeting);
+    setDescription("MEETING");
+    setRefreshTime(new Date().toLocaleTimeString());
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
   const [isSelectedNoPower, setIsSelectedNoPower] = useState(false);
   const handleButtonClickNoPower = () => {
     setIsSelectedNoPower(!isSelectedNoPower);
+    setDescription("NO POWER");
   };
   const [isSelectedTeaTime, setIsSelectedTeaTime] = useState(false);
   const handleButtonClickTeaTime = () => {
     setIsSelectedTeaTime(!isSelectedTeaTime);
+    setDescription("TEA TIME");
   };
   const [isSelectedLunch, setIsSelectedLunch] = useState(false);
+
   const handleButtonClickLunch = () => {
     setIsSelectedLunch(!isSelectedLunch);
+    setDescription("LUNCH");
+    if (!isSelectedNOMRN) {
+      setStartTime(formattedTime);
+      setIsSelectedNOMRN(!isSelectedNOMRN);
+      setDescription("NO MRN");
+      console.log(starttime);
+    } else {
+      setEndTime(formattedTime);
+      setIsSelectedNOMRN(true);
+      console.log(endedAt);
+    }
   };
   const [isSelectedNoMaterial, setIsSelectedNoMaterial] = useState(false);
   const handleButtonClickNoMaterial = () => {
     setIsSelectedNoMaterial(!isSelectedNoMaterial);
+    setDescription("NO MATERIAL");
   };
   const [isSelectedNoPacking, setIsSelectedNoPacking] = useState(false);
   const handleButtonClickNoPacking = () => {
     setIsSelectedNoPacking(!isSelectedNoPacking);
+    setDescription("NO PACKING");
   };
+
   const [isSelectedNoOperator, setIsSelectedNoOperator] = useState(false);
+
   const handleButtonClickNoOperator = () => {
     setIsSelectedNoOperator(!isSelectedNoOperator);
+    setDescription("NO OPERATOR");
   };
+
   const [isSelectedNoTea, setIsSelectedNoTea] = useState(false);
   const handleButtonClickNoTea = () => {
     setIsSelectedNoTea(!isSelectedNoTea);
+    setDescription("NO TEA");
   };
   const [isSelectedDinner, setIsSelectedDinner] = useState(false);
   const handleButtonClickDinner = () => {
     setIsSelectedDinner(!isSelectedDinner);
+    setDescription("DINNER");
   };
   function sendData(e) {
     e.preventDefault();
@@ -103,18 +134,22 @@ const Dashboard = () => {
         shift,
         machinenumber,
         mrnnumber,
-        starttime,
+        starttime: currentTime.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }),
         Description,
-        endtime: formattedTime,
+        changeoverNumber,
+        // endtime: formattedTime,
       };
-
-      newBreakdown.endtime = formattedTime; // Add endtime property to newBreakdown object
+      // newBreakdown.endtime = formattedTime; // Add endtime property to newBreakdown object
       axios
         .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
         .then((response) => {
           console.log(response.data); // Log the response from the server (optional)
           alert("Breakdown saved successfully!");
-          close(); // Close the popup
         })
         .catch((error) => {
           console.error(error);
@@ -124,22 +159,18 @@ const Dashboard = () => {
       console.error(err);
       alert("An error occurred while saving the breakdown.");
     }
-  }
-  useEffect(() => {
-    // const intervalId = setInterval(() => {
-    //   window.location.reload();
-    // }, 5000);
-    const currentTime = new Date();
-    const formattedTime = currentTime.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-    });
-    setStartTime(formattedTime); // Set start time in state
-    // return () => clearInterval(intervalId);
-  }, []);
 
+    axios
+      .get("http://localhost:8080/api/breakdown/getbreakdowns")
+      .then((res) => {
+        const nofilter = res.data;
+        const filteredbreakdown = nofilter.filter((breakdown) => {
+          return breakdown.IsBreakdown === true;
+        });
+        setBreakDowndata(filteredbreakdown);
+      })
+      .catch((err) => console.log(`get machine data failed ${err}`));
+  }
   return (
     <div className="container-Dashboard">
       <div className="container1-Dashboard">
@@ -265,7 +296,6 @@ const Dashboard = () => {
               END CHANGEOVER
             </button>
           </form>
-
           <div className="container6-Dashboard">
             <div className="container8-Dashboard">
               <Divider type="vertical" style={dividerStyle} />
@@ -273,8 +303,9 @@ const Dashboard = () => {
               <Divider type="vertical" style={dividerStyle} />
             </div>
             <div className="container4-addbrdwn">
-              <div className="container5-addbrdwn">
+              <form className="container5-addbrdwn" onSubmit={sendBDData}>
                 <button
+                  type="submit"
                   className={`button-addbrdwn ${
                     isSelectedNoTea ? "selected" : ""
                   }`}
@@ -302,8 +333,8 @@ const Dashboard = () => {
                     ? "MACHINE BREAKDOWN - NO PACKING"
                     : "NO PACKING"}
                 </button>
-              </div>
-              <div className="container5-addbrdwn">
+              </form>
+              <form className="container5-addbrdwn" onSubmit={sendBDData}>
                 <button
                   className={`button-addbrdwn ${
                     isSelectedNoMaterial ? "selected" : ""
@@ -332,8 +363,8 @@ const Dashboard = () => {
                     ? "MACHINE BREAKDOWN - TEA TIME"
                     : "TEA TIME"}
                 </button>
-              </div>
-              <div className="container5-addbrdwn">
+              </form>
+              <form className="container5-addbrdwn" onSubmit={sendBDData}>
                 <button
                   className={`button-addbrdwn ${
                     isSelectedMeeting ? "selected" : ""
@@ -362,8 +393,8 @@ const Dashboard = () => {
                 >
                   {isSelectedNOMRN ? "MACHINE BREAKDOWN - NO MRN" : "NO MRN"}
                 </button>
-              </div>
-              <div className="container5-addbrdwn">
+              </form>
+              <div className="container5-addbrdwn" onSubmit={sendBDData}>
                 <button
                   className={`button-addbrdwn ${
                     isSelectedDinner ? "selected" : ""

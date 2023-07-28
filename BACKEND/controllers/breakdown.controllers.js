@@ -37,8 +37,10 @@ const addBreakdown = async (req, res) => {
     shift,
     changeoverNumber,
     starttime,
+    mrnnumber,
     endtime,
     Description,
+    IsBreakdown,
   } = req.body;
 
   try {
@@ -47,9 +49,11 @@ const addBreakdown = async (req, res) => {
       date,
       shift,
       changeoverNumber,
+      mrnnumber,
       starttime,
       endtime,
       Description,
+      IsBreakdown,
     });
 
     return res.status(200).json(breakdown);

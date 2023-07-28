@@ -13,6 +13,10 @@ const breakdownSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  mrnnumber: {
+    type: String,
+    required: true,
+  },
   changeoverNumber: {
     type: Number,
     required: true,
@@ -23,11 +27,15 @@ const breakdownSchema = new mongoose.Schema({
   },
   endtime: {
     type: String,
-    required: true,
   },
   Description: {
     type: String,
     required: true,
+  },
+  IsBreakdown: {
+    type: Boolean,
+    required: true,
+    default: true,
   },
 });
 const Breakdown = mongoose.model("Breakdown", breakdownSchema);
