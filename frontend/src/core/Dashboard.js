@@ -15,55 +15,87 @@ const Dashboard = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [starttime, setStartTime] = useState("");
   const [date, setDate] = useState(location.state.date);
   const [shift, setShift] = useState(location.state.selectedshift);
   const [machinenumber, setMachine] = useState(location.state.selectedMachine);
   const [changeoverNumber, setChangeover] = useState(
     location.state.changeoverNumber
   );
-  const [breakdowndata, setBreakDowndata] = useState(location.state.mrnnumber);
   const [mrnnumber, setMrnNumber] = useState(location.state.mrnnumber);
   const [description, setDescription] = useState("");
 
-  const [isSelectedNOMRN, setIsSelectedNOMRN] = useState(false);
-
+  const [isOn, setIsOn] = useState(false);
+  const [newbreakdown, setNewBreakdown] = useState(null);
   const handleButtonClickNoMRN = (e) => {
-    setIsSelectedNOMRN(!isSelectedNOMRN);
-    e.preventDefault();
-    try {
-      const currentTime = new Date();
-      const newBreakdown = {
-        date,
-        shift,
-        machinenumber,
-        mrnnumber,
-        starttime: currentTime.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true,
-        }),
-        Description: "NO MRN",
-        changeoverNumber,
-        // endtime: formattedTime,
-      };
-      axios
-        .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
-        .then((response) => {
-          const objectId = response.data._id;
-          // console.log("Object ID:", objectId); // Log the response from the server (optional)
-          alert("Breakdown saved successfully!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("An error occurred while saving the breakdown.");
-        });
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred while saving the breakdown.");
+    // Toggle the state
+    setIsOn((prevIsOn) => !prevIsOn);
+
+    // Execute different functions based on the state
+    if (!isOn) {
+      functionWhenOn();
+    } else {
+      functionWhenOff();
     }
   };
+
+  const functionWhenOn = () => {
+    // Logic for when the button is on
+    const currentTime = new Date();
+    const newBreakdown = {
+      date,
+      shift,
+      machinenumber,
+      mrnnumber,
+      starttime: currentTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }),
+      Description: "NO MRN",
+      changeoverNumber,
+    };
+
+    axios
+      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .then((res) => {
+        // Store the created breakdown in state
+        setNewBreakdown(res.data._id);
+        console.log(res.data._id);
+        alert("Breakdown started successfully!");
+      })
+      .catch((error) => {
+        console.error("Error creating breakdown:", error);
+      });
+  };
+  const functionWhenOff = () => {
+    const currentTime = new Date();
+    if (newbreakdown) {
+      axios
+        .patch(
+          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          {
+            endtime: currentTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: true,
+            }),
+            IsBreakdown: "false",
+          }
+        )
+        .then((response) => {
+          setNewBreakdown(null); // Clear the stored breakdown object
+          alert("Breakdown ended successfully!");
+        })
+        .catch((error) => {
+          console.error("Error updating breakdown:", error);
+        });
+    } else {
+      alert("No active breakdown to end.");
+    }
+  };
+
   function sendData(e) {
     e.preventDefault();
     try {
@@ -87,30 +119,30 @@ const Dashboard = () => {
     navigate(`/Basilur/home/${id}/addchangeover`);
   }
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/breakdown/getbreakdowns")
-      .then((res) => {
-        const nofilter = res.data;
-        const filteredData = nofilter.filter((breakdown) => {
-          return (breakdown.machinenumber =
-            machinenumber &&
-            breakdown.date == date &&
-            breakdown.changeoverNumber == changeoverNumber &&
-            breakdown.IsBreakdown == true);
-        });
-        console.log(filteredData);
-        setBreakDowndata(filteredData);
-        if (filteredData.length > 0 && filteredData[0].Description) {
-          setDescription(filteredData[0].Description);
-        }
-        console.log(filteredData[0].Description);
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("An error occurred while fetching the breakdown.");
-      });
-  }, [machinenumber, date, changeoverNumber]);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8080/api/breakdown/getbreakdowns")
+  //     .then((res) => {
+  //       const nofilter = res.data;
+  //       const filteredData = nofilter.filter((breakdown) => {
+  //         return (breakdown.machinenumber =
+  //           machinenumber &&
+  //           breakdown.date == date &&
+  //           breakdown.changeoverNumber == changeoverNumber &&
+  //           breakdown.IsBreakdown == true);
+  //       });
+  //       // console.log(filteredData);
+  //       setBreakDowndata(filteredData);
+  //       if (filteredData.length > 0 && filteredData[0].Description) {
+  //         setDescription(filteredData[0].Description);
+  //       }
+  //       // console.log(filteredData[0].Description);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       alert("An error occurred while fetching the breakdown.");
+  //     });
+  // }, [breakdowndata]);
 
   return (
     <div className="container-Dashboard">
@@ -335,14 +367,12 @@ const Dashboard = () => {
                 </button> */}
                 <button
                   type="submit"
-                  className={`button-addbrdwn ${description ? "selected" : ""}`}
+                  className={`button-addbrdwn`}
                   id="myButton"
                   value={"NO MRN"}
-                  //   isSelectedNOMRN ? "selected" : ""
-                  // }
                   onClick={handleButtonClickNoMRN}
                 >
-                  {description ? "MACHINE BREAKDOWN - NO MRN" : "NO MRN"}
+                  NO MRN
                 </button>
               </div>
               <div className="container5-addbrdwn">
