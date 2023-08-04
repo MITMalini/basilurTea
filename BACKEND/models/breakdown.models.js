@@ -27,6 +27,7 @@ const breakdownSchema = new mongoose.Schema({
   },
   endtime: {
     type: String,
+    default: 0,
   },
   Description: {
     type: String,
