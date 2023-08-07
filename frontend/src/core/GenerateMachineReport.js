@@ -9,34 +9,20 @@ import * as XLSX from "xlsx";
 export default function GenerateMachineReport() {
   const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
   const [changeovers, setChangeovers] = useState([]);
-  const [changeovers1, setChangeovers1] = useState([]);
-  const [changeoversod, setChangeoversOD] = useState([]);
+  const [changeoversDateRange, setChangeoverDateRange] = useState([]);
+  const [changeoversOneDay, setChangeoversOneDay] = useState([]);
   const [breakdowns, setBreakdowns] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [wantedDate, setWantedDate] = useState("");
   const [dataFetched, setDataFetched] = useState(false);
-  // const [selectedPositionId, setSelectedPositionID] = useState(false);
-  // const [selectedPositionName, setSelectedPositionName] = useState(false);
-  // const [operators, setOperators] = useState([]);
-  // const [packings, setPackings] = useState([]);
-  // const [qcs, setQcs] = useState([]);
-  // const [technicians, setTechnicians] = useState([]);
-  // const [supervisors, setSupervisors] = useState([]);
-  // const [selectedName, setSelectedName] = useState([]);
-  // const Positionoptions = [
-  //   { _id: "1", value: "selectedoperator", label: "Operator" },
-  //   { _id: "2", value: "selectedpacking", label: "Packing" },
-  //   { _id: "3", value: "selectedqc", label: "QC" },
-  //   { _id: "4", value: "selectedtechnician", label: "Technician" },
-  //   { _id: "5", value: "selectedsupervisor", label: "Supervisor" },
-  // ];
+
   useEffect(() => {
     function getChangeovers() {
       axios.get(`http://localhost:8080/api/user/getuser/${id}`).then((res) => {
         const user = res.data.number;
+        console.log(user);
         axios
           .get("http://localhost:8080/api/changeover/getchangeovers")
           .then((res) => {
@@ -51,64 +37,39 @@ export default function GenerateMachineReport() {
             const filteredChangeovers = nofilter.filter((changeover) => {
               return changeover.date >= startDate && changeover.date <= endDate;
             });
-            setChangeovers1(filteredChangeovers.reverse());
+            setChangeoverDateRange(filteredChangeovers.reverse());
             const filteredODChangeovers = nofilter.filter((changeover) => {
               const changeoverDate = changeover.date.split("T")[0];
               return changeoverDate === wantedDate;
             });
             console.log(filteredODChangeovers);
-            setChangeoversOD(filteredODChangeovers.reverse());
+            setChangeoversOneDay(filteredODChangeovers.reverse());
             setDataFetched(true);
           })
           .catch((err) => {
             alert(err.message);
           });
-        //   axios
-        //     .get("http://localhost:8080/api/breakdown/getbreakdowns")
-        //     .then((res) => {
-        //       const allBreakdowns = res.data;
-        //       const nofilterbreakdown = allBreakdowns.filter((breakdown) => {
-        //         return breakdown.machinenumber === user;
-        //       });
-        //       const filteredBreakdowns = nofilterbreakdown.filter((breakdown) => {
-        //         const breakdownDate = breakdown.date.split("T")[0];
-        //         return breakdownDate === wantedDate;
-        //       });
-        //       console.log(filteredBreakdowns);
-        //       setBreakdowns(filteredBreakdowns.reverse());
-        //       setDataFetched(true);
-        //     })
-        //     .catch((err) => {
-        //       alert(err.message);
-        //     });
+        axios
+          .get("http://localhost:8080/api/breakdown/getbreakdowns")
+          .then((res) => {
+            const allBreakdowns = res.data;
+            const nofilterbreakdown = allBreakdowns.filter((breakdown) => {
+              return breakdown.machinenumber === user;
+            });
+            const filteredBreakdowns = nofilterbreakdown.filter((breakdown) => {
+              const breakdownDate = breakdown.date.split("T")[0];
+              return breakdownDate === wantedDate;
+            });
+            console.log(filteredBreakdowns);
+            setBreakdowns(filteredBreakdowns.reverse());
+            setDataFetched(true);
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
       });
     }
     getChangeovers();
-    // fetch("http://localhost:8080/api/operators/getoperators")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setOperators(data);
-    //   });
-    // fetch("http://localhost:8080/api/packing/getpackings")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setPackings(data);
-    //   });
-    // fetch("http://localhost:8080/api/qc/getqcs")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setQcs(data);
-    //   });
-    // fetch("http://localhost:8080/api/technician/gettechnicians")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setTechnicians(data);
-    //   });
-    // fetch("http://localhost:8080/api/supervisor/getsupervisors")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setSupervisors(data);
-    //   });
   }, [startDate, endDate, wantedDate]);
 
   const generateExcel = () => {
@@ -117,19 +78,6 @@ export default function GenerateMachineReport() {
       return;
     }
 
-    const columnStyles = {
-      Changeoverdate: { cellWidth: 25 },
-      ChangeoverMachine: { cellWidth: 25 },
-      Changeovershift: { cellWidth: 25 },
-      ChangeoverNumber: { cellWidth: 25 },
-      Changeoveroperator: { cellWidth: 25 },
-      Changeoverpacking: { cellWidth: 25 },
-      Changeoverqc: { cellWidth: 25 },
-      Changeovertechnician: { cellWidth: 25 },
-      Changeoversupervisor: { cellWidth: 25 },
-      ChangeoverstartedAt: { cellWidth: 25 },
-      ChangeoverendedAt: { cellWidth: 25 },
-    };
     const data = changeovers.map((changeover) => ({
       Changeoverdate: changeover.date.split("T")[0],
       ChangeoverMachine: changeover.selectedMachine,
@@ -223,13 +171,13 @@ export default function GenerateMachineReport() {
     doc.save("Changeovers Details.pdf");
   };
 
-  const generatefilteredExcel = () => {
-    if (changeovers.length === 0) {
+  const generateDateRangeExcel = () => {
+    if (changeoversDateRange.length === 0) {
       alert("No data available");
       return;
     }
 
-    const data = changeovers1.map((changeover) => ({
+    const data = changeoversDateRange.map((changeover) => ({
       Changeoverdate: changeover.date.split("T")[0],
       ChangeoverMachine: changeover.selectedMachine,
       Changeovershift: changeover.selectedshift,
@@ -260,8 +208,8 @@ export default function GenerateMachineReport() {
       "Changeovers Details from " + startDate + " to " + endDate + ".xlsx"
     );
   };
-  const generateFilteredPdf = () => {
-    if (!dataFetched || changeovers1.length === 0) {
+  const generateDateRangePdf = () => {
+    if (!dataFetched || changeoversDateRange.length === 0) {
       alert("No data available");
       return;
     }
@@ -293,7 +241,7 @@ export default function GenerateMachineReport() {
         { header: "Changeover Started At", dataKey: "ChangeoverstartedAt" },
         { header: "Changeover Ended At", dataKey: "ChangeoverendedAt" },
       ],
-      body: changeovers1.map((changeover) => {
+      body: changeoversDateRange.map((changeover) => {
         return {
           Changeoverdate: changeover.date.split("T")[0],
           ChangeoverMachine: changeover.selectedMachine,
@@ -326,12 +274,12 @@ export default function GenerateMachineReport() {
     );
   };
   const generatefilteredDateExcel = () => {
-    if (changeoversod.length === 0) {
+    if (changeoversOneDay.length === 0) {
       alert("No data available");
       return;
     }
 
-    const data = changeoversod.map((changeover) => ({
+    const data = changeoversOneDay.map((changeover) => ({
       Changeoverdate: changeover.date.split("T")[0],
       ChangeoverMachine: changeover.selectedMachine,
       Changeovershift: changeover.selectedshift,
@@ -360,7 +308,7 @@ export default function GenerateMachineReport() {
     XLSX.writeFile(workbook, "Changeovers Details on " + wantedDate + ".xlsx");
   };
   const generateFilteredDatePdf = () => {
-    if (!dataFetched || changeoversod.length === 0) {
+    if (!dataFetched || changeoversOneDay.length === 0) {
       alert("No data available");
       return;
     }
@@ -392,7 +340,7 @@ export default function GenerateMachineReport() {
         { header: "Changeover Started At", dataKey: "ChangeoverstartedAt" },
         { header: "Changeover Ended At", dataKey: "ChangeoverendedAt" },
       ],
-      body: changeoversod.map((changeover) => {
+      body: changeoversOneDay.map((changeover) => {
         return {
           Changeoverdate: changeover.date.split("T")[0],
           ChangeoverMachine: changeover.selectedMachine,
@@ -419,44 +367,44 @@ export default function GenerateMachineReport() {
       }),
       columnStyles,
     });
-    // doc.addPage();
-    // const columnStylesbd = {
-    //   machinenumber: { cellWidth: 20 },
-    //   date: { cellWidth: 25 },
-    //   shift: { cellWidth: 25 },
-    //   changeoverNumber: { cellWidth: 25 },
-    //   starttime: { cellWidth: 25 },
-    //   endtime: { cellWidth: 25 },
-    //   Description: { cellWidth: 40 },
-    // };
-    // autoTable(doc, {
-    //   columns: [
-    //     { header: "machine number", dataKey: "machinenumber" },
-    //     { header: "date", dataKey: "date" },
-    //     { header: "Shift", dataKey: "shift" },
-    //     { header: "Changeover Number", dataKey: "changeoverNumber" },
-    //     { header: "start time", dataKey: "starttime" },
-    //     { header: "end time", dataKey: "endtime" },
-    //     { header: "Description", dataKey: "Description" },
-    //   ],
-    //   body: breakdowns.map((breakdown) => {
-    //     return {
-    //       machinenumber: breakdown.machinenumber,
-    //       date: breakdown.date.split("T")[0],
-    //       Changeovershift: breakdown.selectedshift,
-    //       shift: breakdown.shift,
-    //       changeoverNumber: breakdown.changeoverNumber,
-    //       starttime: breakdown.starttime,
-    //       endtime: breakdown.endtime,
-    //       Description: breakdown.Description,
-    //     };
-    //   }),
-    //   columnStylesbd,
-    // });
+    doc.addPage();
+    const columnStylesbd = {
+      machinenumber: { cellWidth: 20 },
+      date: { cellWidth: 25 },
+      shift: { cellWidth: 25 },
+      changeoverNumber: { cellWidth: 25 },
+      starttime: { cellWidth: 25 },
+      endtime: { cellWidth: 25 },
+      Description: { cellWidth: 40 },
+    };
+    autoTable(doc, {
+      columns: [
+        { header: "machine number", dataKey: "machinenumber" },
+        { header: "date", dataKey: "date" },
+        { header: "Shift", dataKey: "shift" },
+        { header: "Changeover Number", dataKey: "changeoverNumber" },
+        { header: "start time", dataKey: "starttime" },
+        { header: "end time", dataKey: "endtime" },
+        { header: "Description", dataKey: "Description" },
+      ],
+      body: breakdowns.map((breakdown) => {
+        return {
+          machinenumber: breakdown.machinenumber,
+          date: breakdown.date.split("T")[0],
+          Changeovershift: breakdown.selectedshift,
+          shift: breakdown.shift,
+          changeoverNumber: breakdown.changeoverNumber,
+          starttime: breakdown.starttime,
+          endtime: breakdown.endtime,
+          Description: breakdown.Description,
+        };
+      }),
+      columnStylesbd,
+    });
     doc.save("Changeovers Details on " + wantedDate + ".pdf");
   };
   // const generateNameFilteredPdf = () => {
-  //   if (!dataFetched || changeovers1.length === 0) {
+  //   if (!dataFetched || changeoversDateRange.length === 0) {
   //     alert("No data available");
   //     return;
   //   }
@@ -488,7 +436,7 @@ export default function GenerateMachineReport() {
   //       { header: "Changeover Started At", dataKey: "ChangeoverstartedAt" },
   //       { header: "Changeover Ended At", dataKey: "ChangeoverendedAt" },
   //     ],
-  //     body: changeovers1.map((changeover) => {
+  //     body: changeoversDateRange.map((changeover) => {
   //       return {
   //         Changeoverdate: changeover.date.split("T")[0],
   //         ChangeoverMachine: changeover.selectedMachine,
@@ -592,18 +540,19 @@ export default function GenerateMachineReport() {
               </form>
               &nbsp;&nbsp;
               <button
-                onClick={generateFilteredPdf}
+                onClick={generateDateRangePdf}
                 className="generate-buttonpdf"
               >
                 GENERATE PDF
               </button>
               <button
-                onClick={generatefilteredExcel}
+                onClick={generateDateRangeExcel}
                 className="generate-buttonexcel"
               >
                 GENERATE EXCEL
               </button>
             </div>
+
             {/* <h3>FILTER DATA BY POSITION</h3>
             <div className="container53">
               <form>

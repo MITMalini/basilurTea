@@ -39,5 +39,23 @@ const breakdownSchema = new mongoose.Schema({
     default: true,
   },
 });
+breakdownSchema.pre("save", async function (next) {
+  if (this.IsBreakdown) {
+    const existingRecord = await mongoose.models.Breakdown.findOne({
+      machinenumber: this.machinenumber,
+      date: this.date,
+      shift: this.shift,
+      mrnnumber: this.mrnnumber,
+      changeoverNumber: this.changeoverNumber,
+      IsBreakdown: true,
+    });
+
+    if (existingRecord) {
+      const error = new Error("A breakdown is already active.");
+      return next(error);
+    }
+  }
+  next();
+});
 const Breakdown = mongoose.model("Breakdown", breakdownSchema);
 module.exports = Breakdown;
