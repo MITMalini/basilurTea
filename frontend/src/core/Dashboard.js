@@ -23,6 +23,8 @@ const Dashboard = (props) => {
   );
   const [mrnnumber, setMrnNumber] = useState(location.state.mrnnumber);
   const [description, setDescription] = useState("");
+  const [otherdescription, setOtherDescription] = useState("");
+
   const [breakdowndata, setBreakDowndata] = useState("");
 
   const [isOn, setIsOn] = useState(false);
@@ -692,6 +694,80 @@ const Dashboard = (props) => {
     }
   };
 
+  const [isSelectedOTHER, setIsSelectedOTHER] = useState(false);
+  const handleButtonClickOTHER = (e) => {
+    // Toggle the state
+    setIsOn((prevIsOn) => !prevIsOn);
+    localStorage.setItem("isOn", JSON.stringify(!isOn));
+    // Execute different functions based on the state
+    if (!isOn) {
+      functionWhenOnOTHER();
+    } else {
+      functionWhenOffOTHER();
+    }
+  };
+  const functionWhenOnOTHER = () => {
+    // Logic for when the button is on
+    setIsSelectedOTHER(!isSelectedOTHER);
+    const currentTime = new Date();
+    const newBreakdown = {
+      date,
+      shift,
+      machinenumber,
+      mrnnumber,
+      starttime: currentTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }),
+      Description: otherdescription,
+      changeoverNumber,
+    };
+
+    axios
+      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .then((res) => {
+        // Store the created breakdown in state
+        setNewBreakdown(res.data._id);
+        localStorage.setItem("newBreakdownId", res.data._id);
+        console.log(res.data._id);
+        alert("Breakdown started successfully!");
+      })
+      .catch((error) => {
+        console.error("Error creating breakdown:", error);
+      });
+  };
+  const functionWhenOffOTHER = () => {
+    const currentTime = new Date();
+    if (newbreakdown) {
+      axios
+        .patch(
+          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          {
+            endtime: currentTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: true,
+            }),
+            IsBreakdown: "false",
+          }
+        )
+        .then((response) => {
+          setNewBreakdown(null); // Clear the stored breakdown object
+          localStorage.removeItem("newBreakdownId");
+          alert("Breakdown ended successfully!");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error updating breakdown:", error);
+        });
+    } else {
+      alert("No active breakdown to end.");
+    }
+  };
+
   function sendData(e) {
     e.preventDefault();
     try {
@@ -996,11 +1072,57 @@ const Dashboard = (props) => {
                     : "NO MRN"}
                 </button>
               </div>
-              <div className="container5-addbrdwn">
-                <button type="button" className="button-addbrdwn">
-                  OTHER
-                </button>
-              </div>
+              {/* <div className="container5-addbrdwn">
+                 <Popup
+                  trigger={
+                    <button
+                      type="button"
+                      className={`button-addbrdwn ${
+                        isSelectedOTHER ? "selected" : ""
+                      }`}
+                      onClick={handleButtonClickOTHER}
+                    >
+                      {otherdescription
+                        ? "MACHINE BREAKDOWN - OTHER "
+                        : "OTHER"}
+                    </button>
+                  }
+                  modal
+                  nested
+                >
+                  {(close) => (
+                    <div className="modal">
+                      <form className="form">
+                        <div className="container5">
+                          <h6 className="text0">DESCRIPTION</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            placeholder="Breakdown description"
+                            value={otherdescription}
+                            onChange={(e) => {
+                              setOtherDescription(e.target.value);
+                            }}
+                          />
+                        </div>
+                        <br></br>
+                        <button
+                          className="savebutton"
+                          onClick={() => {
+                            close();
+                            isOn
+                              ? functionWhenOffOTHER()
+                              : functionWhenOnOTHER();
+                          }}
+                        >
+                          SAVE
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </Popup> 
+              </div> */}
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ const userRoutes = require("./routes/users.routes.js");
 const bagcountRoutes = require("./routes/bagcount.routes.js");
 const breakdownRoutes = require("./routes/breakdown.routes.js");
 const isbreakdownRoutes = require("./routes/isbreakdown.routes.js");
+const nomrnbreakdownRoutes = require("./routes/nomrnbreakdown.routes.js");
 require("dotenv").config();
 
 // app config
@@ -35,6 +36,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/bagcount", bagcountRoutes);
 app.use("/api/breakdown", breakdownRoutes);
 app.use("/api/isbreakdown", isbreakdownRoutes);
+app.use("/api/mrnbreakdown", nomrnbreakdownRoutes);
 // connect to db
 const dotenv = require("dotenv");
 dotenv.config({ path: "config.env" });

@@ -7,24 +7,16 @@ import "reactjs-popup/dist/index.css";
 import { Divider } from "antd";
 
 const Breakdown = (props) => {
-  const dividerStyle = {
-    backgroundColor: "#D9D9D9",
-    width: "40%",
-    height: "0.1px",
-  };
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  //   const [date, setDate] = useState(location.state.date);
-  //   const [machinenumber, setMachine] = useState(location.state.selectedMachine);
-  const [changeoverNumber, setChangeover] = useState(
-    location.state.changeoverNumber
-  );
   const [description, setDescription] = useState("");
+  const [machinedata, setMachinedata] = useState([]);
+  const [otherdescription, setOtherDescription] = useState("");
   const [breakdowndata, setBreakDowndata] = useState("");
+  const [machinenumber, setMachine] = useState();
   const [isOn, setIsOn] = useState(false);
   const [newbreakdown, setNewBreakdown] = useState(null);
-
   const [isSelectedNoTea, setIsSelectedNoTea] = useState(false);
   const handleButtonClickNoTea = (e) => {
     // Toggle the state
@@ -41,11 +33,10 @@ const Breakdown = (props) => {
     // Logic for when the button is on
     setIsSelectedNoTea(!isSelectedNoTea);
     const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -53,11 +44,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "NO TEA",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnBreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -74,7 +67,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -113,12 +106,11 @@ const Breakdown = (props) => {
   const functionWhenOnNoOperator = () => {
     // Logic for when the button is on
     setIsSelectedNoOperator(!isSelectedNoOperator);
+    const currentDate = currentTime.toLocaleDateString();
     const currentTime = new Date();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -126,11 +118,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "NO OPERATOR",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -147,7 +141,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -186,12 +180,11 @@ const Breakdown = (props) => {
   const functionWhenOnNoPacking = () => {
     // Logic for when the button is on
     setIsSelectedNoPacking(!isSelectedNoPacking);
+    const currentDate = currentTime.toLocaleDateString();
     const currentTime = new Date();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -199,11 +192,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "NO PACKING",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -220,7 +215,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -261,11 +256,10 @@ const Breakdown = (props) => {
     // Logic for when the button is on
     setIsSelectedTeaTime(!isSelectedTeaTime);
     const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -273,11 +267,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "TEA TIME",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -294,7 +290,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -335,11 +331,10 @@ const Breakdown = (props) => {
     // Logic for when the button is on
     setIsSelectedNoMaterial(!isSelectedNoMaterial);
     const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -347,11 +342,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "NO MATERIAL",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -368,7 +365,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -409,11 +406,10 @@ const Breakdown = (props) => {
     // Logic for when the button is on
     setIsSelectedLunch(!isSelectedLunch);
     const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -421,11 +417,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "LUNCH",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -442,7 +440,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -483,11 +481,10 @@ const Breakdown = (props) => {
     // Logic for when the button is on
     setIsSelectedMEETING(!isSelectedMEETING);
     const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -495,11 +492,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "MEETING",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -516,7 +515,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -557,11 +556,10 @@ const Breakdown = (props) => {
     // Logic for when the button is on
     setIsSelectedNOPOWER(!isSelectedNOPOWER);
     const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -569,11 +567,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "NO POWER",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -590,7 +590,7 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -631,11 +631,10 @@ const Breakdown = (props) => {
     // Logic for when the button is on
     setIsSelectedNOMRN(!isSelectedNOMRN);
     const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
     const newBreakdown = {
-      date,
-      shift,
-      machinenumber,
-      mrnnumber,
+      machinenumber: machinedata.number,
+      date: currentDate,
       starttime: currentTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -643,11 +642,13 @@ const Breakdown = (props) => {
         hour12: true,
       }),
       Description: "NO MRN",
-      changeoverNumber,
     };
 
     axios
-      .post("http://localhost:8080/api/breakdown/addbreakdown", newBreakdown)
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
       .then((res) => {
         // Store the created breakdown in state
         setNewBreakdown(res.data._id);
@@ -664,7 +665,82 @@ const Breakdown = (props) => {
     if (newbreakdown) {
       axios
         .patch(
-          `http://localhost:8080/api/breakdown/updatebreakdown${newbreakdown}`,
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
+          {
+            endtime: currentTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: true,
+            }),
+            IsBreakdown: "false",
+          }
+        )
+        .then((response) => {
+          setNewBreakdown(null); // Clear the stored breakdown object
+          localStorage.removeItem("newBreakdownId");
+          alert("Breakdown ended successfully!");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error updating breakdown:", error);
+        });
+    } else {
+      alert("No active breakdown to end.");
+    }
+  };
+
+  const [isSelectedOTHER, setIsSelectedOTHER] = useState(false);
+  const handleButtonClickOTHER = (e) => {
+    // Toggle the state
+    setIsOn((prevIsOn) => !prevIsOn);
+    localStorage.setItem("isOn", JSON.stringify(!isOn));
+    // Execute different functions based on the state
+    if (!isOn) {
+      functionWhenOnOTHER();
+    } else {
+      functionWhenOffOTHER();
+    }
+  };
+  const functionWhenOnOTHER = () => {
+    // Logic for when the button is on
+    setIsSelectedOTHER(!isSelectedOTHER);
+    const currentTime = new Date();
+    const currentDate = currentTime.toLocaleDateString();
+    const newBreakdown = {
+      machinenumber: machinedata.number,
+      date: currentDate,
+      starttime: currentTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }),
+      Description: otherdescription,
+    };
+
+    axios
+      .post(
+        "http://localhost:8080/api/mrnbreakdown/addnomrnbreakdown",
+        newBreakdown
+      )
+      .then((res) => {
+        // Store the created breakdown in state
+        setNewBreakdown(res.data._id);
+        localStorage.setItem("newBreakdownId", res.data._id);
+        console.log(res.data._id);
+        alert("Breakdown started successfully!");
+      })
+      .catch((error) => {
+        console.error("Error creating breakdown:", error);
+      });
+  };
+  const functionWhenOffOTHER = () => {
+    const currentTime = new Date();
+    if (newbreakdown) {
+      axios
+        .patch(
+          `http://localhost:8080/api/mrnbreakdown/updatenomrnbreakdown${newbreakdown}`,
           {
             endtime: currentTime.toLocaleTimeString([], {
               hour: "2-digit",
@@ -698,7 +774,6 @@ const Breakdown = (props) => {
           return (breakdown.machinenumber =
             machinenumber &&
             breakdown.date == date &&
-            breakdown.changeoverNumber == changeoverNumber &&
             breakdown.IsBreakdown == true);
         });
         // console.log(filteredData);
@@ -713,7 +788,14 @@ const Breakdown = (props) => {
         console.error(error);
         alert("An error occurred while fetching the breakdown.");
       });
-  }, [machinenumber, date, changeoverNumber, breakdowndata]);
+    axios
+      .get(`http://localhost:8080/api/user/getuser/${id}`)
+
+      .then((res) => {
+        setMachinedata(res.data);
+      })
+      .catch((err) => console.log(`get machine data failed ${err}`));
+  }, [machinenumber, breakdowndata]);
 
   return (
     <div className="container-Dashboard">
@@ -847,11 +929,57 @@ const Breakdown = (props) => {
                     : "NO MRN"}
                 </button>
               </div>
-              <div className="container5-addbrdwn">
-                <button type="button" className="button-addbrdwn">
-                  OTHER
-                </button>
-              </div>
+              {/* <div className="container5-addbrdwn">
+                {/* <Popup
+                  trigger={
+                    <button
+                      type="button"
+                      className={`button-addbrdwn ${
+                        isSelectedOTHER ? "selected" : ""
+                      }`}
+                      onClick={handleButtonClickOTHER}
+                    >
+                      {otherdescription
+                        ? "MACHINE BREAKDOWN - OTHER "
+                        : "OTHER"}
+                    </button>
+                  }
+                  modal
+                  nested
+                >
+                  {(close) => (
+                    <div className="modal">
+                      <form className="form">
+                        <div className="container5">
+                          <h6 className="text0">DESCRIPTION</h6>
+                          <input
+                            type="text"
+                            name="name"
+                            className="textinput3"
+                            placeholder="Breakdown description"
+                            value={otherdescription}
+                            onChange={(e) => {
+                              setOtherDescription(e.target.value);
+                            }}
+                          />
+                        </div>
+                        <br></br>
+                        <button
+                          className="savebutton"
+                          onClick={() => {
+                            close();
+                            isOn
+                              ? functionWhenOffOTHER()
+                              : functionWhenOnOTHER();
+                          }}
+                        >
+                          SAVE
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </Popup> 
+              </div> */}
             </div>
           </div>
         </div>

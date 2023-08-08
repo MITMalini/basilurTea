@@ -76,6 +76,12 @@ export default function App() {
             element={<AddChangeOver />}
           />
           <Route
+            path="/Basilur/home/:id/breakdowns"
+            exact
+            element={<Breakdown />}
+          />
+
+          <Route
             path="/Basilur/adminhome/:id/generatereport"
             exact
             element={<GenerateReport />}
@@ -89,11 +95,6 @@ export default function App() {
             path="/Basilur/home/:id/viewallchangeovers"
             exact
             element={<ViewAllChangeovers />}
-          />
-          <Route
-            path="/Basilur/home/:id/breakdowns"
-            exact
-            element={<Breakdown />}
           />
           <Route
             path="/Basilur/adminhome/:id/adminviewallchangeovers"
