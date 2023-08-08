@@ -22,14 +22,9 @@ export default function Home() {
               <a href="./generatemachinereport" className="homebutton">
                 GENERATE REPORT
               </a>
-              <a href="./dashboard" className="homebutton">
-                DASHBOARD
+              <a href="./breakdowns" className="homebutton">
+                ADD BREAKDOWN
               </a>
-              {/* <a href="./addoperator" className='homebutton'>ADD OPERATOR</a>
-                        <a href="./addpacking" className='homebutton'>ADD PACKING</a>
-                        <a href="./addqc" className='homebutton'>ADD QC</a>
-                        <a href="./addtechnician" className='homebutton'>ADD TECHNICIAN</a>
-                        <a href="./addsupervisor" className='homebutton'>ADD SUPERVISOR</a> */}
             </div>
           </div>
         </div>

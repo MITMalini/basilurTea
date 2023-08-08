@@ -13,10 +13,14 @@ export default function GenerateMachineReport() {
   const [changeoversDateRange, setChangeoverDateRange] = useState([]);
   const [changeoversOneDay, setChangeoversOneDay] = useState([]);
   const [breakdowns, setBreakdowns] = useState([]);
+  const [allbreakdowns, setAllBreakdowns] = useState([]);
+  const [daterangebreakdowns, setDateRangeBreakdowns] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [wantedDate, setWantedDate] = useState("");
   const [dataFetched, setDataFetched] = useState(false);
+  const [mrnchangeovers, setMRNChangeOver] = useState([]);
+  const [mrnbreakdowns, setMRNBreakdowns] = useState([]);
 
   useEffect(() => {
     function getChangeovers() {
@@ -56,11 +60,18 @@ export default function GenerateMachineReport() {
             const nofilterbreakdown = allBreakdowns.filter((breakdown) => {
               return breakdown.machinenumber === user;
             });
+            setAllBreakdowns(nofilterbreakdown);
+            const filtereddaterangeBreakdowns = nofilterbreakdown.filter(
+              (breakdown) => {
+                return breakdown.date >= startDate && breakdown.date <= endDate;
+              }
+            );
             const filteredBreakdowns = nofilterbreakdown.filter((breakdown) => {
               const breakdownDate = breakdown.date.split("T")[0];
               return breakdownDate === wantedDate;
             });
             console.log(filteredBreakdowns);
+            setDateRangeBreakdowns(filtereddaterangeBreakdowns.reverse());
             setBreakdowns(filteredBreakdowns.reverse());
             setDataFetched(true);
           })
@@ -100,9 +111,23 @@ export default function GenerateMachineReport() {
       ChangeoverendedAt: changeover.endedAt,
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
+    const worksheet1 = XLSX.utils.json_to_sheet(data);
+
+    const Otherdata = allbreakdowns.map((breakdown) => ({
+      Breakdowndate: breakdown.date.split("T")[0],
+      BreakdownMachine: breakdown.machinenumber,
+      Breakdownshift: breakdown.shift,
+      BreakdownMRN: breakdown.mrnnumber,
+      BreakdownChangeoverNumber: breakdown.changeoverNumber,
+      BreakdownDescription: breakdown.Description,
+      BreakdownstartedAt: breakdown.starttime,
+      BreakdownendedAt: breakdown.endtime,
+    }));
+
+    const worksheet2 = XLSX.utils.json_to_sheet(Otherdata);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Changeovers");
+    XLSX.utils.book_append_sheet(workbook, worksheet1, "Changeovers");
+    XLSX.utils.book_append_sheet(workbook, worksheet2, "breakdowns");
 
     XLSX.writeFile(workbook, "Changeovers_Details.xlsx");
   };
@@ -167,6 +192,40 @@ export default function GenerateMachineReport() {
       }),
       columnStyles,
     });
+    doc.addPage();
+    const columnStylesbd = {
+      machinenumber: { cellWidth: 20 },
+      date: { cellWidth: 25 },
+      shift: { cellWidth: 25 },
+      changeoverNumber: { cellWidth: 25 },
+      starttime: { cellWidth: 25 },
+      endtime: { cellWidth: 25 },
+      Description: { cellWidth: 40 },
+    };
+    autoTable(doc, {
+      columns: [
+        { header: "machine number", dataKey: "machinenumber" },
+        { header: "date", dataKey: "date" },
+        { header: "Shift", dataKey: "shift" },
+        { header: "Changeover Number", dataKey: "changeoverNumber" },
+        { header: "start time", dataKey: "starttime" },
+        { header: "end time", dataKey: "endtime" },
+        { header: "Description", dataKey: "Description" },
+      ],
+      body: allbreakdowns.map((breakdown) => {
+        return {
+          machinenumber: breakdown.machinenumber,
+          date: breakdown.date.split("T")[0],
+          Changeovershift: breakdown.selectedshift,
+          shift: breakdown.shift,
+          changeoverNumber: breakdown.changeoverNumber,
+          Description: breakdown.Description,
+          starttime: breakdown.starttime,
+          endtime: breakdown.endtime,
+        };
+      }),
+      columnStylesbd,
+    });
 
     doc.save("Changeovers Details.pdf");
   };
@@ -199,9 +258,22 @@ export default function GenerateMachineReport() {
       ChangeoverendedAt: changeover.endedAt,
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
+    const worksheet1 = XLSX.utils.json_to_sheet(data);
+    const otherdata = daterangebreakdowns.map((breakdown) => ({
+      Breakdowndate: breakdown.date.split("T")[0],
+      BreakdownMachine: breakdown.machinenumber,
+      Breakdownshift: breakdown.shift,
+      BreakdownMRN: breakdown.mrnnumber,
+      BreakdownChangeoverNumber: breakdown.changeoverNumber,
+      BreakdownDescription: breakdown.Description,
+      BreakdownstartedAt: breakdown.starttime,
+      BreakdownendedAt: breakdown.endtime,
+    }));
+
+    const worksheet2 = XLSX.utils.json_to_sheet(otherdata);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Changeovers");
+    XLSX.utils.book_append_sheet(workbook, worksheet1, "Changeovers");
+    XLSX.utils.book_append_sheet(workbook, worksheet2, "BreakDowns");
 
     XLSX.writeFile(
       workbook,
@@ -268,6 +340,40 @@ export default function GenerateMachineReport() {
       }),
       columnStyles,
     });
+    doc.addPage();
+    const columnStylesbd = {
+      machinenumber: { cellWidth: 20 },
+      date: { cellWidth: 25 },
+      shift: { cellWidth: 25 },
+      changeoverNumber: { cellWidth: 25 },
+      starttime: { cellWidth: 25 },
+      endtime: { cellWidth: 25 },
+      Description: { cellWidth: 40 },
+    };
+    autoTable(doc, {
+      columns: [
+        { header: "machine number", dataKey: "machinenumber" },
+        { header: "date", dataKey: "date" },
+        { header: "Shift", dataKey: "shift" },
+        { header: "Changeover Number", dataKey: "changeoverNumber" },
+        { header: "start time", dataKey: "starttime" },
+        { header: "end time", dataKey: "endtime" },
+        { header: "Description", dataKey: "Description" },
+      ],
+      body: daterangebreakdowns.map((breakdown) => {
+        return {
+          machinenumber: breakdown.machinenumber,
+          date: breakdown.date.split("T")[0],
+          Changeovershift: breakdown.selectedshift,
+          shift: breakdown.shift,
+          changeoverNumber: breakdown.changeoverNumber,
+          Description: breakdown.Description,
+          starttime: breakdown.starttime,
+          endtime: breakdown.endtime,
+        };
+      }),
+      columnStylesbd,
+    });
 
     doc.save(
       "Changeovers Details from " + startDate + " to " + endDate + ".pdf"
@@ -301,9 +407,23 @@ export default function GenerateMachineReport() {
       ChangeoverendedAt: changeover.endedAt,
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
+    const worksheet1 = XLSX.utils.json_to_sheet(data);
+    const Otherdata = breakdowns.map((breakdown) => ({
+      Breakdowndate: breakdown.date.split("T")[0],
+      BreakdownMachine: breakdown.machinenumber,
+      Breakdownshift: breakdown.shift,
+      BreakdownMRN: breakdown.mrnnumber,
+      BreakdownChangeoverNumber: breakdown.changeoverNumber,
+      BreakdownDescription: breakdown.Description,
+      BreakdownstartedAt: breakdown.starttime,
+      BreakdownendedAt: breakdown.endtime,
+    }));
+
+    const worksheet2 = XLSX.utils.json_to_sheet(Otherdata);
+
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Changeovers");
+    XLSX.utils.book_append_sheet(workbook, worksheet1, "Changeovers");
+    XLSX.utils.book_append_sheet(workbook, worksheet2, "Breakdowns");
 
     XLSX.writeFile(workbook, "Changeovers Details on " + wantedDate + ".xlsx");
   };
@@ -394,80 +514,15 @@ export default function GenerateMachineReport() {
           Changeovershift: breakdown.selectedshift,
           shift: breakdown.shift,
           changeoverNumber: breakdown.changeoverNumber,
+          Description: breakdown.Description,
           starttime: breakdown.starttime,
           endtime: breakdown.endtime,
-          Description: breakdown.Description,
         };
       }),
       columnStylesbd,
     });
     doc.save("Changeovers Details on " + wantedDate + ".pdf");
   };
-  // const generateNameFilteredPdf = () => {
-  //   if (!dataFetched || changeoversDateRange.length === 0) {
-  //     alert("No data available");
-  //     return;
-  //   }
-  //   const doc = new jsPDF({ orientation: "landscape" });
-  //   const columnStyles = {
-  //     Changeoverdate: { cellWidth: 25 },
-  //     ChangeoverMachine: { cellWidth: 25 },
-  //     Changeovershift: { cellWidth: 25 },
-  //     ChangeoverNumber: { cellWidth: 25 },
-  //     Changeoveroperator: { cellWidth: 25 },
-  //     Changeoverpacking: { cellWidth: 25 },
-  //     Changeoverqc: { cellWidth: 25 },
-  //     Changeovertechnician: { cellWidth: 25 },
-  //     Changeoversupervisor: { cellWidth: 25 },
-  //     ChangeoverstartedAt: { cellWidth: 25 },
-  //     ChangeoverendedAt: { cellWidth: 25 },
-  //   };
-  //   autoTable(doc, {
-  //     columns: [
-  //       { header: "Changeover Date", dataKey: "Changeoverdate" },
-  //       { header: "Changeover Machine", dataKey: "ChangeoverMachine" },
-  //       { header: "Changeover Shift", dataKey: "Changeovershift" },
-  //       { header: "Changeover Number", dataKey: "ChangeoverNumber" },
-  //       { header: "Changeover Operator", dataKey: "Changeoveroperator" },
-  //       { header: "Changeover Packing", dataKey: "Changeoverpacking" },
-  //       { header: "Changeover QC", dataKey: "Changeoverqc" },
-  //       { header: "Changeover Technician", dataKey: "Changeovertechnician" },
-  //       { header: "Changeover Supervisor", dataKey: "Changeoversupervisor" },
-  //       { header: "Changeover Started At", dataKey: "ChangeoverstartedAt" },
-  //       { header: "Changeover Ended At", dataKey: "ChangeoverendedAt" },
-  //     ],
-  //     body: changeoversDateRange.map((changeover) => {
-  //       return {
-  //         Changeoverdate: changeover.date.split("T")[0],
-  //         ChangeoverMachine: changeover.selectedMachine,
-  //         Changeovershift: changeover.selectedshift,
-  //         ChangeoverNumber: changeover.changeoverNumber,
-  //         Changeoveroperator: changeover.selectedoperator
-  //           .map((operator) => operator.operator_name)
-  //           .join(", "),
-  //         Changeoverpacking: changeover.selectedpacking
-  //           .map((packing) => packing.packing_name)
-  //           .join(", "),
-  //         Changeoverqc: changeover.selectedqc
-  //           .map((qc) => qc.qc_name)
-  //           .join(", "),
-  //         Changeovertechnician: changeover.selectedtechnician
-  //           .map((technician) => technician.technician_name)
-  //           .join(", "),
-  //         Changeoversupervisor: changeover.selectedsupervisor
-  //           .map((supervisor) => supervisor.supervisor_name)
-  //           .join(", "),
-  //         ChangeoverstartedAt: changeover.startedAt,
-  //         ChangeoverendedAt: changeover.endedAt,
-  //       };
-  //     }),
-  //     columnStyles,
-  //   });
-
-  //   doc.save(
-  //     "Changeovers Details from " + startDate + " to " + endDate + ".pdf"
-  //   );
-  // };
 
   return (
     <div className="container">
