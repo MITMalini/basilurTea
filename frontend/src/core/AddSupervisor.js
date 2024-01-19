@@ -3,7 +3,7 @@ import "./style.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function addSupervisor() {
+export default function AddSupervisor() {
   const [supervisor_name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [epfno, setEpf] = useState("");
